@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Inoculações">
+<meta name="theme-color" content="#20312A">
+<title>Inoculações · Pleurotus</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAElUlEQVR4nO3dvVEcSwCF0V3qBSIb41XJhTRkKI4XCHHIUBoPlyoMbDKRHKGCZX9mdrqnu++cY0oFzA6fLg0LaL/rxJevt79aXwPLvD697FtfQ7MLEHC+FoGv+gZFvF1rxV39jYiYQzXjrvaKhcwlNcIu/gqFzFwlw74p9Yp2OzFznZLdFPmXIWRKWbrWixdazJS0tKdFQYuZGpZ0ddW8C5m1zD2CzF5oMbOmub3NClrMtDCnu8lBi5mWpvZX9OvQ0NqkoK0zPZjS4cWgxUxPLvV4Nmgx06NzXTpDE+Vk0NaZnp3q82jQYmYExzp15CDKp6CtMyM57NVCE+VD0Na5nh/fmv/Kiljvu7XQK3iLWdT1CZoof4N23KjjcJWtdB1v/VpoovzT+gJSnVvit7/7/tMHxdL2u53jRmlzjhWiLsuRgyiCLmzuJ30+SSxL0ES5cX4u59q1tdLlWGiiCJoogiaKoIki6IKufZLEkyvlCJoogi5s7tpa57IETRRBVzB1da1zeXvPFJ738vi46OWfH+4//dm///2/6HXe3t0tevlkvh+6sqXxMo8jB1EETRRBE0XQRBE0UQRNFEETRdBEETRRPPV9haVPh8/hae55LDRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBD3Tmv8DVou3NzpBE0XQM7RaSys9naAnah1V67c/CkFP0EtMvVxHzwRNFEFf0Nsq9nY9vRH0Gb3G0+t19UDQRBH0Cb2vYO/X14qgjxglllGuc02CPjBaJKNdb22CJoqg3xl17Ua97hoE/cfoUYx+/aUImiiC3uWsW8rjWGLzQadFkPZ45tp00Knv/NTHNcWmgybPZoNOX7H0x3fKJoPeyjt7K4/zvU0GTa79l6+3v1pfRG0/vu1bX0I3vv/MfndbaKLEB22dP0q/H/FBsy3RQaev0bWS70t00GxPbNDJK1RC6v2JDZptigw6dX1KS7xPkUGzXXFBJ65OTWn3Ky5oti0q6LS1WUvSfYsJeovfKllSyv2LCfr54b71JQwt5f5FBJ2yLq0l3Mfhg355fIxZl9aeH+6Hj3r4oOG9oYO2zuWNvtLD/gjWyDd9FLd3d60vYbYhF1rM6xjxPg8ZNJwyXNAjrsbIRrvfw56h4ZjhFhrOETRRBE0UQRNF0EQRNFEETZSb16eXnJ+/YfMsNFEETRRBE+Vmt9vtnKNJ8Pr0srfQRBE0Uf4G7djByN76tdBEETRRPgTt2MGI3ndroYnyKWgrzUgOe7XQRDkatJVmBMc6PbnQoqZnp/p05CDK2aCtND061+XFhRY1PbnU46Qjh6jpwZQOnaGJMjloK01LU/ubtdCipoU53c0+coiaNc3tbVGcfrc0tVw7nIs+KbTW1LCkq8Vf5RA1JS3tqWiMjiBcq9QwFv06tLXmGiW7qRagteaSGgNYfVGFzaGaH8lXPSKIe7vWOo42O/OKO1+Lz6l+A7EDZf82htu9AAAAAElFTkSuQmCC">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAElUlEQVR4nO3dvVEcSwCF0V3qBSIb41XJhTRkKI4XCHHIUBoPlyoMbDKRHKGCZX9mdrqnu++cY0oFzA6fLg0LaL/rxJevt79aXwPLvD697FtfQ7MLEHC+FoGv+gZFvF1rxV39jYiYQzXjrvaKhcwlNcIu/gqFzFwlw74p9Yp2OzFznZLdFPmXIWRKWbrWixdazJS0tKdFQYuZGpZ0ddW8C5m1zD2CzF5oMbOmub3NClrMtDCnu8lBi5mWpvZX9OvQ0NqkoK0zPZjS4cWgxUxPLvV4Nmgx06NzXTpDE+Vk0NaZnp3q82jQYmYExzp15CDKp6CtMyM57NVCE+VD0Na5nh/fmv/Kiljvu7XQK3iLWdT1CZoof4N23KjjcJWtdB1v/VpoovzT+gJSnVvit7/7/tMHxdL2u53jRmlzjhWiLsuRgyiCLmzuJ30+SSxL0ES5cX4u59q1tdLlWGiiCJoogiaKoIki6IKufZLEkyvlCJoogi5s7tpa57IETRRBVzB1da1zeXvPFJ738vi46OWfH+4//dm///2/6HXe3t0tevlkvh+6sqXxMo8jB1EETRRBE0XQRBE0UQRNFEETRdBEETRRPPV9haVPh8/hae55LDRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBD3Tmv8DVou3NzpBE0XQM7RaSys9naAnah1V67c/CkFP0EtMvVxHzwRNFEFf0Nsq9nY9vRH0Gb3G0+t19UDQRBH0Cb2vYO/X14qgjxglllGuc02CPjBaJKNdb22CJoqg3xl17Ua97hoE/cfoUYx+/aUImiiC3uWsW8rjWGLzQadFkPZ45tp00Knv/NTHNcWmgybPZoNOX7H0x3fKJoPeyjt7K4/zvU0GTa79l6+3v1pfRG0/vu1bX0I3vv/MfndbaKLEB22dP0q/H/FBsy3RQaev0bWS70t00GxPbNDJK1RC6v2JDZptigw6dX1KS7xPkUGzXXFBJ65OTWn3Ky5oti0q6LS1WUvSfYsJeovfKllSyv2LCfr54b71JQwt5f5FBJ2yLq0l3Mfhg355fIxZl9aeH+6Hj3r4oOG9oYO2zuWNvtLD/gjWyDd9FLd3d60vYbYhF1rM6xjxPg8ZNJwyXNAjrsbIRrvfw56h4ZjhFhrOETRRBE0UQRNF0EQRNFEETZSb16eXnJ+/YfMsNFEETRRBE+Vmt9vtnKNJ8Pr0srfQRBE0Uf4G7djByN76tdBEETRRPgTt2MGI3ndroYnyKWgrzUgOe7XQRDkatJVmBMc6PbnQoqZnp/p05CDK2aCtND061+XFhRY1PbnU46Qjh6jpwZQOnaGJMjloK01LU/ubtdCipoU53c0+coiaNc3tbVGcfrc0tVw7nIs+KbTW1LCkq8Vf5RA1JS3tqWiMjiBcq9QwFv06tLXmGiW7qRagteaSGgNYfVGFzaGaH8lXPSKIe7vWOo42O/OKO1+Lz6l+A7EDZf82htu9AAAAAElFTkSuQmCC">
+<style>
+  :root{
+    --bg:#E5EAE2; --surface:#FBFCF9; --surface-2:#F1F4ED;
+    --ink:#20312A; --ink-soft:#586A60; --ink-faint:#8A988E;
+    --accent:#B9722A; --accent-soft:#F2E3CF; --accent-deep:#9A5C1E;
+    --green:#2F6B57; --green-soft:#DCEAE2;
+    --warn:#B14A36; --warn-soft:#F4DED7;
+    --line:#CBD3CA; --line-soft:#DDE3D9;
+    --serif:Georgia,'Times New Roman',serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --tabh:64px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:var(--bg);}
+  body{color:var(--ink);font-family:var(--sans);line-height:1.45;-webkit-font-smoothing:antialiased;
+    padding-bottom:calc(var(--tabh) + env(safe-area-inset-bottom));}
+  .wrap{max-width:580px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 16px) 16px 30px;}
+  .page{display:none;} .page.active{display:block;}
+  header{padding:4px 2px 16px;}
+  .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;}
+  h1{font-family:var(--serif);font-weight:700;font-size:29px;letter-spacing:-.01em;margin:4px 0 2px;}
+  .sub{color:var(--ink-soft);font-size:13.5px;max-width:44ch;}
+
+  .driver{background:var(--ink);color:var(--surface);border-radius:20px;padding:18px 18px 15px;margin-bottom:14px;box-shadow:0 8px 24px -12px rgba(32,49,42,.5);}
+  .driver label{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#A9BBAF;font-weight:700;display:block;}
+  .driver-row{display:flex;align-items:baseline;gap:8px;margin-top:6px;}
+  .driver input{background:transparent;border:none;color:var(--surface);font-family:var(--mono);font-size:44px;font-weight:600;width:100%;padding:0;letter-spacing:-.02em;}
+  .driver input:focus{outline:none;}
+  .driver .unit{font-family:var(--serif);font-size:17px;color:#A9BBAF;white-space:nowrap;}
+  .driver-meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px;border-top:1px solid rgba(255,255,255,.12);padding-top:10px;}
+  .driver-meta span{font-size:12px;color:#A9BBAF;}
+  .mini-field{display:flex;align-items:center;gap:6px;}
+  .mini-field input{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:var(--surface);font-family:var(--mono);font-size:13px;width:64px;padding:4px 7px;border-radius:8px;text-align:right;}
+  .mini-field input:focus{outline:none;border-color:var(--accent);}
+
+  .readout{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
+  .stat{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:11px 13px;}
+  .stat .k{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;line-height:1.25;}
+  .stat .v{font-family:var(--mono);font-size:22px;font-weight:600;margin-top:5px;letter-spacing:-.01em;}
+  .stat .v small{font-size:11.5px;color:var(--ink-soft);font-family:var(--serif);font-weight:400;margin-left:3px;}
+  .stat.accent{background:var(--accent-soft);border-color:#E6CFA8;}
+  .stat.accent .v{color:var(--accent-deep);}
+
+  .section-title{font-family:var(--serif);font-size:15px;color:var(--ink-soft);margin:0 2px 12px;display:flex;align-items:center;gap:8px;}
+  .section-title::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  .stage{background:var(--surface);border:1px solid var(--line-soft);border-radius:18px;padding:15px 16px 13px;}
+  .stage-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+  .stage-name{font-family:var(--serif);font-size:18px;font-weight:700;line-height:1.1;}
+  .stage-tag{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-top:3px;}
+  .stage-out{text-align:right;flex-shrink:0;}
+  .stage-out .big{font-family:var(--mono);font-size:23px;font-weight:600;letter-spacing:-.01em;}
+  .stage-out .big small{font-size:11.5px;color:var(--ink-soft);font-family:var(--serif);font-weight:400;}
+  .stage-out .sec{font-size:12px;color:var(--ink-soft);font-family:var(--mono);margin-top:1px;}
+  .note{margin-top:10px;font-size:12px;background:var(--green-soft);color:var(--green);padding:7px 10px;border-radius:9px;}
+  .note b{font-family:var(--mono);font-weight:600;}
+
+  .toggle{margin-top:11px;border-top:1px dashed var(--line);padding-top:10px;}
+  .toggle summary{list-style:none;cursor:pointer;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);font-weight:700;display:flex;align-items:center;gap:6px;}
+  .toggle summary::-webkit-details-marker{display:none;}
+  .toggle summary .chev{transition:transform .2s;font-size:10px;}
+  .toggle[open] summary .chev{transform:rotate(90deg);}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px;}
+  .field{display:flex;flex-direction:column;gap:3px;}
+  .field.wide{grid-column:1 / -1;}
+  .field label{font-size:11px;color:var(--ink-soft);font-weight:600;}
+  .field .in{display:flex;align-items:center;background:var(--surface-2);border:1px solid var(--line-soft);border-radius:9px;padding:0 9px;}
+  .field input{background:transparent;border:none;font-family:var(--mono);font-size:15px;color:var(--ink);width:100%;padding:8px 0;}
+  .field input:focus{outline:none;}
+  .field .in:focus-within{border-color:var(--accent);background:var(--surface);}
+  .field .suffix{font-size:12px;color:var(--ink-faint);font-family:var(--serif);}
+
+  .link{display:flex;flex-direction:column;align-items:center;padding:3px 0;}
+  .link .bar{width:2px;height:9px;background:var(--line);}
+  .link .pill{font-size:11px;font-family:var(--mono);background:var(--surface);border:1px solid var(--line);color:var(--ink-soft);padding:3px 10px;border-radius:999px;white-space:nowrap;}
+  .link .pill b{color:var(--accent);}
+
+  .timeline{background:var(--surface);border:1px solid var(--line-soft);border-radius:18px;padding:16px;}
+  .tl-row{display:flex;align-items:center;gap:12px;padding:9px 0;}
+  .tl-row+.tl-row{border-top:1px solid var(--line-soft);}
+  .tl-dot{width:11px;height:11px;border-radius:50%;border:2px solid var(--accent);background:var(--surface);flex-shrink:0;}
+  .tl-row.key .tl-dot{background:var(--accent);}
+  .tl-label{font-size:13px;flex:1;}
+  .tl-label small{display:block;color:var(--ink-faint);font-size:11px;}
+  .tl-date{font-family:var(--mono);font-size:14px;font-weight:600;white-space:nowrap;}
+  .tl-row.key .tl-date{color:var(--accent-deep);}
+
+  .fab{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin-top:20px;padding:16px;border:none;border-radius:16px;background:var(--accent);color:#fff;font-family:var(--sans);font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px -8px rgba(185,114,42,.6);}
+  .fab:active{transform:translateY(1px);background:var(--accent-deep);}
+  .fab svg{width:20px;height:20px;}
+  .btn{padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:14px;}
+  .btn:active{opacity:.6;}
+  .tip{margin-top:22px;background:var(--surface-2);border:1px dashed var(--line);border-radius:14px;padding:13px 15px;font-size:12.5px;color:var(--ink-soft);}
+  .tip b{color:var(--ink);}
+  .foot{text-align:center;font-size:11px;color:var(--ink-faint);margin-top:16px;line-height:1.5;}
+
+  .stock-head{background:var(--ink);color:var(--surface);border-radius:18px;padding:16px 18px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;}
+  .stock-head .big{font-family:var(--mono);font-size:32px;font-weight:600;line-height:1;}
+  .stock-head .big small{font-family:var(--serif);font-size:13px;color:#A9BBAF;margin-left:4px;}
+  .stock-head .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A9BBAF;font-weight:700;}
+  .stock-head .right{text-align:right;font-size:12px;color:#A9BBAF;}
+  .stock-head .right b{color:var(--surface);font-family:var(--mono);font-size:16px;display:block;}
+
+  .empty{text-align:center;color:var(--ink-soft);padding:34px 20px;background:var(--surface);border:1px dashed var(--line);border-radius:16px;margin-bottom:8px;}
+  .empty .ico{font-size:28px;opacity:.4;}
+  .empty p{margin:8px 0 0;font-size:13px;}
+
+  .lote{background:var(--surface);border:1px solid var(--line-soft);border-radius:16px;padding:15px 16px;margin-bottom:12px;}
+  .lote-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;}
+  .lote-id{font-family:var(--mono);font-size:19px;font-weight:600;}
+  .lote-meta{font-size:11.5px;color:var(--ink-faint);margin-top:2px;}
+  .lote-ready{font-size:11px;font-weight:700;background:var(--accent-soft);color:var(--accent-deep);padding:4px 9px;border-radius:999px;white-space:nowrap;}
+  .inv{margin-top:13px;}
+  .inv-num{display:flex;align-items:baseline;gap:6px;}
+  .inv-num .cur{font-family:var(--mono);font-size:30px;font-weight:600;line-height:1;}
+  .inv-num .tot{font-family:var(--mono);font-size:15px;color:var(--ink-faint);}
+  .inv-num .lab{font-family:var(--serif);font-size:12px;color:var(--ink-soft);margin-left:auto;}
+  .bar-track{height:8px;background:var(--surface-2);border-radius:99px;margin-top:8px;overflow:hidden;border:1px solid var(--line-soft);}
+  .bar-fill{height:100%;background:var(--green);border-radius:99px;transition:width .25s;}
+  .bar-fill.low{background:var(--accent);} .bar-fill.empty{background:var(--warn);}
+  .baixa{display:flex;align-items:center;gap:8px;margin-top:12px;}
+  .step-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);font-size:20px;font-weight:700;color:var(--ink);cursor:pointer;flex-shrink:0;line-height:1;}
+  .step-btn:active{opacity:.5;} .step-btn:disabled{opacity:.35;}
+  .baixa input{flex:1;min-width:0;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px;font-family:var(--mono);font-size:15px;text-align:center;color:var(--ink);}
+  .baixa input:focus{outline:none;border-color:var(--accent);}
+  .baixa-btn{padding:9px 14px;border-radius:10px;border:none;background:var(--ink);color:#fff;font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0;}
+  .baixa-btn:active{opacity:.6;} .baixa-btn:disabled{opacity:.35;}
+  .lote-toggle{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;}
+  .lote-toggle summary{list-style:none;cursor:pointer;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;display:flex;align-items:center;gap:6px;}
+  .lote-toggle summary::-webkit-details-marker{display:none;}
+  .lote-toggle summary .chev{transition:transform .2s;font-size:10px;}
+  .lote-toggle[open] summary .chev{transform:rotate(90deg);}
+  .kv{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--line-soft);gap:10px;}
+  .kv:last-of-type{border-bottom:none;} .kv .v{font-family:var(--mono);text-align:right;}
+  .det-block{margin-top:10px;}
+  .det-block h4{margin:6px 0 2px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);}
+  .hist{font-size:12px;color:var(--ink-soft);font-family:var(--mono);padding:3px 0;}
+  .del-btn{margin-top:12px;width:100%;padding:9px;border-radius:10px;border:1px solid var(--warn-soft);background:var(--warn-soft);color:var(--warn);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--sans);}
+  .del-btn:active{opacity:.6;}
+
+  .tabbar{position:fixed;left:0;right:0;bottom:0;height:calc(var(--tabh) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:rgba(251,252,249,.94);backdrop-filter:saturate(180%) blur(12px);border-top:1px solid var(--line);display:flex;z-index:50;}
+  .tab{flex:1;border:none;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--ink-faint);font-family:var(--sans);font-size:11px;font-weight:700;cursor:pointer;padding-top:8px;}
+  .tab svg{width:23px;height:23px;}
+  .tab.active{color:var(--accent);}
+  .tab .badge{position:absolute;transform:translate(13px,-12px);background:var(--accent);color:#fff;font-size:10px;font-family:var(--mono);min-width:17px;height:17px;border-radius:99px;padding:0 4px;display:flex;align-items:center;justify-content:center;}
+
+  .overlay{position:fixed;inset:0;background:rgba(20,28,24,.55);backdrop-filter:blur(3px);z-index:100;display:none;align-items:flex-end;justify-content:center;}
+  .overlay.open{display:flex;}
+  .sheet{background:var(--bg);width:100%;max-width:580px;border-radius:22px 22px 0 0;padding:8px 18px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;}
+  .sheet-grab{width:40px;height:4px;background:var(--line);border-radius:99px;margin:8px auto 14px;}
+  .sheet h2{font-family:var(--serif);font-size:21px;margin:0 0 2px;}
+  .sheet .sub2{color:var(--ink-soft);font-size:12.5px;margin-bottom:16px;}
+  .m-field{margin-bottom:14px;}
+  .m-field label{display:block;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:5px;}
+  .m-field input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:12px;font-family:var(--mono);font-size:17px;color:var(--ink);}
+  .m-field input:focus{outline:none;border-color:var(--accent);}
+  .m-summary{background:var(--surface);border:1px solid var(--line-soft);border-radius:13px;padding:12px 14px;margin-bottom:16px;}
+  .m-summary .kv{font-size:13px;}
+  .m-actions{display:flex;gap:10px;}
+  .m-actions button{flex:1;padding:14px;border-radius:13px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;}
+  .m-cancel{background:var(--surface);border:1px solid var(--line);color:var(--ink-soft);}
+  .m-confirm{background:var(--accent);border:none;color:#fff;}
+  .m-confirm:active,.m-cancel:active{opacity:.7;}
+
+  .toast{position:fixed;left:50%;transform:translateX(-50%) translateY(20px);bottom:calc(var(--tabh) + env(safe-area-inset-bottom) + 16px);background:var(--ink);color:#fff;padding:11px 18px;border-radius:999px;font-size:13px;font-weight:600;z-index:90;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;box-shadow:0 10px 30px -8px rgba(0,0,0,.4);}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  /* ===== Composto ===== */
+  .ing-row{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:12px 13px;margin-bottom:9px;}
+  .ing-head{display:flex;align-items:center;gap:8px;}
+  .ing-nome{flex:1;min-width:0;border:none;background:transparent;font-family:var(--serif);font-size:16px;font-weight:700;color:var(--ink);padding:2px 0;}
+  .ing-nome:focus{outline:none;}
+  .ing-del{width:28px;height:28px;border-radius:8px;border:none;background:var(--surface-2);color:var(--ink-faint);font-size:19px;cursor:pointer;flex-shrink:0;line-height:1;}
+  .ing-del:active{background:var(--warn-soft);color:var(--warn);}
+  .ing-controls{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px;}
+  .ing-field{display:flex;flex-direction:column;gap:3px;}
+  .ing-field label{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;}
+  .ing-field .in{display:flex;align-items:center;background:var(--surface-2);border:1px solid var(--line-soft);border-radius:9px;padding:0 9px;}
+  .ing-field input{background:transparent;border:none;font-family:var(--mono);font-size:15px;color:var(--ink);width:100%;padding:8px 0;text-align:right;}
+  .ing-field input:focus{outline:none;}
+  .ing-field .in:focus-within{border-color:var(--accent);background:var(--surface);}
+  .ing-field .sfx{font-size:12px;color:var(--ink-faint);font-family:var(--serif);}
+  .ing-out{display:flex;justify-content:space-between;margin-top:10px;padding-top:9px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--ink-soft);}
+  .ing-out b{font-family:var(--mono);color:var(--ink);font-weight:600;}
+  .total-bar{background:var(--surface);border:1px solid var(--line-soft);border-radius:13px;padding:12px 14px;margin:2px 0 12px;}
+  .total-bar .row{display:flex;justify-content:space-between;align-items:baseline;}
+  .total-bar .lab{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;}
+  .total-bar .val{font-family:var(--mono);font-size:21px;font-weight:600;}
+  .total-bar.ok .val{color:var(--green);}
+  .total-bar.off .val{color:var(--warn);}
+  .total-track{height:7px;background:var(--surface-2);border-radius:99px;margin-top:9px;overflow:hidden;border:1px solid var(--line-soft);}
+  .total-fill{height:100%;background:var(--green);border-radius:99px;transition:width .2s;}
+  .total-fill.off{background:var(--warn);}
+  .total-msg{font-size:11.5px;margin-top:8px;color:var(--ink-soft);display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .norm-btn{border:1px solid var(--accent);color:var(--accent);background:transparent;font-size:11px;font-weight:700;padding:5px 11px;border-radius:99px;cursor:pointer;white-space:nowrap;}
+  .norm-btn:active{opacity:.6;} .norm-btn[disabled]{opacity:.3;}
+  .add-ing{width:100%;padding:13px;border:1.5px dashed var(--line);border-radius:13px;background:var(--surface-2);color:var(--accent);font-weight:700;font-size:14px;cursor:pointer;margin-bottom:12px;}
+  .add-ing:active{opacity:.6;}
+  .add-panel{background:var(--surface);border:1px solid #E6CFA8;border-radius:14px;padding:13px;margin-bottom:12px;}
+  .add-panel h4{margin:0 0 10px;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-deep);}
+  .add-panel .fr{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .add-panel .fr .wide{grid-column:1/-1;}
+  .add-actions{display:flex;gap:9px;margin-top:11px;}
+  .add-actions button{flex:1;padding:11px;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;font-family:var(--sans);}
+  .a-cancel{background:var(--surface-2);border:1px solid var(--line);color:var(--ink-soft);}
+  .a-add{background:var(--accent);border:none;color:#fff;}
+  .agua{background:var(--ink);color:var(--surface);border-radius:14px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
+  .agua .lab{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:#A9BBAF;font-weight:700;}
+  .agua .lab small{display:block;text-transform:none;letter-spacing:0;font-size:11px;font-weight:400;margin-top:2px;color:#90A398;}
+  .agua .v{font-family:var(--mono);font-size:24px;font-weight:600;text-align:right;}
+  .agua.warn{background:var(--warn);}
+  .agua.warn .lab,.agua.warn .lab small{color:#F4DED7;}
+  .sec-sub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:26px 2px 12px;}
+  .dose{margin-top:9px;font-size:12px;color:var(--ink-soft);display:flex;align-items:center;gap:7px;}
+  .dose::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+  .dose b{font-family:var(--mono);color:var(--ink);font-weight:600;}
+  .ready-row{background:var(--surface);border:1px solid var(--line-soft);border-radius:14px;padding:13px 15px;margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .ready-lab{font-size:13px;font-weight:700;color:var(--ink);}
+  .ready-lab small{display:block;font-weight:400;color:var(--ink-faint);font-size:11px;margin-top:1px;}
+  .ready-ctl{display:flex;align-items:center;gap:8px;}
+  .ready-field{display:flex;align-items:center;gap:5px;background:var(--surface-2);border:1px solid var(--line-soft);border-radius:9px;padding:0 9px;}
+  .ready-field input{width:38px;background:transparent;border:none;font-family:var(--mono);font-size:15px;color:var(--ink);padding:8px 0;text-align:right;}
+  .ready-field input:focus{outline:none;}
+  .ready-field span{font-size:12px;color:var(--ink-faint);font-family:var(--serif);}
+  .ready-arrow{color:var(--ink-faint);}
+  .ready-date{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--accent-deep);white-space:nowrap;}
+  .cal-btn{margin-top:12px;width:100%;padding:11px;border-radius:11px;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent-deep);font-size:13px;font-weight:700;cursor:pointer;font-family:var(--sans);display:flex;align-items:center;justify-content:center;gap:8px;}
+  .cal-btn:active{opacity:.6;}
+  .cal-btn svg{width:16px;height:16px;}
+  .undo-baixa{margin-left:8px;border:none;background:none;color:var(--accent);font-size:11px;font-weight:700;cursor:pointer;font-family:var(--sans);text-decoration:underline;padding:0;}
+  .undo-baixa:active{opacity:.5;}
+  .hist-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:3px 0;}
+
+</style>
+</head>
+<body>
+
+<!-- ===== CALCULAR ===== -->
+<div class="page active" id="page-calc"><div class="wrap">
+  <header><div class="eyebrow">Pleurotus · Cultura Líquida</div><h1>Inoculações</h1>
+    <p class="sub">Defina a meta semanal de substrato e calcule a cascata completa de multiplicação e o cronograma de produção.</p></header>
+  <div class="driver"><label for="substratoSemanal">Quantidade semanal de substrato</label>
+    <div class="driver-row"><input id="substratoSemanal" type="text" inputmode="decimal" value="800"><span class="unit">kg / semana</span></div>
+    <div class="driver-meta"><span>Base mensal de cálculo</span><div class="mini-field"><input id="semanasMes" type="text" inputmode="decimal" value="4,3333"><span>sem./mês</span></div></div></div>
+  <div class="readout">
+    <div class="stat"><div class="k">Spawn a produzir</div><div class="v" id="r-spawn">–</div></div>
+    <div class="stat"><div class="k">Potes de CL F2</div><div class="v" id="r-potesf2">–</div></div>
+    <div class="stat"><div class="k">Seringas comerciais</div><div class="v" id="r-seringas">–</div></div>
+    <div class="stat accent"><div class="k">Custo mensal</div><div class="v" id="r-custo">–</div></div></div>
+  <div class="section-title">Cascata de multiplicação</div>
+  <div class="stage"><div class="stage-top"><div><div class="stage-name">Substrato</div><div class="stage-tag">Frutificação · meta</div></div>
+    <div class="stage-out"><div class="big" id="o-sub-mes">–</div><div class="sec" id="o-sub-sem">–</div></div></div>
+    <details class="toggle"><summary><span class="chev">▶</span> Ajustar parâmetros</summary><div class="fields">
+      <div class="field"><label>Inoculação (spawn)</label><div class="in"><input id="txSubstrato" type="text" inputmode="decimal" value="5"><span class="suffix">%</span></div></div>
+      <div class="field"><label>Margem de segurança</label><div class="in"><input id="margem" type="text" inputmode="decimal" value="25"><span class="suffix">%</span></div></div></div></details></div>
+  <div class="link"><div class="bar"></div><div class="pill">inocula spawn a <b id="l-sub">5%</b> · margem <b id="l-mar">25%</b></div><div class="bar"></div></div>
+  <div class="stage"><div class="stage-top"><div><div class="stage-name">Spawn de sorgo</div><div class="stage-tag">Grão colonizado</div></div>
+    <div class="stage-out"><div class="big" id="o-spawn-mes">–</div><div class="sec" id="o-spawn-sacos">–</div></div></div>
+    <div class="dose" id="dose-spawn"></div>
+    <details class="toggle"><summary><span class="chev">▶</span> Ajustar parâmetros</summary><div class="fields">
+      <div class="field"><label>Volume por saco</label><div class="in"><input id="volumeSaco" type="text" inputmode="decimal" value="2"><span class="suffix">kg</span></div></div>
+      <div class="field"><label>Inoculação (CL F2)</label><div class="in"><input id="txSpawn" type="text" inputmode="decimal" value="2"><span class="suffix">%</span></div></div></div></details></div>
+  <div class="link"><div class="bar"></div><div class="pill">inocula CL F2 a <b id="l-spawn">2%</b></div><div class="bar"></div></div>
+  <div class="stage"><div class="stage-top"><div><div class="stage-name">CL F2</div><div class="stage-tag">2ª geração · potes</div></div>
+    <div class="stage-out"><div class="big" id="o-f2-nec">–</div><div class="sec" id="o-f2-potes">–</div></div></div>
+    <div class="dose" id="dose-f2"></div>
+    <div class="note" id="note-f2"></div>
+    <details class="toggle"><summary><span class="chev">▶</span> Ajustar parâmetros</summary><div class="fields">
+      <div class="field"><label>Volume por pote</label><div class="in"><input id="mlPoteF2" type="text" inputmode="decimal" value="400"><span class="suffix">ml</span></div></div>
+      <div class="field"><label>Inoculação (F1)</label><div class="in"><input id="txF2" type="text" inputmode="decimal" value="14"><span class="suffix">%</span></div></div></div></details></div>
+  <div class="link"><div class="bar"></div><div class="pill">inocula CL F1 a <b id="l-f2">14%</b></div><div class="bar"></div></div>
+  <div class="stage"><div class="stage-top"><div><div class="stage-name">CL F1 Master</div><div class="stage-tag">1ª geração · potes</div></div>
+    <div class="stage-out"><div class="big" id="o-f1-nec">–</div><div class="sec" id="o-f1-potes">–</div></div></div>
+    <div class="dose" id="dose-f1"></div>
+    <div class="note" id="note-f1"></div>
+    <details class="toggle"><summary><span class="chev">▶</span> Ajustar parâmetros</summary><div class="fields">
+      <div class="field"><label>Volume por pote</label><div class="in"><input id="mlPoteF1" type="text" inputmode="decimal" value="50"><span class="suffix">ml</span></div></div>
+      <div class="field"><label>Inoculação (comercial)</label><div class="in"><input id="txF1" type="text" inputmode="decimal" value="4"><span class="suffix">%</span></div></div></div></details></div>
+  <div class="link"><div class="bar"></div><div class="pill">inocula CL comercial a <b id="l-f1">4%</b></div><div class="bar"></div></div>
+  <div class="stage"><div class="stage-top"><div><div class="stage-name">CL Comercial</div><div class="stage-tag">Seringas · compra</div></div>
+    <div class="stage-out"><div class="big" id="o-com-nec">–</div><div class="sec" id="o-com-ser">–</div></div></div>
+    <div class="note" id="note-com" style="background:var(--accent-soft);color:var(--accent-deep)"></div>
+    <details class="toggle"><summary><span class="chev">▶</span> Ajustar parâmetros</summary><div class="fields">
+      <div class="field"><label>Volume por seringa</label><div class="in"><input id="volSeringa" type="text" inputmode="decimal" value="10"><span class="suffix">ml</span></div></div>
+      <div class="field"><label>Custo por seringa</label><div class="in"><span class="suffix">R$</span><input id="custoSeringa" type="text" inputmode="decimal" value="28,90" style="text-align:left;padding-left:6px"></div></div></div></details></div>
+  <div class="section-title" style="margin-top:24px">Cronograma de produção</div>
+  <div class="timeline">
+    <div class="tl-row"><div class="tl-dot"></div><div class="tl-label">Comprar CL comercial</div><div class="tl-date" id="t-compra">–</div></div>
+    <div class="tl-row"><div class="tl-dot"></div><div class="tl-label">Início produção F1 Master</div><div class="tl-date" id="t-f1ini">–</div></div>
+    <div class="tl-row"><div class="tl-dot"></div><div class="tl-label">F1 Master pronta<small id="t-f1inc">incubação 7 dias</small></div><div class="tl-date" id="t-f1pr">–</div></div>
+    <div class="tl-row"><div class="tl-dot"></div><div class="tl-label">Início produção F2</div><div class="tl-date" id="t-f2ini">–</div></div>
+    <div class="tl-row key"><div class="tl-dot"></div><div class="tl-label">CL F2 pronta para uso<small id="t-f2inc">incubação 7 dias</small></div><div class="tl-date" id="t-f2pr">–</div></div>
+    <details class="toggle" style="border-top:1px dashed var(--line);margin-top:6px"><summary><span class="chev">▶</span> Ajustar datas e incubação</summary><div class="fields">
+      <div class="field wide"><label>Data desejada (CL F2 pronta)</label><div class="in"><input id="dataAlvo" type="date"></div></div>
+      <div class="field"><label>Entrega da loja (dias)</label><div class="in"><input id="diasEntrega" type="text" inputmode="numeric" value="15"></div></div>
+      <div class="field"><label>Incubação F1 (dias)</label><div class="in"><input id="incubF1" type="text" inputmode="numeric" value="7"></div></div>
+      <div class="field"><label>Incubação F2 (dias)</label><div class="in"><input id="incubF2" type="text" inputmode="numeric" value="7"></div></div></div></details></div>
+  <button class="fab" id="fabricarBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v5L5 18a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V3"/><path d="M7.5 14h9"/></svg> Fabricar lote</button>
+  <button class="btn" id="resetBtn">Restaurar parâmetros padrão</button>
+  <div class="tip"><b>Instalar no iPhone:</b> toque em <b>Compartilhar</b> (⬆️) no Safari e escolha <b>Adicionar à Tela de Início</b>. Abre em tela cheia e funciona sem internet; os lotes ficam salvos no aparelho.</div>
+  <div class="foot">Quantidades arredondadas sempre para cima. O custo usa o nº de seringas arredondado.</div>
+</div></div>
+
+<!-- ===== COMPOSTO ===== -->
+<div class="page" id="page-composto"><div class="wrap">
+  <header><div class="eyebrow">Compostagem · Substrato</div><h1>Composto</h1>
+    <p class="sub">Monte a mistura de materiais que vira substrato. As fatias de matéria seca somam 100% e a água fecha a umidade final.</p></header>
+  <div class="driver"><label for="c-pesoUmido">Peso úmido do lote</label>
+    <div class="driver-row"><input id="c-pesoUmido" type="text" inputmode="decimal" value="1000"><span class="unit">kg</span></div>
+    <div class="driver-meta"><span>Umidade final desejada</span><div class="mini-field"><input id="c-umidade" type="text" inputmode="decimal" value="68"><span>%</span></div></div></div>
+  <div class="readout">
+    <div class="stat"><div class="k">Matéria seca (MS)</div><div class="v" id="c-ms">–</div></div>
+    <div class="stat"><div class="k">Úmido ingredientes</div><div class="v" id="c-umido">–</div></div>
+    <div class="stat"><div class="k">Ingredientes</div><div class="v" id="c-count">–</div></div>
+    <div class="stat accent"><div class="k">Água a adicionar</div><div class="v" id="c-agua-top">–</div></div></div>
+  <div class="section-title">Ingredientes da mistura</div>
+  <div id="ing-list"></div>
+  <div class="total-bar" id="total-bar">
+    <div class="row"><span class="lab">Total da composição (MS)</span><span class="val" id="total-pct">100%</span></div>
+    <div class="total-track"><div class="total-fill" id="total-fill" style="width:100%"></div></div>
+    <div class="total-msg"><span id="total-msg">A soma deve fechar 100%.</span><button class="norm-btn" id="norm-btn">Normalizar 100%</button></div></div>
+  <button class="add-ing" id="add-ing-btn">+ Adicionar ingrediente</button>
+  <div class="add-panel" id="add-panel" style="display:none">
+    <h4>Novo ingrediente</h4>
+    <div class="fr">
+      <div class="ing-field wide"><label>Nome</label><div class="in"><input id="ai-nome" type="text" style="text-align:left" placeholder="ex.: palha de trigo"></div></div>
+      <div class="ing-field"><label>%MS na mistura</label><div class="in"><input id="ai-pct" type="text" inputmode="decimal" placeholder="0"><span class="sfx">%</span></div></div>
+      <div class="ing-field"><label>Umidade do ingrediente</label><div class="in"><input id="ai-umid" type="text" inputmode="decimal" placeholder="0"><span class="sfx">%</span></div></div></div>
+    <p style="font-size:11.5px;color:var(--ink-soft);margin:10px 0 0">Ao adicionar, os ingredientes atuais são reduzidos proporcionalmente para o total não passar de 100%.</p>
+    <div class="add-actions"><button class="a-cancel" id="ai-cancel">Cancelar</button><button class="a-add" id="ai-add">Adicionar</button></div></div>
+  <div class="agua" id="agua-box"><div class="lab">Água a adicionar<small id="agua-sub">para atingir a umidade final</small></div><div class="v" id="c-agua">–</div></div>
+  <div class="ready-row">
+    <div class="ready-lab">Pronto para uso<small>após a compostagem</small></div>
+    <div class="ready-ctl"><div class="ready-field"><input id="c-dias" type="text" inputmode="numeric" value="14"><span>dias</span></div><span class="ready-arrow">→</span><span class="ready-date" id="c-ready">–</span></div>
+  </div>
+  <button class="fab" id="fabricarMixBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14M7 4c0 5-3 6-3 11a5 5 0 0 0 5 5h6a5 5 0 0 0 5-5c0-5-3-6-3-11"/><path d="M5.5 13h13"/></svg> Fabricar mistura</button>
+  <button class="btn" id="resetCompBtn">Restaurar mistura padrão</button>
+  <div class="foot">Pesos em quilos, com 1 casa decimal para manter o balanço de umidade exato.</div>
+</div></div>
+
+
+<!-- ===== LOTES ===== -->
+<div class="page" id="page-lotes"><div class="wrap">
+  <header><div class="eyebrow">Produção · Estoque</div><h1>Lotes</h1>
+    <p class="sub">Registro das fabricações e controle de estoque.</p></header>
+  <div class="sec-sub">Cultura líquida · CL F2</div>
+  <div class="stock-head"><div><div class="k">Potes F2 em estoque</div><div class="big" id="stock-total">0<small>potes</small></div></div>
+    <div class="right">Lotes ativos<b id="stock-count">0</b></div></div>
+  <div id="lotes-list"></div>
+  <div class="sec-sub">Compostagem · substrato</div>
+  <div class="stock-head"><div><div class="k">Substrato em estoque</div><div class="big" id="comp-stock-total">0<small>kg</small></div></div>
+    <div class="right">Lotes ativos<b id="comp-stock-count">0</b></div></div>
+  <div id="composto-list"></div>
+</div></div>
+
+<!-- TAB BAR -->
+<div class="tabbar">
+  <button class="tab active" data-page="page-calc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v4L6 17a2 2 0 0 0 2 3h8a2 2 0 0 0 2-3L14 7V3"/></svg>Inoculações</button>
+  <button class="tab" data-page="page-composto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 12V3a9 9 0 0 1 7.8 4.5z" fill="currentColor" stroke="none"/><path d="M12 12l-6.5 6.4" /></svg>Composto</button>
+  <button class="tab" data-page="page-lotes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="7" height="13" rx="1.5"/><rect x="14" y="8" width="7" height="13" rx="1.5"/><path d="M4 8l2-4h4l1 4M14 8l1-4h4l2 4"/></svg><span style="position:relative">Lotes<span class="badge" id="tab-badge" style="display:none">0</span></span></button>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay"><div class="sheet"><div class="sheet-grab"></div>
+  <h2 id="m-title">Fabricar lote</h2><p class="sub2" id="m-sub">Registra um snapshot deste cálculo no estoque.</p>
+  <div class="m-field"><label id="m-lote-label">Número do lote</label><input id="m-lote" type="text"></div>
+  <div class="m-field"><label>Data de fabricação</label><input id="m-data" type="date"></div>
+  <div class="m-summary" id="m-summary"></div>
+  <div class="m-field"><label>Observações (opcional)</label><input id="m-obs" type="text" placeholder="ex.: cepa, responsável…"></div>
+  <div class="m-actions"><button class="m-cancel" id="m-cancel">Cancelar</button><button class="m-confirm" id="m-confirm">Registrar</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var mem={};
+  var store={
+    get:function(k){try{var v=localStorage.getItem(k);return v===null?(k in mem?mem[k]:null):v;}catch(e){return (k in mem)?mem[k]:null;}},
+    set:function(k,v){try{localStorage.setItem(k,v);}catch(e){mem[k]=v;}}
+  };
+  function $(id){return document.getElementById(id);}
+  function num(s){if(typeof s!=="string")s=String(s==null?"":s);s=s.trim();if(s==="")return 0;
+    if(s.indexOf(",")>-1)s=s.replace(/\./g,"").replace(",",".");var n=parseFloat(s);return isNaN(n)?0:n;}
+  function fmt(n,d){if(d===undefined)d=0;if(!isFinite(n))n=0;return n.toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});}
+  function fmt1(n){if(!isFinite(n))n=0;return n.toLocaleString("pt-BR",{maximumFractionDigits:1});}
+  function fmtP(n){if(!isFinite(n))n=0;return n.toLocaleString("pt-BR",{maximumFractionDigits:2});}
+  function ceilUp(n){if(!isFinite(n))return 0;if(Math.abs(n-Math.round(n))<1e-9)return Math.round(n);return Math.ceil(n);}
+  function pct(n){return fmtP(n)+"%";}
+  function brl(n){return "R$ "+fmt(n,2);}
+  function todayISO(){var t=new Date();return new Date(t.getTime()-t.getTimezoneOffset()*60000).toISOString().slice(0,10);}
+  function addDays(iso,days){var a=iso.split("-").map(Number);var dt=new Date(Date.UTC(a[0],a[1]-1,a[2]));dt.setUTCDate(dt.getUTCDate()+days);return dt.toISOString().slice(0,10);}
+  function fmtDate(iso){if(!iso)return "–";var a=iso.split("-");return a[2]+"/"+a[1]+"/"+a[0];}
+  function fmtShort(iso){if(!iso)return "";var a=iso.split("-");return a[2]+"/"+a[1];}
+  function set(id,h){var n=$(id);if(n)n.innerHTML=h;}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function kv(k,v){return '<div class="kv"><span>'+k+'</span><span class="v">'+v+'</span></div>';}
+
+  /* =================== ABA CALCULAR (CL / spawn) =================== */
+  var pIds=["substratoSemanal","semanasMes","txSubstrato","margem","volumeSaco","txSpawn","mlPoteF2","txF2","mlPoteF1","txF1","volSeringa","custoSeringa","dataAlvo","diasEntrega","incubF1","incubF2"];
+  var pDef={substratoSemanal:"800",semanasMes:"4,3333",txSubstrato:"5",margem:"25",volumeSaco:"2",txSpawn:"2",mlPoteF2:"400",txF2:"14",mlPoteF1:"50",txF1:"4",volSeringa:"10",custoSeringa:"28,90",dataAlvo:"",diasEntrega:"15",incubF1:"7",incubF2:"7"};
+  var el={}; pIds.forEach(function(id){el[id]=$(id);});
+
+  function loadP(){pIds.forEach(function(id){var s=store.get("inoc2_"+id);
+    if(s!=null&&s!=="")el[id].value=s;else if(id==="dataAlvo")el[id].value=addDays(todayISO(),21);else el[id].value=pDef[id];});
+    if(!el.dataAlvo.value)el.dataAlvo.value=addDays(todayISO(),21);}
+  function saveP(){pIds.forEach(function(id){store.set("inoc2_"+id,el[id].value);});}
+  function readP(){return{substratoSem:num(el.substratoSemanal.value),semanasMes:num(el.semanasMes.value),txSubstrato:num(el.txSubstrato.value),margem:num(el.margem.value),volumeSaco:num(el.volumeSaco.value),txSpawn:num(el.txSpawn.value),mlPoteF2:num(el.mlPoteF2.value),txF2:num(el.txF2.value),mlPoteF1:num(el.mlPoteF1.value),txF1:num(el.txF1.value),volSeringa:num(el.volSeringa.value),custoSeringa:num(el.custoSeringa.value),dataAlvo:el.dataAlvo.value||todayISO(),diasEntrega:num(el.diasEntrega.value),incubF1:num(el.incubF1.value),incubF2:num(el.incubF2.value)};}
+  function computeP(){var p=readP(),sem=p.semanasMes;
+    var substratoMes=p.substratoSem*sem,spawnNec=substratoMes*p.txSubstrato/100,spawnProd=(p.margem>=100)?0:spawnNec/(1-p.margem/100),spawnSem=sem>0?spawnProd/sem:0,sacos=p.volumeSaco>0?spawnSem/p.volumeSaco:0,clF2Sem=spawnSem*p.txSpawn/100*1000,clF2Mes=clF2Sem*sem,potesF2=p.mlPoteF2>0?clF2Mes/p.mlPoteF2:0,clF1Nec=clF2Mes*p.txF2/100,potesF1=p.mlPoteF1>0?clF1Nec/p.mlPoteF1:0,clComNec=clF1Nec*p.txF1/100,seringas=p.volSeringa>0?clComNec/p.volSeringa:0;
+    var R={substratoMes:ceilUp(substratoMes),spawnProd:ceilUp(spawnProd),spawnSem:ceilUp(spawnSem),sacos:ceilUp(sacos),clF2Mes:ceilUp(clF2Mes),potesF2:ceilUp(potesF2),clF1Nec:ceilUp(clF1Nec),potesF1:ceilUp(potesF1),clComNec:ceilUp(clComNec),seringas:ceilUp(seringas)};
+    R.custo=R.seringas*p.custoSeringa;
+    var f2pr=p.dataAlvo,f2ini=addDays(p.dataAlvo,-p.incubF2),f1pr=f2ini,f1ini=addDays(f1pr,-p.incubF1),compra=addDays(f1ini,-p.diasEntrega);
+    return{p:p,R:R,T:{f2pr:f2pr,f2ini:f2ini,f1pr:f1pr,f1ini:f1ini,compra:compra}};}
+  function renderP(){var c=computeP(),R=c.R,p=c.p,T=c.T;
+    set("r-spawn",fmt(R.spawnProd)+'<small>kg/mês</small>');set("r-potesf2",fmt(R.potesF2)+'<small>potes</small>');set("r-seringas",fmt(R.seringas)+'<small>/mês</small>');set("r-custo",brl(R.custo));
+    set("o-sub-mes",fmt(R.substratoMes)+'<small> kg/mês</small>');set("o-sub-sem",fmt(p.substratoSem)+' kg/sem');
+    set("o-spawn-mes",fmt(R.spawnProd)+'<small> kg/mês</small>');set("o-spawn-sacos",fmt(R.sacos)+' sacos/sem · '+fmt(R.spawnSem)+' kg/sem');
+    set("o-f2-nec",fmt(R.clF2Mes)+'<small> ml/mês</small>');set("o-f2-potes",fmt(R.potesF2)+' potes de '+fmt(p.mlPoteF2)+' ml');
+    var pf2=R.potesF2*p.mlPoteF2;set("note-f2",'Encha <b>'+fmt(R.potesF2)+'</b> potes = <b>'+fmt(pf2)+' ml</b> (folga de '+fmt(pf2-R.clF2Mes)+' ml)');
+    set("o-f1-nec",fmt(R.clF1Nec)+'<small> ml</small>');set("o-f1-potes",fmt(R.potesF1)+' potes de '+fmt(p.mlPoteF1)+' ml');
+    var pf1=R.potesF1*p.mlPoteF1;set("note-f1",'Encha <b>'+fmt(R.potesF1)+'</b> potes = <b>'+fmt(pf1)+' ml</b> (folga de '+fmt(pf1-R.clF1Nec)+' ml)');
+    set("o-com-nec",fmt(R.clComNec)+'<small> ml</small>');set("o-com-ser",fmt(R.seringas)+' seringas de '+fmt(p.volSeringa)+' ml');
+    set("note-com",'Compre <b>'+fmt(R.seringas)+'</b> seringas · custo <b>'+brl(R.custo)+'</b>');
+    set("l-sub",pct(p.txSubstrato));set("l-mar",pct(p.margem));set("l-spawn",pct(p.txSpawn));set("l-f2",pct(p.txF2));set("l-f1",pct(p.txF1));
+    set("dose-spawn",'Cada saco recebe <b>'+fmt(ceilUp(p.volumeSaco*p.txSpawn/100*1000))+' ml</b> de CL F2 · '+pct(p.txSpawn));
+    set("dose-f2",'Cada pote recebe <b>'+fmt(ceilUp(p.mlPoteF2*p.txF2/100))+' ml</b> de CL F1 Master · '+pct(p.txF2));
+    set("dose-f1",'Cada pote recebe <b>'+fmt(ceilUp(p.mlPoteF1*p.txF1/100))+' ml</b> de CL comercial · '+pct(p.txF1));
+    set("t-compra",fmtDate(T.compra));set("t-f1ini",fmtDate(T.f1ini));set("t-f1pr",fmtDate(T.f1pr));set("t-f2ini",fmtDate(T.f2ini));set("t-f2pr",fmtDate(T.f2pr));
+    set("t-f1inc","incubação "+fmt(p.incubF1)+" dias");set("t-f2inc","incubação "+fmt(p.incubF2)+" dias");}
+
+  /* =================== ABA COMPOSTO =================== */
+  var compDef={pesoUmido:"1000",umidadeFinal:"68",dias:"14",ingredientes:[
+    {nome:"caroço de açaí",pctMS:50,umid:40},{nome:"Serragem",pctMS:35,umid:62},
+    {nome:"Farelo de arroz",pctMS:12,umid:12},{nome:"Gesso",pctMS:1.5,umid:1},{nome:"Calcário",pctMS:1.5,umid:1}]};
+
+  function rowHTML(ig){return ''
+    +'<div class="ing-row">'
+      +'<div class="ing-head"><input class="ing-nome" type="text" value="'+esc(ig.nome)+'"><button class="ing-del" title="remover">×</button></div>'
+      +'<div class="ing-controls">'
+        +'<div class="ing-field"><label>%MS na mistura</label><div class="in"><input class="ing-pct" type="text" inputmode="decimal" value="'+fmtP(ig.pctMS)+'"><span class="sfx">%</span></div></div>'
+        +'<div class="ing-field"><label>Umidade</label><div class="in"><input class="ing-umid" type="text" inputmode="decimal" value="'+fmtP(ig.umid)+'"><span class="sfx">%</span></div></div>'
+      +'</div>'
+      +'<div class="ing-out"><span>MS: <b class="ing-kgms">–</b></span><span>Pesar: <b class="ing-peso">–</b></span></div>'
+    +'</div>';}
+  function renderRows(arr){$("ing-list").innerHTML=arr.map(rowHTML).join("");updateComp();}
+  function readComp(){
+    var ings=[];
+    Array.prototype.forEach.call(document.querySelectorAll("#ing-list .ing-row"),function(row){
+      ings.push({nome:row.querySelector(".ing-nome").value,pctMS:num(row.querySelector(".ing-pct").value),umid:num(row.querySelector(".ing-umid").value)});});
+    return{pesoUmido:num($("c-pesoUmido").value),umidadeFinal:num($("c-umidade").value),dias:num($("c-dias").value),ingredientes:ings};}
+  function computeComp(s){
+    var pesoMS=s.pesoUmido*(1-s.umidadeFinal/100),totalPct=0,totalKgMS=0,totalUmido=0;
+    var per=s.ingredientes.map(function(ig){var kgMS=pesoMS*ig.pctMS/100;var pu=(ig.umid<100)?kgMS/(1-ig.umid/100):0;totalPct+=ig.pctMS;totalKgMS+=kgMS;totalUmido+=pu;return{nome:ig.nome,pctMS:ig.pctMS,umid:ig.umid,kgMS:kgMS,pesoUmido:pu};});
+    return{pesoMS:pesoMS,totalPct:totalPct,totalKgMS:totalKgMS,totalUmido:totalUmido,agua:s.pesoUmido-totalUmido,per:per};}
+  function updateComp(){
+    var s=readComp(),c=computeComp(s);
+    var rows=document.querySelectorAll("#ing-list .ing-row");
+    c.per.forEach(function(o,i){var r=rows[i];if(!r)return;r.querySelector(".ing-kgms").textContent=fmt1(o.kgMS)+" kg";r.querySelector(".ing-peso").textContent=fmt1(o.pesoUmido)+" kg";});
+    set("c-ms",fmt1(c.pesoMS)+'<small> kg</small>');set("c-umido",fmt1(c.totalUmido)+'<small> kg</small>');set("c-count",fmt(s.ingredientes.length));
+    set("c-agua-top",fmt1(Math.max(0,c.agua))+'<small> kg</small>');
+    // total bar
+    var tp=Math.abs(c.totalPct-Math.round(c.totalPct))<1e-6?Math.round(c.totalPct):c.totalPct;
+    var ok=Math.abs(tp-100)<0.05;
+    var tb=$("total-bar");tb.className="total-bar "+(ok?"ok":"off");
+    set("total-pct",(ok?"100":fmtP(tp))+"%");
+    var fill=$("total-fill");fill.style.width=Math.min(100,tp)+"%";fill.className="total-fill"+(ok?"":" off");
+    if(ok)set("total-msg","Composição completa.");
+    else if(tp<100)set("total-msg","Faltam "+fmtP(100-tp)+"% para fechar 100%.");
+    else set("total-msg","Excede 100% em "+fmtP(tp-100)+"%.");
+    $("norm-btn").disabled=ok;
+    // agua box
+    var ab=$("agua-box");
+    if(c.agua>=0){ab.className="agua";set("agua-sub","para atingir a umidade final");set("c-agua",fmt1(c.agua)+' kg');}
+    else{ab.className="agua warn";set("agua-sub","ingredientes já têm mais água que o alvo — reduza umidades ou aumente o lote");set("c-agua",fmt1(c.agua)+' kg');}
+    var dias=num($("c-dias").value);set("c-ready",fmtDate(addDays(todayISO(),dias)));
+  }
+  function loadComp(){
+    var raw=store.get("inoc2_composto");var s;
+    try{s=raw?JSON.parse(raw):null;}catch(e){s=null;}
+    if(!s){s=JSON.parse(JSON.stringify(compDef));}
+    $("c-pesoUmido").value=s.pesoUmido!=null?s.pesoUmido:"1000";
+    $("c-umidade").value=s.umidadeFinal!=null?s.umidadeFinal:"68";
+    $("c-dias").value=s.dias!=null?s.dias:"14";
+    renderRows(s.ingredientes||compDef.ingredientes);}
+  function saveComp(){var s=readComp();store.set("inoc2_composto",JSON.stringify({pesoUmido:$("c-pesoUmido").value,umidadeFinal:$("c-umidade").value,dias:$("c-dias").value,ingredientes:s.ingredientes}));}
+
+  // add ingredient with proportional shrink
+  function addIngredient(nome,newPct,umid){
+    var s=readComp();var sumOthers=s.ingredientes.reduce(function(a,b){return a+b.pctMS;},0);
+    newPct=Math.max(0,Math.min(100,newPct));
+    if(sumOthers+newPct>100 && sumOthers>0){var target=100-newPct;var f=target/sumOthers;s.ingredientes.forEach(function(o){o.pctMS=o.pctMS*f;});}
+    s.ingredientes.push({nome:nome||"novo ingrediente",pctMS:newPct,umid:umid});
+    renderRows(s.ingredientes);saveComp();}
+  function normalizeComp(){var s=readComp();var sum=s.ingredientes.reduce(function(a,b){return a+b.pctMS;},0);
+    if(sum>0){s.ingredientes.forEach(function(o){o.pctMS=o.pctMS*100/sum;});renderRows(s.ingredientes);saveComp();}}
+
+  /* =================== LOTES (CL F2 + COMPOSTO) =================== */
+  var batches=[],compBatches=[];
+  function loadBatches(){try{var s=store.get("inoc2_batches");batches=s?JSON.parse(s):[];}catch(e){batches=[];}if(!Array.isArray(batches))batches=[];
+    try{var c=store.get("inoc2_comp_batches");compBatches=c?JSON.parse(c):[];}catch(e){compBatches=[];}if(!Array.isArray(compBatches))compBatches=[];}
+  function saveBatches(){store.set("inoc2_batches",JSON.stringify(batches));}
+  function saveCompBatches(){store.set("inoc2_comp_batches",JSON.stringify(compBatches));}
+
+  function renderLotes(){
+    // CL F2 stock
+    var totCL=batches.reduce(function(s,b){return s+(b.potesF2Rest||0);},0);
+    set("stock-total",fmt(totCL)+'<small>potes</small>');$("stock-count").textContent=batches.length;
+    var list=$("lotes-list");
+    if(!batches.length)list.innerHTML='<div class="empty"><div class="ico">⬡</div><p>Nenhum lote de cultura. Calcule em <b>Inoculações</b> e toque em <b>Fabricar lote</b>.</p></div>';
+    else{var sorted=batches.slice().sort(function(a,b){return(a.createdAt<b.createdAt)?1:-1;});
+      list.innerHTML=sorted.map(function(b){var rest=b.potesF2Rest||0,tot=b.potesF2||0,pv=tot>0?Math.round(rest/tot*100):0,cls=rest<=0?"empty":(pv<=34?"low":"");
+        var hist=(b.baixas&&b.baixas.length)?b.baixas.map(function(x,xi){return '<div class="hist-row"><span class="hist">'+fmtDate(x.date)+' — baixa de '+x.qty+' pote(s)</span><button class="undo-baixa" data-act="undo" data-bidx="'+xi+'">desfazer</button></div>';}).join(""):'<div class="hist" style="color:var(--ink-faint)">sem baixas</div>';
+        return '<div class="lote" data-id="'+esc(b.id)+'" data-kind="cl">'
+          +'<div class="lote-top"><div><div class="lote-id">'+esc(b.id)+'</div><div class="lote-meta">fab. '+fmtDate(b.createdAt)+(b.obs?' · '+esc(b.obs):'')+'</div></div><div class="lote-ready">F2 '+fmtShort(b.f2pr)+'</div></div>'
+          +'<div class="inv"><div class="inv-num"><span class="cur">'+fmt(rest)+'</span><span class="tot">/ '+fmt(tot)+'</span><span class="lab">potes de CL F2</span></div><div class="bar-track"><div class="bar-fill '+cls+'" style="width:'+pv+'%"></div></div></div>'
+          +'<div class="baixa"><button class="step-btn" data-act="dec1" '+(rest<=0?"disabled":"")+'>−</button><input type="text" inputmode="numeric" class="baixa-qty" value="1"><button class="baixa-btn" data-act="baixa" '+(rest<=0?"disabled":"")+'>Dar baixa</button></div>'
+          +'<button class="cal-btn" data-act="cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Adicionar cronograma ao calendário</button>'
+          +'<details class="lote-toggle"><summary><span class="chev">▶</span> Detalhes</summary>'
+            +'<div class="det-block"><h4>Produção</h4>'+kv("Substrato alvo",fmt(b.substratoSem)+" kg/sem")+kv("Spawn a produzir",fmt(b.spawnProd)+" kg/mês")+kv("Sacos",fmt(b.sacos)+" /sem")+kv("CL F2",fmt(b.potesF2)+" potes · "+fmt(b.clF2Mes)+" ml")+kv("CL F1 Master",fmt(b.potesF1)+" potes · "+fmt(b.clF1Nec)+" ml")+kv("CL Comercial",fmt(b.seringas)+" seringas")+kv("Custo",brl(b.custo))+'</div>'
+            +'<div class="det-block"><h4>Cronograma</h4>'+kv("Compra comercial",fmtDate(b.compra))+kv("Início F1",fmtDate(b.f1ini))+kv("F1 pronta",fmtDate(b.f1pr))+kv("Início F2",fmtDate(b.f2ini))+kv("F2 pronta",fmtDate(b.f2pr))+'</div>'
+            +'<div class="det-block"><h4>Baixas</h4>'+hist+'</div><button class="del-btn" data-act="del">Excluir lote</button></details></div>';}).join("");}
+    // Composto stock
+    var totC=compBatches.reduce(function(s,b){return s+(b.pesoUmidoRest||0);},0);
+    set("comp-stock-total",fmt1(totC)+'<small>kg</small>');$("comp-stock-count").textContent=compBatches.length;
+    var clist=$("composto-list");
+    if(!compBatches.length)clist.innerHTML='<div class="empty"><div class="ico">◍</div><p>Nenhuma mistura. Monte em <b>Composto</b> e toque em <b>Fabricar mistura</b>.</p></div>';
+    else{var cs=compBatches.slice().sort(function(a,b){return(a.createdAt<b.createdAt)?1:-1;});
+      clist.innerHTML=cs.map(function(b){var rest=b.pesoUmidoRest||0,tot=b.pesoUmido||0,pv=tot>0?Math.round(rest/tot*100):0,cls=rest<=0?"empty":(pv<=20?"low":"");
+        var pronto=b.prontoEm||addDays(b.createdAt,(b.dias||14));
+        var ings=(b.ingredientes||[]).map(function(ig){return kv(esc(ig.nome),fmtP(ig.pctMS)+"% · "+fmt1(ig.pesoUmido)+" kg");}).join("");
+        var hist=(b.baixas&&b.baixas.length)?b.baixas.map(function(x,xi){return '<div class="hist-row"><span class="hist">'+fmtDate(x.date)+' — baixa de '+fmt1(x.qty)+' kg</span><button class="undo-baixa" data-act="undo" data-bidx="'+xi+'">desfazer</button></div>';}).join(""):'<div class="hist" style="color:var(--ink-faint)">sem baixas</div>';
+        return '<div class="lote" data-id="'+esc(b.id)+'" data-kind="comp">'
+          +'<div class="lote-top"><div><div class="lote-id">'+esc(b.id)+'</div><div class="lote-meta">fab. '+fmtDate(b.createdAt)+(b.obs?' · '+esc(b.obs):'')+'</div></div><div class="lote-ready">pronto '+fmtShort(pronto)+'</div></div>'
+          +'<div class="inv"><div class="inv-num"><span class="cur">'+fmt1(rest)+'</span><span class="tot">/ '+fmt1(tot)+' kg</span><span class="lab">substrato úmido</span></div><div class="bar-track"><div class="bar-fill '+cls+'" style="width:'+pv+'%"></div></div></div>'
+          +'<div class="baixa"><input type="text" inputmode="decimal" class="baixa-qty" value="" placeholder="kg a usar"><button class="baixa-btn" data-act="baixa" '+(rest<=0?"disabled":"")+'>Dar baixa</button></div>'
+          +'<button class="cal-btn" data-act="cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Adicionar "pronto" ao calendário</button>'
+          +'<details class="lote-toggle"><summary><span class="chev">▶</span> Receita e detalhes</summary>'
+            +'<div class="det-block"><h4>Lote</h4>'+kv("Peso úmido",fmt1(b.pesoUmido)+" kg")+kv("Umidade final",fmtP(b.umidadeFinal)+"%")+kv("Matéria seca",fmt1(b.pesoMS)+" kg")+kv("Água adicionada",fmt1(b.agua)+" kg")+kv("Compostagem",fmt(b.dias||14)+" dias")+kv("Pronto em",fmtDate(pronto))+'</div>'
+            +'<div class="det-block"><h4>Ingredientes (%MS · peso)</h4>'+ings+'</div>'
+            +'<div class="det-block"><h4>Baixas</h4>'+hist+'</div><button class="del-btn" data-act="del">Excluir mistura</button></details></div>';}).join("");}
+    var badge=$("tab-badge"),total=batches.length+compBatches.length;
+    if(total){badge.style.display="flex";badge.textContent=total;}else badge.style.display="none";
+  }
+
+  function findB(arr,id){for(var i=0;i<arr.length;i++)if(arr[i].id===id)return arr[i];return null;}
+  function doBaixaCL(id,qty){var b=findB(batches,id);if(!b)return;qty=Math.max(0,Math.floor(qty||0));qty=Math.min(qty,b.potesF2Rest);if(qty<=0)return;b.potesF2Rest-=qty;b.baixas=b.baixas||[];b.baixas.push({date:todayISO(),qty:qty});saveBatches();renderLotes();toast("Baixa de "+qty+" pote(s) · "+b.id);}
+  function doBaixaComp(id,kg){var b=findB(compBatches,id);if(!b)return;kg=Math.max(0,kg||0);kg=Math.min(kg,b.pesoUmidoRest);if(kg<=0)return;b.pesoUmidoRest=Math.round((b.pesoUmidoRest-kg)*10)/10;b.baixas=b.baixas||[];b.baixas.push({date:todayISO(),qty:kg});saveCompBatches();renderLotes();toast("Baixa de "+fmt1(kg)+" kg · "+b.id);}
+  function delB(kind,id){var name=kind==="cl"?"lote":"mistura";if(!confirm("Excluir "+name+" "+id+"? Não pode ser desfeito."))return;if(kind==="cl"){batches=batches.filter(function(b){return b.id!==id;});saveBatches();}else{compBatches=compBatches.filter(function(b){return b.id!==id;});saveCompBatches();}renderLotes();toast(name.charAt(0).toUpperCase()+name.slice(1)+" excluída");}
+  function undoBaixaCL(id,idx){var b=findB(batches,id);if(!b||!b.baixas||!b.baixas[idx])return;var rec=b.baixas[idx];b.potesF2Rest=Math.min(b.potesF2,(b.potesF2Rest||0)+(rec.qty||0));b.baixas.splice(idx,1);saveBatches();renderLotes();toast("Baixa desfeita · "+b.id);}
+  function undoBaixaComp(id,idx){var b=findB(compBatches,id);if(!b||!b.baixas||!b.baixas[idx])return;var rec=b.baixas[idx];b.pesoUmidoRest=Math.min(b.pesoUmido,Math.round(((b.pesoUmidoRest||0)+(rec.qty||0))*10)/10);b.baixas.splice(idx,1);saveCompBatches();renderLotes();toast("Baixa desfeita · "+b.id);}
+  function icsEsc(s){return String(s).replace(/([,;\\])/g,"\\$1").replace(/\n/g,"\\n");}
+  function icsD(iso){var a=iso.split("-");return a[0]+a[1]+a[2];}
+  function downloadICS(fname,events){
+    var lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Inoculacoes//PT-BR//","CALSCALE:GREGORIAN"];
+    var stamp=icsD(todayISO())+"T000000Z";
+    events.forEach(function(ev,i){if(!ev.date)return;lines.push("BEGIN:VEVENT","UID:"+fname+"-"+i+"-"+Date.now()+"@inoc","DTSTAMP:"+stamp,"DTSTART;VALUE=DATE:"+icsD(ev.date),"DTEND;VALUE=DATE:"+icsD(addDays(ev.date,1)),"SUMMARY:"+icsEsc(ev.title),"END:VEVENT");});
+    lines.push("END:VCALENDAR");
+    var ics=lines.join("\r\n");
+    try{var blob=new Blob([ics],{type:"text/calendar;charset=utf-8"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download=fname+".ics";document.body.appendChild(a);a.click();setTimeout(function(){document.body.removeChild(a);URL.revokeObjectURL(url);},1500);}
+    catch(e){try{window.location.href="data:text/calendar;charset=utf-8,"+encodeURIComponent(ics);}catch(e2){alert("Não foi possível gerar o arquivo de calendário neste navegador.");}}
+  }
+  function doCal(kind,id){
+    if(kind==="cl"){var b=findB(batches,id);if(!b)return;downloadICS(b.id,[{date:b.compra,title:b.id+" · Comprar CL comercial"},{date:b.f1ini,title:b.id+" · Início F1 Master"},{date:b.f1pr,title:b.id+" · F1 Master pronta"},{date:b.f2ini,title:b.id+" · Início F2"},{date:b.f2pr,title:b.id+" · CL F2 pronta para uso"}]);}
+    else{var c=findB(compBatches,id);if(!c)return;var pr=c.prontoEm||addDays(c.createdAt,(c.dias||14));downloadICS(c.id,[{date:pr,title:c.id+" · Composto pronto"}]);}
+    toast("Calendário gerado · "+id);
+  }
+
+  $("lotes-list").addEventListener("click",lotesClick);
+  $("composto-list").addEventListener("click",lotesClick);
+  function lotesClick(e){var card=e.target.closest(".lote");if(!card)return;var id=card.getAttribute("data-id"),kind=card.getAttribute("data-kind"),act=e.target.getAttribute("data-act");
+    if(act==="del"){delB(kind,id);return;}
+    if(act==="cal"){doCal(kind,id);return;}
+    if(act==="undo"){var bi=parseInt(e.target.getAttribute("data-bidx"),10);if(kind==="cl")undoBaixaCL(id,bi);else undoBaixaComp(id,bi);return;}
+    if(kind==="cl"){if(act==="dec1"){doBaixaCL(id,1);return;}if(act==="baixa"){var i=card.querySelector(".baixa-qty");doBaixaCL(id,num(i.value));i.value="1";return;}}
+    else{if(act==="baixa"){var i2=card.querySelector(".baixa-qty");doBaixaComp(id,num(i2.value));i2.value="";return;}}}
+
+  /* =================== MODAL (genérico) =================== */
+  var modalMode="cl";
+  function suggestLote(dateISO,prefix,ids){var a=dateISO.split("-");var base=prefix+a[0].slice(2)+a[1]+a[2];var n=base,i=1;while(ids.indexOf(n)>-1){i++;n=base+"-"+i;}return n;}
+  function openFabricarCL(){modalMode="cl";var c=computeP(),R=c.R,T=c.T,d=todayISO();
+    $("m-title").textContent="Fabricar lote";$("m-sub").textContent="Registra um snapshot deste cálculo no estoque de CL F2.";$("m-lote-label").textContent="Número do lote";
+    $("m-data").value=d;$("m-lote").value=suggestLote(d,"INC",batches.map(function(b){return b.id;}));$("m-obs").value="";
+    $("m-summary").innerHTML=kv("Potes de CL F2","<b>"+fmt(R.potesF2)+"</b> potes")+kv("Spawn a produzir",fmt(R.spawnProd)+" kg/mês")+kv("CL F1 Master",fmt(R.potesF1)+" potes")+kv("Seringas",fmt(R.seringas))+kv("Custo",brl(R.custo))+kv("F2 pronta",fmtDate(T.f2pr));
+    $("overlay").classList.add("open");}
+  function openFabricarMix(){modalMode="mix";var s=readComp(),c=computeComp(s),d=todayISO();
+    $("m-title").textContent="Fabricar mistura";$("m-sub").textContent="Registra esta receita de composto no estoque de substrato.";$("m-lote-label").textContent="Número do lote (composto)";
+    $("m-data").value=d;$("m-lote").value=suggestLote(d,"COM",compBatches.map(function(b){return b.id;}));$("m-obs").value="";
+    var warn=(Math.abs(c.totalPct-100)>0.05)?'<div class="kv" style="color:var(--warn)"><span>Atenção</span><span class="v">composição em '+fmtP(c.totalPct)+'%</span></div>':'';
+    $("m-summary").innerHTML=kv("Peso úmido","<b>"+fmt1(s.pesoUmido)+"</b> kg")+kv("Umidade final",fmtP(s.umidadeFinal)+"%")+kv("Matéria seca",fmt1(c.pesoMS)+" kg")+kv("Ingredientes",s.ingredientes.length)+kv("Água a adicionar",fmt1(c.agua)+" kg")+kv("Pronto em",fmtDate(addDays(d,s.dias))+" ("+fmt(s.dias)+" dias)")+warn;
+    $("overlay").classList.add("open");}
+  function closeFabricar(){$("overlay").classList.remove("open");}
+  function confirmFabricar(){
+    var id=($("m-lote").value||"").trim();var dt=$("m-data").value||todayISO();var obs=($("m-obs").value||"").trim();
+    if(modalMode==="cl"){
+      if(!id)id=suggestLote(dt,"INC",batches.map(function(b){return b.id;}));
+      if(findB(batches,id)){if(!confirm('Já existe o lote "'+id+'". Criar com sufixo?'))return;id=suggestLote(dt,"INC",batches.map(function(b){return b.id;}));}
+      var c=computeP(),R=c.R,p=c.p,T=c.T;
+      batches.push({id:id,createdAt:dt,obs:obs,substratoSem:p.substratoSem,spawnProd:R.spawnProd,sacos:R.sacos,clF2Mes:R.clF2Mes,potesF2:R.potesF2,clF1Nec:R.clF1Nec,potesF1:R.potesF1,clComNec:R.clComNec,seringas:R.seringas,custo:R.custo,compra:T.compra,f1ini:T.f1ini,f1pr:T.f1pr,f2ini:T.f2ini,f2pr:T.f2pr,potesF2Rest:R.potesF2,baixas:[]});
+      saveBatches();closeFabricar();renderLotes();switchTab("page-lotes");toast("Lote "+id+" registrado ✓");
+    }else{
+      if(!id)id=suggestLote(dt,"COM",compBatches.map(function(b){return b.id;}));
+      if(findB(compBatches,id)){if(!confirm('Já existe a mistura "'+id+'". Criar com sufixo?'))return;id=suggestLote(dt,"COM",compBatches.map(function(b){return b.id;}));}
+      var s=readComp(),cc=computeComp(s);
+      compBatches.push({id:id,createdAt:dt,obs:obs,pesoUmido:s.pesoUmido,umidadeFinal:s.umidadeFinal,dias:s.dias,prontoEm:addDays(dt,s.dias),pesoMS:cc.pesoMS,agua:cc.agua,totalUmido:cc.totalUmido,totalPct:cc.totalPct,ingredientes:cc.per,pesoUmidoRest:s.pesoUmido,baixas:[]});
+      saveCompBatches();closeFabricar();renderLotes();switchTab("page-lotes");toast("Mistura "+id+" registrada ✓");}
+  }
+
+  /* =================== TABS / TOAST =================== */
+  function switchTab(pid){document.querySelectorAll(".page").forEach(function(pg){pg.classList.toggle("active",pg.id===pid);});document.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("active",t.getAttribute("data-page")===pid);});window.scrollTo(0,0);}
+  document.querySelectorAll(".tab").forEach(function(t){t.addEventListener("click",function(){switchTab(t.getAttribute("data-page"));});});
+  var toastT;function toast(m){var e=$("toast");e.textContent=m;e.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){e.classList.remove("show");},1800);}
+
+  /* =================== WIRING =================== */
+  pIds.forEach(function(id){el[id].addEventListener("input",function(){renderP();saveP();});el[id].addEventListener("change",function(){renderP();saveP();});if(el[id].type==="text")el[id].addEventListener("focus",function(){this.select();});});
+  $("fabricarBtn").addEventListener("click",openFabricarCL);
+  $("resetBtn").addEventListener("click",function(){if(confirm("Restaurar parâmetros de cálculo? (lotes não são afetados)")){pIds.forEach(function(id){el[id].value=(id==="dataAlvo")?addDays(todayISO(),21):pDef[id];});renderP();saveP();}});
+
+  // composto driver inputs
+  ["c-pesoUmido","c-umidade","c-dias"].forEach(function(id){$(id).addEventListener("input",function(){updateComp();saveComp();});$(id).addEventListener("focus",function(){this.select();});});
+  // ingredient list delegation
+  var ingList=$("ing-list");
+  ingList.addEventListener("input",function(e){if(e.target.classList.contains("ing-nome")||e.target.classList.contains("ing-pct")||e.target.classList.contains("ing-umid")){updateComp();saveComp();}});
+  ingList.addEventListener("change",function(e){
+    if(e.target.classList.contains("ing-pct")){
+      var rows=Array.prototype.slice.call(document.querySelectorAll("#ing-list .ing-row"));
+      var sum=rows.reduce(function(a,r){return a+num(r.querySelector(".ing-pct").value);},0);
+      if(sum>100.0001){var excess=sum-100;var v=num(e.target.value);var nv=Math.max(0,v-excess);e.target.value=fmtP(nv);}
+      updateComp();saveComp();
+    }else if(e.target.classList.contains("ing-umid")){var u=num(e.target.value);if(u<0)e.target.value="0";if(u>99)e.target.value="99";updateComp();saveComp();}
+  });
+  ingList.addEventListener("click",function(e){if(e.target.classList.contains("ing-del")){var row=e.target.closest(".ing-row");if(row){row.parentNode.removeChild(row);updateComp();saveComp();}}});
+  $("norm-btn").addEventListener("click",normalizeComp);
+  $("add-ing-btn").addEventListener("click",function(){var p=$("add-panel");p.style.display="block";$("ai-nome").value="";$("ai-pct").value="";$("ai-umid").value="";$("ai-nome").focus();this.style.display="none";});
+  $("ai-cancel").addEventListener("click",function(){$("add-panel").style.display="none";$("add-ing-btn").style.display="block";});
+  $("ai-add").addEventListener("click",function(){var nome=($("ai-nome").value||"").trim();var p=num($("ai-pct").value);var u=num($("ai-umid").value);if(u>99)u=99;if(u<0)u=0;addIngredient(nome,p,u);$("add-panel").style.display="none";$("add-ing-btn").style.display="block";toast("Ingrediente adicionado");});
+  $("fabricarMixBtn").addEventListener("click",openFabricarMix);
+  $("resetCompBtn").addEventListener("click",function(){if(confirm("Restaurar a mistura padrão? (misturas registradas não são afetadas)")){store.set("inoc2_composto","");$("c-pesoUmido").value="1000";$("c-umidade").value="68";$("c-dias").value="14";renderRows(JSON.parse(JSON.stringify(compDef.ingredientes)));saveComp();}});
+
+  $("m-cancel").addEventListener("click",closeFabricar);
+  $("m-confirm").addEventListener("click",confirmFabricar);
+  $("overlay").addEventListener("click",function(e){if(e.target.id==="overlay")closeFabricar();});
+
+  loadP();loadComp();loadBatches();renderP();renderLotes();
+})();
+
+</script>
+</body>
+</html>

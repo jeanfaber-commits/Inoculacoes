@@ -325,7 +325,10 @@
   .chart-empty{font-size:12.5px;color:var(--ink-faint);font-family:var(--serif);padding:14px 0;text-align:center;}
   .bar-rect{fill:var(--accent);} .bar-rect.g{fill:var(--green);} .bar-rect.r{fill:#C06A5A;}
   .bar-lbl{font-family:var(--sans);font-size:9px;fill:var(--ink-faint);} .bar-val{font-family:var(--mono);font-size:9px;fill:var(--ink-soft);}
-  .home-lote{display:flex;justify-content:space-between;align-items:center;background:var(--surface);border:1px solid var(--line-soft);border-radius:13px;padding:12px 14px;margin-bottom:8px;}
+  .home-lote{background:var(--surface);border:1px solid var(--line-soft);border-radius:13px;padding:12px 14px;margin-bottom:8px;}
+  .home-lote .hl-top{display:flex;justify-content:space-between;align-items:center;}
+  .home-lote .hl-bar{margin-top:10px;height:7px;border-radius:99px;background:var(--surface-2);overflow:hidden;}
+  .home-lote .hl-fill{height:100%;border-radius:99px;transition:width .3s;}
   .home-lote .lote-id{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--ink);}
   .home-lote .lote-meta{font-size:11.5px;color:var(--ink-faint);margin-top:2px;font-family:var(--serif);}
   /* line charts */
@@ -689,6 +692,7 @@
 
 <div class="overlay" id="newlote-overlay"><div class="sheet"><div class="sheet-grab"></div>
   <h2>Novo lote na incubação</h2><p class="sub2">O que você vai iniciar?</p>
+  <div class="m-field"><label>Data de início</label><input id="nl-data" type="date"></div>
   <button class="choice-btn" id="nl-spawn"><span class="choice-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v5L6 17a3 3 0 0 0 3 4h6a3 3 0 0 0 3-4l-4-9V3M8 13h8"/></svg></span><span class="choice-tx"><b>Spawn de sorgo</b><small>Grão colonizado a partir da CL F2</small></span></button>
   <button class="choice-btn" id="nl-sub"><span class="choice-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l9-5 9 5-9 5-9-5zM3 8v8l9 5 9-5V8M12 13v8"/></svg></span><span class="choice-tx"><b>Substrato</b><small>Composto + spawn (5%) para frutificar</small></span></button>
   <div class="m-actions"><button class="m-cancel" id="nl-cancel">Cancelar</button></div>
@@ -696,6 +700,7 @@
 
 <div class="overlay" id="sub-overlay"><div class="sheet"><div class="sheet-grab"></div>
   <h2>Novo lote de substrato</h2><p class="sub2">O composto vira substrato com spawn (5% do peso úmido). Use o estoque ou lance manualmente.</p>
+  <div class="m-field"><label>Data de início</label><input id="sub-data" type="date"></div>
   <div class="m-field"><label>Composto</label><select id="sub-comp"></select></div>
   <div class="new-meta"><div class="m-field" style="flex:1;margin:0"><label>Composto (kg)</label><input id="sub-kg" type="text" inputmode="decimal" value="0"></div>
     <div class="m-field" style="flex:1;margin:0"><label>Proporção de spawn (%)</label><input id="sub-rate" type="text" inputmode="decimal" value="5"></div></div>
@@ -1009,7 +1014,7 @@
   function findP2(id){for(var i=0;i<prodLotes.length;i++)if(prodLotes[i].id===id)return prodLotes[i];return null;}
   function suggestProd(dateISO){var a=dateISO.split("-");var base="PRD"+a[0].slice(2)+a[1]+a[2];var ids=prodLotes.map(function(b){return b.id;});var n=base,i=1;while(ids.indexOf(n)>-1){i++;n=base+"-"+i;}return n;}
   function phaseDur(l){return l.phase==="spawn"?(l.durSpawn||14):l.phase==="substrato"?(l.durSub||14):l.phase==="container"?(l.durCont||40):0;}
-  function newLote(startPhase){var d=todayISO();var l={id:suggestProd(d),createdAt:d,phase:startPhase,phaseStart:d,durSpawn:14,durSub:14,durCont:40,bolsas:0,pesoBolsa:0,umidade:68,container:(containers[0]?containers[0].id:"c1"),compUsado:0,colheitas:[],obs:"",history:[{phase:startPhase,date:d}]};prodLotes.push(l);saveProd();return l;}
+  function newLote(startPhase,startDate){var d=todayISO();var sd=startDate||d;var l={id:suggestProd(sd),createdAt:d,phase:startPhase,phaseStart:sd,durSpawn:14,durSub:14,durCont:40,bolsas:0,pesoBolsa:0,umidade:68,container:(containers[0]?containers[0].id:"c1"),compUsado:0,colheitas:[],obs:"",history:[{phase:startPhase,date:sd}]};prodLotes.push(l);saveProd();return l;}
   function advance(id){var l=findP2(id);if(!l)return;var nx=PHASE_NEXT[l.phase];if(!nx)return;
     if(nx==="concluido"&&!confirm("Concluir o lote "+id+"?"))return;
     l.phase=nx;l.phaseStart=todayISO();l.history=l.history||[];l.history.push({phase:nx,date:l.phaseStart});saveProd();renderIncub();renderProd();renderHome();
@@ -1378,7 +1383,7 @@
     saveProd();closeMix();renderIncub();renderProd();renderLotes();renderHome();switchTab("page-incub");toast("Mistura pronta · "+l.id+" em incubação");}
 
   /* =================== NOVO LOTE (escolha) + SUBSTRATO MANUAL =================== */
-  function openNewLote(){$("newlote-overlay").classList.add("open");}
+  function openNewLote(){if($("nl-data"))$("nl-data").value=todayISO();$("newlote-overlay").classList.add("open");}
   function closeNewLote(){$("newlote-overlay").classList.remove("open");}
   function subCompOptions(){var o='<option value="manual">Manual (sem baixar estoque)</option>';compBatches.filter(function(b){return (b.pesoUmidoRest||0)>0&&isReady(b);}).forEach(function(b){o+='<option value="'+esc(b.id)+'">'+esc(b.id)+' · '+fmt1(b.pesoUmidoRest||0)+' kg disp.</option>';});return o;}
   function subSpawnOptions(){var o='<option value="manual">Manual (sem baixar estoque)</option>';spawnBatches.filter(function(b){return ((b.restante!=null?b.restante:b.totalKg)||0)>0&&isReady(b);}).forEach(function(b){var r=(b.restante!=null?b.restante:b.totalKg)||0;o+='<option value="'+esc(b.id)+'">'+esc(b.id)+' · '+fmt1(r)+' kg disp.</option>';});return o;}
@@ -1392,6 +1397,7 @@
     var cf=$("sub-comp").value==="manual"?"manual":"estoque",sf=$("sub-spw").value==="manual"?"manual":"estoque";
     $("sub-summary").innerHTML=kv("Composto","<b>"+fmt1(kg)+"</b> kg · "+cf)+kv("Spawn ("+fmtP(rate)+"%)",fmt1(sp)+" kg · "+sf)+kv("Mistura pronta","<b>"+fmt1(total)+"</b> kg")+kv("Bolsas",fmt(bo)+" × "+fmt1(pe)+" kg")+kv("Destino",esc($("sub-cont").options[$("sub-cont").selectedIndex]?$("sub-cont").options[$("sub-cont").selectedIndex].text:""));}
   function openNewSub(){$("sub-comp").innerHTML=subCompOptions();$("sub-spw").innerHTML=subSpawnOptions();$("sub-cont").innerHTML=contOptions(null);
+    if($("sub-data"))$("sub-data").value=(($("nl-data")&&$("nl-data").value)||todayISO());
     $("sub-rate").value="5";var fc=compBatches.filter(function(b){return (b.pesoUmidoRest||0)>0&&isReady(b);})[0];
     if(fc){$("sub-comp").value=fc.id;$("sub-kg").value=fmtP(fc.pesoUmidoRest);}else{$("sub-comp").value="manual";$("sub-kg").value="0";}
     $("sub-spawnkg").value=fmtP(Math.round(num($("sub-kg").value)*5/100*100)/100);
@@ -1399,11 +1405,11 @@
     $("sub-peso").value="3";subBolsasFromPeso();$("sub-overlay").classList.add("open");}
   function closeNewSub(){$("sub-overlay").classList.remove("open");}
   function confirmNewSub(){
-    var compId=$("sub-comp").value,spawnId=$("sub-spw").value,kg=Math.max(0,num($("sub-kg").value)),sp=Math.max(0,num($("sub-spawnkg").value)),bo=Math.max(0,Math.floor(num($("sub-bolsas").value))),pe=Math.max(0,num($("sub-peso").value)),cont=$("sub-cont").value;
+    var compId=$("sub-comp").value,spawnId=$("sub-spw").value,kg=Math.max(0,num($("sub-kg").value)),sp=Math.max(0,num($("sub-spawnkg").value)),bo=Math.max(0,Math.floor(num($("sub-bolsas").value))),pe=Math.max(0,num($("sub-peso").value)),cont=$("sub-cont").value,sd=($("sub-data")&&$("sub-data").value)||todayISO();
     if(kg<=0){toast("Informe a quantidade de composto");return;}
     if(compId&&compId!=="manual"){var cb=findB(compBatches,compId);if(cb){var u=Math.min(kg,cb.pesoUmidoRest||0);if(u>0){cb.pesoUmidoRest=Math.round((cb.pesoUmidoRest-u)*10)/10;cb.baixas=cb.baixas||[];cb.baixas.push({date:todayISO(),qty:u});saveCompBatches();}}}
     if(spawnId&&spawnId!=="manual"&&sp>0){var sb=findB(spawnBatches,spawnId);if(sb){var rest=(sb.restante!=null?sb.restante:sb.totalKg)||0;var us=Math.min(sp,rest);if(us>0){sb.restante=Math.round((rest-us)*10)/10;sb.baixas=sb.baixas||[];sb.baixas.push({date:todayISO(),qty:us});saveSpawnBatches();}}}
-    var l=newLote("substrato");l.bolsas=bo;l.pesoBolsa=pe;l.container=cont||l.container;l.compUsado=kg;l.spawnUsado=sp;l.phaseStart=todayISO();l.history=[{phase:"substrato",date:l.phaseStart}];
+    var l=newLote("substrato",sd);l.bolsas=bo;l.pesoBolsa=pe;l.container=cont||l.container;l.compUsado=kg;l.spawnUsado=sp;
     saveProd();closeNewSub();renderIncub();renderProd();renderLotes();renderHome();switchTab("page-incub");toast("Substrato "+l.id+" em incubação");}
 
   /* =================== DESCARTE =================== */
@@ -1429,7 +1435,9 @@
     var and=prodLotes.filter(function(l){return l.phase!=="concluido";});
     var hl=$("home-lotes");
     if(!and.length)hl.innerHTML='<div class="empty"><div class="ico">❀</div><p>Nenhum lote em andamento. Comece em <b>Cálculos › Spawn</b> ou na <b>Incubação</b>.</p></div>';
-    else hl.innerHTML=and.slice().sort(function(a,b){return a.phaseStart<b.phaseStart?1:-1;}).map(function(l){var dur=phaseDur(l),de=daysElapsed(l.phaseStart);return '<div class="home-lote"><div><div class="lote-id">'+esc(l.id)+'</div><div class="lote-meta">'+(dur>0?('dia '+de+' de '+dur):'')+'</div></div><div class="phase-badge phase-'+l.phase+'">'+PHASE_NAME[l.phase]+'</div></div>';}).join("");
+    else hl.innerHTML=and.slice().sort(function(a,b){var pa=phaseDur(a)>0?daysElapsed(a.phaseStart)/phaseDur(a):0,pb=phaseDur(b)>0?daysElapsed(b.phaseStart)/phaseDur(b):0;return pb-pa;}).map(function(l){var dur=phaseDur(l),de=daysElapsed(l.phaseStart);var pct=dur>0?Math.max(0,Math.min(1,de/dur)):0;var hue=Math.round(pct*130);var restante=Math.max(0,dur-de);
+      return '<div class="home-lote"><div class="hl-top"><div><div class="lote-id">'+esc(l.id)+'</div><div class="lote-meta">'+(dur>0?('dia '+de+' de '+dur+(pct>=1?' · pronto':(' · faltam '+restante+'d'))):'')+'</div></div><div class="phase-badge phase-'+l.phase+'">'+PHASE_NAME[l.phase]+'</div></div>'
+        +'<div class="hl-bar"><div class="hl-fill" style="width:'+Math.max(3,Math.round(pct*100))+'%;background:hsl('+hue+',58%,43%)"></div></div></div>';}).join("");
     renderCharts();
   }
 
@@ -1516,7 +1524,7 @@
   // lotes de produção
   $("novoLoteBtn").addEventListener("click",openNewLote);
   $("nl-cancel").addEventListener("click",closeNewLote);
-  $("nl-spawn").addEventListener("click",function(){closeNewLote();var l=newLote("spawn");renderIncub();renderHome();toast("Lote "+l.id+" iniciado");});
+  $("nl-spawn").addEventListener("click",function(){closeNewLote();var d=($("nl-data")&&$("nl-data").value)||todayISO();var l=newLote("spawn",d);renderIncub();renderHome();toast("Lote "+l.id+" iniciado");});
   $("nl-sub").addEventListener("click",function(){closeNewLote();openNewSub();});
   $("sub-cancel").addEventListener("click",closeNewSub);
   $("sub-confirm").addEventListener("click",confirmNewSub);

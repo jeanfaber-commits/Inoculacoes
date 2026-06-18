@@ -355,6 +355,19 @@
   .ready-btn{width:100%;margin-top:4px;padding:12px;border:none;border-radius:11px;background:var(--green);color:#fff;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;}
   .ready-btn:active{opacity:.7;} .ready-btn svg{width:16px;height:16px;}
   .prep-note{font-size:12px;color:var(--accent-deep);background:var(--accent-soft);border-radius:9px;padding:8px 11px;margin-top:6px;font-family:var(--sans);font-weight:600;text-align:center;}
+  /* sincronização nuvem */
+  .sync-card{width:100%;display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line-soft);border-radius:15px;padding:13px 15px;margin-bottom:14px;cursor:pointer;text-align:left;font-family:var(--sans);}
+  .sync-card:active{opacity:.7;}
+  .sync-ic{width:34px;height:34px;border-radius:9px;background:var(--green-soft);color:var(--green);display:flex;align-items:center;justify-content:center;flex:none;}
+  .sync-ic svg{width:19px;height:19px;}
+  .sync-tx{display:flex;flex-direction:column;flex:1;min-width:0;}
+  .sync-tx b{font-size:14px;color:var(--ink);}
+  .sync-tx span{font-size:12px;color:var(--ink-faint);}
+  .sync-go{font-size:13px;font-weight:700;color:var(--accent);flex:none;}
+  .sy-status{display:flex;align-items:center;gap:8px;background:var(--surface-2);border-radius:10px;padding:9px 12px;margin-bottom:12px;font-size:13px;color:var(--ink-soft);font-weight:600;}
+  .sy-dot{width:10px;height:10px;border-radius:99px;background:var(--ink-faint);flex:none;}
+  .sy-dot.ok{background:var(--green);} .sy-dot.err{background:#C0392B;} .sy-dot.sync{background:var(--accent);} .sy-dot.off{background:var(--ink-faint);}
+  .sy-row{display:flex;gap:10px;margin-top:10px;}
 
 </style>
 </head>
@@ -370,6 +383,7 @@
   </div>
 
   <div class="subpage active" id="home-resumo">
+    <button class="sync-card" id="sync-open"><span class="sync-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 .5-9 6 6 0 0 0-11.6-1.5A4 4 0 0 0 6 19z"/></svg></span><span class="sync-tx"><b>Sincronização</b><span id="home-sync-state">Nuvem desligada</span></span><span class="sync-go">Configurar ›</span></button>
     <div class="kpi-grid">
       <div class="kpi accent"><div class="kpi-k">Eficiência biológica</div><div class="kpi-v" id="kpi-eb">–</div><div class="kpi-s" id="kpi-eb-s">colheita ÷ matéria seca</div></div>
       <div class="kpi"><div class="kpi-k">Sanidade <span class="kpi-tag">30d</span></div><div class="kpi-v" id="kpi-san">–</div><div class="kpi-s" id="kpi-san-s">livre de contaminação</div></div>
@@ -650,13 +664,29 @@
   <div class="m-actions"><button class="m-cancel" id="dcm-cancel">Cancelar</button><button class="m-confirm" id="dcm-confirm">Dar baixa</button></div>
 </div></div>
 
+<div class="overlay" id="sync-overlay"><div class="sheet"><div class="sheet-grab"></div>
+  <h2>Sincronização na nuvem</h2><p class="sub2">Quem usar a mesma <b>chave de acesso</b> vê e edita os mesmos dados, em qualquer aparelho. Use o seu projeto gratuito do Supabase.</p>
+  <div class="sy-status"><span class="sy-dot off" id="sy-dot"></span><span id="sy-state">Desligada</span></div>
+  <div class="m-field"><label>URL do projeto (Supabase)</label><input id="sy-url" type="text" inputmode="url" placeholder="https://xxxx.supabase.co" autocapitalize="off" autocorrect="off"></div>
+  <div class="m-field"><label>Chave anônima (anon public)</label><input id="sy-anon" type="text" placeholder="eyJhbGci..." autocapitalize="off" autocorrect="off"></div>
+  <div class="m-field"><label>Chave de acesso compartilhada</label><input id="sy-ws" type="text" placeholder="ex.: sitio-pleurotus-2026" autocapitalize="off" autocorrect="off"></div>
+  <div class="m-actions"><button class="m-cancel" id="sy-cancel">Fechar</button><button class="m-confirm" id="sy-connect">Conectar</button></div>
+  <div class="sy-row"><button class="export-btn" id="sy-now" style="flex:1">Sincronizar agora</button><button class="archive-btn" id="sy-off" style="width:auto;margin:0;flex:1">Desconectar</button></div>
+  <details class="lote-toggle"><summary><span class="chev">▶</span> Compartilhar conexão com outra pessoa</summary>
+    <p class="sub2" style="margin:8px 2px">Conecte primeiro, toque em <b>Copiar código</b> e envie para a outra pessoa. Ela cola aqui e toca em <b>Aplicar</b>, depois em <b>Conectar</b>.</p>
+    <textarea id="sy-codebox" rows="3" style="width:100%;box-sizing:border-box;font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:10px;padding:8px" placeholder="código de conexão"></textarea>
+    <div class="sy-row"><button class="export-btn" id="sy-copy" style="flex:1">Copiar código</button><button class="export-btn" id="sy-paste" style="flex:1">Aplicar código</button></div>
+  </details>
+</div></div>
+
 <script>
 (function(){
   "use strict";
   var mem={};
+  var syncApplying=false;
   var store={
     get:function(k){try{var v=localStorage.getItem(k);return v===null?(k in mem?mem[k]:null):v;}catch(e){return (k in mem)?mem[k]:null;}},
-    set:function(k,v){try{localStorage.setItem(k,v);}catch(e){mem[k]=v;}}
+    set:function(k,v){try{localStorage.setItem(k,v);}catch(e){mem[k]=v;}if(!syncApplying&&typeof syncOnWrite==="function"&&typeof k==="string"&&k.indexOf("inoc2_")===0)syncOnWrite(k);}
   };
   function $(id){return document.getElementById(id);}
   function num(s){if(typeof s!=="string")s=String(s==null?"":s);s=s.trim();if(s==="")return 0;
@@ -1465,7 +1495,67 @@
   // período do histórico
   document.querySelectorAll("#log-period .per").forEach(function(b){b.addEventListener("click",function(){logMonths=parseInt(b.getAttribute("data-per"),10)||12;document.querySelectorAll("#log-period .per").forEach(function(x){x.classList.toggle("active",x===b);});renderLog();});});
 
+  /* =================== SINCRONIZAÇÃO (NUVEM · Supabase) =================== */
+  var SYNC={url:"",anon:"",ws:"",enabled:false,lastPull:0,timer:null,poll:null};
+  function syncLoadCfg(){SYNC.url=store.get("sync_url")||"";SYNC.anon=store.get("sync_anon")||"";SYNC.ws=store.get("sync_ws")||"";SYNC.enabled=(store.get("sync_enabled")==="1")&&!!SYNC.url&&!!SYNC.anon&&!!SYNC.ws;}
+  function syncSaveCfg(){store.set("sync_url",SYNC.url);store.set("sync_anon",SYNC.anon);store.set("sync_ws",SYNC.ws);store.set("sync_enabled",SYNC.enabled?"1":"0");}
+  function syncBase(){return SYNC.url.replace(/\/+$/,"")+"/rest/v1/workspaces";}
+  function syncHeaders(extra){var h={apikey:SYNC.anon,Authorization:"Bearer "+SYNC.anon,"Content-Type":"application/json"};if(extra)for(var k in extra)h[k]=extra[k];return h;}
+  function snapshot(){var o={};try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf("inoc2_")===0)o[k]=localStorage.getItem(k);}}catch(e){for(var m in mem)if(m.indexOf("inoc2_")===0)o[m]=mem[m];}return o;}
+  function applySnapshot(obj){if(!obj)return;syncApplying=true;try{
+      var del=[],i,k;try{for(i=0;i<localStorage.length;i++){k=localStorage.key(i);if(k&&k.indexOf("inoc2_")===0&&!(k in obj))del.push(k);}}catch(e){}
+      del.forEach(function(k){try{localStorage.removeItem(k);}catch(e){delete mem[k];}});
+      Object.keys(obj).forEach(function(k){try{localStorage.setItem(k,obj[k]);}catch(e){mem[k]=obj[k];}});
+    }finally{syncApplying=false;}
+    reloadAll();}
+  function reloadAll(){loadContainers();loadStockLog();loadP();loadComp();loadSpawn();loadBatches();loadProd();loadSpawnBatches();renderP();renderSpawn();renderLotes();renderIncub();renderProd();renderHome();renderLog();}
+  function syncStatus(s,msg){var dot=$("sy-dot"),tx=$("sy-state"),home=$("home-sync-state");var label={off:"Desligada",ok:"Sincronizado",sync:"Sincronizando…",err:"Erro de conexão",local:"Só neste aparelho"}[s]||s;
+    if(tx)tx.textContent=msg||label;if(home)home.textContent=SYNC.enabled?("Nuvem · "+(msg||label)):"Nuvem desligada";
+    if(dot){dot.className="sy-dot "+s;}}
+  function syncOnWrite(k){if(!SYNC.enabled)return;clearTimeout(SYNC.timer);SYNC.timer=setTimeout(syncFlush,1500);syncStatus("sync");}
+  function syncFlush(){if(!SYNC.enabled)return;var body=JSON.stringify({key:SYNC.ws,data:snapshot(),updated_at:new Date().toISOString()});
+    fetch(syncBase()+"?on_conflict=key",{method:"POST",headers:syncHeaders({Prefer:"resolution=merge-duplicates,return=minimal"}),body:body})
+      .then(function(r){if(r.ok){SYNC.lastPull=Date.now();syncStatus("ok");}else{syncStatus("err","Erro "+r.status);}})
+      .catch(function(){syncStatus("err");});}
+  function syncPull(opts){opts=opts||{};if(!SYNC.enabled){if(opts.cb)opts.cb(false);return;}
+    fetch(syncBase()+"?key=eq."+encodeURIComponent(SYNC.ws)+"&select=data,updated_at",{headers:syncHeaders()})
+      .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
+      .then(function(rows){var has=rows&&rows[0]&&rows[0].data;
+        if(has){var up=Date.parse(rows[0].updated_at)||Date.now();if(opts.force||up>SYNC.lastPull){SYNC.lastPull=up;applySnapshot(rows[0].data);}syncStatus("ok");}
+        else{syncStatus("ok","Conectado · nuvem vazia");if(opts.seedIfEmpty)syncFlush();}
+        if(opts.cb)opts.cb(!!has);})
+      .catch(function(){syncStatus("err");if(opts.cb)opts.cb(false);});}
+  function syncStartPolling(){if(SYNC.poll)clearInterval(SYNC.poll);if(!SYNC.enabled)return;SYNC.poll=setInterval(function(){if(!document.hidden)syncPull({});},20000);}
+  function syncConnect(){
+    SYNC.url=($("sy-url").value||"").trim();SYNC.anon=($("sy-anon").value||"").trim();SYNC.ws=($("sy-ws").value||"").trim();
+    if(!SYNC.url||!SYNC.anon||!SYNC.ws){toast("Preencha URL, chave anônima e a chave de acesso");return;}
+    SYNC.enabled=true;syncSaveCfg();syncStatus("sync","Conectando…");
+    syncPull({force:true,seedIfEmpty:true,cb:function(){syncStartPolling();toast("Nuvem conectada ✓");}});
+  }
+  function syncDisconnect(){SYNC.enabled=false;syncSaveCfg();if(SYNC.poll)clearInterval(SYNC.poll);syncStatus("off");toast("Sincronização desligada");}
+  function syncCode(){try{return btoa(unescape(encodeURIComponent(JSON.stringify({u:SYNC.url,a:SYNC.anon,w:SYNC.ws}))));}catch(e){return "";}}
+  function syncApplyCode(code){try{var o=JSON.parse(decodeURIComponent(escape(atob((code||"").trim()))));if(o.u)$("sy-url").value=o.u;if(o.a)$("sy-anon").value=o.a;if(o.w)$("sy-ws").value=o.w;toast("Código aplicado · toque em Conectar");}catch(e){toast("Código inválido");}}
+  function openSync(){syncLoadCfg();$("sy-url").value=SYNC.url;$("sy-anon").value=SYNC.anon;$("sy-ws").value=SYNC.ws;syncStatus(SYNC.enabled?"ok":"off");$("sync-overlay").classList.add("open");}
+  function closeSync(){$("sync-overlay").classList.remove("open");}
+
   loadContainers();loadStockLog();loadP();loadComp();loadSpawn();loadBatches();loadProd();loadSpawnBatches();renderP();renderSpawn();renderLotes();renderIncub();renderProd();renderHome();renderLog();
+
+  // sincronização: wiring + init
+  (function(){
+    var ids={open:"sync-open",cancel:"sy-cancel",connect:"sy-connect",now:"sy-now",off:"sy-off",copy:"sy-copy",paste:"sy-paste"};
+    if($("sync-open"))$("sync-open").addEventListener("click",openSync);
+    if($("sy-cancel"))$("sy-cancel").addEventListener("click",closeSync);
+    if($("sy-connect"))$("sy-connect").addEventListener("click",syncConnect);
+    if($("sy-now"))$("sy-now").addEventListener("click",function(){syncStatus("sync");syncPull({force:true,cb:function(){syncFlush();}});});
+    if($("sy-off"))$("sy-off").addEventListener("click",syncDisconnect);
+    if($("sy-copy"))$("sy-copy").addEventListener("click",function(){var c=syncCode();if(!c){toast("Conecte primeiro");return;}var t=$("sy-codebox");if(t){t.value=c;t.select();}try{navigator.clipboard.writeText(c);}catch(e){}toast("Código copiado");});
+    if($("sy-paste"))$("sy-paste").addEventListener("click",function(){var t=$("sy-codebox");syncApplyCode(t?t.value:"");});
+    syncLoadCfg();
+    if(SYNC.enabled){syncStatus("sync","Conectando…");syncPull({force:true,cb:function(){syncStartPolling();}});}
+    else syncStatus("off");
+    document.addEventListener("visibilitychange",function(){if(!document.hidden&&SYNC.enabled)syncPull({});});
+    window.addEventListener("focus",function(){if(SYNC.enabled)syncPull({});});
+  })();
 })();
 
 </script>

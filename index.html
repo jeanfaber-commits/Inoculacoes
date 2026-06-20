@@ -535,19 +535,19 @@
 <div class="subpage" id="sub-spawn">
   <p class="sub" style="margin:2px 2px 16px">Calcule sorgo seco, gesso e calcário a partir do spawn a produzir. O alvo é puxado da aba Inoculações.</p>
   <div class="driver"><label for="sp-alvo">Spawn a produzir (alvo)</label>
-    <div class="driver-row"><input id="sp-alvo" type="text" inputmode="decimal" value="232"><span class="unit">kg úmido / mês</span></div>
-    <div class="driver-meta"><span id="sp-week">≈ – kg/semana</span><button class="mini-link" id="sp-sync">usar Inoculações</button></div>
+    <div class="driver-row"><input id="sp-alvo" type="text" inputmode="decimal" value="54"><span class="unit">kg úmido / semana</span></div>
+    <div class="driver-meta"><span id="sp-week">≈ – kg/mês</span><button class="mini-link" id="sp-sync">usar Inoculações</button></div>
     <div class="driver-meta"><span id="sp-link">de Inoculações: – kg/mês</span></div></div>
   <div class="readout">
     <div class="stat accent"><div class="k">Sorgo seco</div><div class="v" id="sp-sorgo">–</div><div class="stat-w" id="sp-sorgo-w"></div></div>
     <div class="stat"><div class="k">Gesso</div><div class="v" id="sp-gesso">–</div><div class="stat-w" id="sp-gesso-w"></div></div>
     <div class="stat"><div class="k">Calcário</div><div class="v" id="sp-calcario">–</div><div class="stat-w" id="sp-calcario-w"></div></div>
     <div class="stat"><div class="k">Total da mistura</div><div class="v" id="sp-total">–</div><div class="stat-w" id="sp-total-w"></div></div></div>
-  <div class="section-title">Produção semanal</div>
+  <div class="section-title">Sorgo do lote (semanal)</div>
   <div class="stage"><div class="stage-top"><div><div class="stage-name">Sorgo por semana</div><div class="stage-tag">Grão · hidratado</div></div>
     <div class="stage-out"><div class="big" id="sp-w-sorgo">–</div><div class="sec" id="sp-w-umido">–</div></div></div>
     <div class="dose" id="sp-w-note"></div></div>
-  <div class="section-title">Mistura do spawn (mês)</div>
+  <div class="section-title">Estimativa mensal</div>
   <div class="stage"><div class="stage-top"><div><div class="stage-name">Sorgo</div><div class="stage-tag">Grão · hidratado</div></div>
     <div class="stage-out"><div class="big" id="sp-o-sorgo">–</div><div class="sec" id="sp-o-umido">–</div></div></div>
     <div class="dose" id="sp-note"></div>
@@ -631,6 +631,7 @@
   <h2 id="m-title">Fabricar lote</h2><p class="sub2" id="m-sub">Registra um snapshot deste cálculo no estoque.</p>
   <div class="m-field"><label id="m-lote-label">Número do lote</label><input id="m-lote" type="text"></div>
   <div class="m-field"><label>Data de fabricação</label><input id="m-data" type="date"></div>
+  <div class="m-field" id="m-qty-wrap"><label>Quantidade a fabricar (ml)</label><input id="m-qty" type="text" inputmode="decimal" value="0"></div>
   <div class="m-summary" id="m-summary"></div>
   <div class="m-field"><label>Observações (opcional)</label><input id="m-obs" type="text" placeholder="ex.: cepa, responsável…"></div>
   <div class="m-actions"><button class="m-cancel" id="m-cancel">Cancelar</button><button class="m-confirm" id="m-confirm">Registrar</button></div>
@@ -643,7 +644,7 @@
   <div class="m-field"><label>Número do lote</label><input id="spm-lote" type="text"></div>
   <div class="m-field"><label>Data de fabricação</label><input id="spm-data" type="date"></div>
   <div class="m-field"><label>Cultura líquida (CL F2) do estoque</label><select id="spm-cl"></select></div>
-  <div class="new-meta"><div class="m-field" style="flex:1;margin:0"><label>Potes de CL F2 a usar</label><input id="spm-clpotes" type="text" inputmode="numeric" value="1"></div>
+  <div class="new-meta"><div class="m-field" style="flex:1;margin:0"><label>ml de CL F2 a usar</label><input id="spm-clml" type="text" inputmode="numeric" value="50"></div>
     <div class="m-field" style="flex:1;margin:0"><label>Bolsas de spawn</label><input id="spm-bolsas" type="text" inputmode="numeric" value="0"></div></div>
   <div class="m-field"><label>Peso / bolsa (kg)</label><input id="spm-peso" type="text" inputmode="decimal" value="0"></div>
   <div class="m-summary" id="spm-summary"></div>
@@ -713,6 +714,39 @@
   <div class="m-actions"><button class="m-cancel" id="sub-cancel">Cancelar</button><button class="m-confirm" id="sub-confirm">Criar lote</button></div>
 </div></div>
 
+<div class="overlay" id="spw-overlay"><div class="sheet"><div class="sheet-grab"></div>
+  <h2>Novo lote de spawn</h2><p class="sub2">Grão de sorgo colonizado pela CL F2. Preencha e confirme para registrar na incubação.</p>
+  <div class="new-meta"><div class="m-field" style="flex:1;margin:0"><label>Data de início</label><input id="spw-data" type="date"></div>
+    <div class="m-field" style="flex:1;margin:0"><label>Colonização (dias)</label><input id="spw-dias" type="text" inputmode="numeric" value="14"></div></div>
+  <div class="new-meta"><div class="m-field" style="flex:1;margin:0"><label>Bolsas / potes</label><input id="spw-bolsas" type="text" inputmode="numeric" value="0"></div>
+    <div class="m-field" style="flex:1;margin:0"><label>Peso / bolsa (kg)</label><input id="spw-peso" type="text" inputmode="decimal" value="0"></div></div>
+  <div class="m-field"><label>Observação (opcional)</label><input id="spw-obs" type="text" placeholder="ex.: linhagem, origem da CL F2"></div>
+  <div class="m-summary" id="spw-summary"></div>
+  <div class="m-actions"><button class="m-cancel" id="spw-cancel">Cancelar</button><button class="m-confirm" id="spw-confirm">Criar lote</button></div>
+</div></div>
+
+<div class="overlay" id="prd-overlay"><div class="sheet"><div class="sheet-grab"></div>
+  <h2>Novo lote em produção</h2><p class="sub2">Bolsas já em frutificação no contêiner. Preencha e confirme para registrar na produção.</p>
+  <div class="new-meta"><div class="m-field" style="flex:1;margin:0"><label>Data de início</label><input id="prd-data" type="date"></div>
+    <div class="m-field" style="flex:1;margin:0"><label>Frutificação (dias)</label><input id="prd-dias" type="text" inputmode="numeric" value="40"></div></div>
+  <div class="m-field"><label>Contêiner</label><select id="prd-cont"></select></div>
+  <div class="new-meta"><div class="m-field" style="flex:1;margin:0"><label>Bolsas</label><input id="prd-bolsas" type="text" inputmode="numeric" value="0"></div>
+    <div class="m-field" style="flex:1;margin:0"><label>Peso / bolsa (kg)</label><input id="prd-peso" type="text" inputmode="decimal" value="0"></div></div>
+  <div class="m-field"><label>Umidade do substrato (%)</label><input id="prd-umid" type="text" inputmode="decimal" value="68"></div>
+  <div class="m-field"><label>Observação (opcional)</label><input id="prd-obs" type="text" placeholder="ex.: origem do substrato"></div>
+  <div class="m-summary" id="prd-summary"></div>
+  <div class="m-actions"><button class="m-cancel" id="prd-cancel">Cancelar</button><button class="m-confirm" id="prd-confirm">Criar lote</button></div>
+</div></div>
+
+<div class="overlay" id="send-overlay"><div class="sheet"><div class="sheet-grab"></div>
+  <h2>Enviar bolsas para produção</h2>
+  <p class="sub2" id="send-sub"></p>
+  <div class="m-field"><label>Bolsas a enviar</label><input id="send-qty" type="text" inputmode="numeric" value="0"></div>
+  <div class="m-summary" id="send-summary"></div>
+  <p class="sub2" style="margin:4px 2px">As bolsas restantes continuam na incubação. Ao enviar de novo, elas entram <b>no mesmo lote de produção</b>.</p>
+  <div class="m-actions"><button class="m-cancel" id="send-cancel">Cancelar</button><button class="m-confirm" id="send-confirm">Enviar</button></div>
+</div></div>
+
 <script>
 (function(){
   "use strict";
@@ -723,8 +757,10 @@
     set:function(k,v){try{localStorage.setItem(k,v);}catch(e){mem[k]=v;}if(!syncApplying&&typeof syncOnWrite==="function"&&typeof k==="string"&&k.indexOf("inoc2_")===0)syncOnWrite(k);}
   };
   function $(id){return document.getElementById(id);}
-  function num(s){if(typeof s!=="string")s=String(s==null?"":s);s=s.trim();if(s==="")return 0;
-    if(s.indexOf(",")>-1)s=s.replace(/\./g,"").replace(",",".");var n=parseFloat(s);return isNaN(n)?0:n;}
+  function num(s){if(typeof s!=="string")s=String(s==null?"":s);s=s.trim();if(s===""||s==="-")return 0;
+    if(s.indexOf(",")>-1)s=s.replace(/\./g,"").replace(",",".");
+    else if(/^-?\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,"");
+    var n=parseFloat(s);return isNaN(n)?0:n;}
   function fmt(n,d){if(d===undefined)d=0;if(!isFinite(n))n=0;return n.toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d});}
   function fmt1(n){if(!isFinite(n))n=0;return n.toLocaleString("pt-BR",{maximumFractionDigits:1});}
   function fmtP(n){if(!isFinite(n))n=0;return n.toLocaleString("pt-BR",{maximumFractionDigits:2});}
@@ -846,22 +882,29 @@
   function saveBatches(){store.set("inoc2_batches",JSON.stringify(batches));}
   function saveCompBatches(){store.set("inoc2_comp_batches",JSON.stringify(compBatches));}
 
+  function clMlTot(b){return b.mlF2!=null?b.mlF2:((b.potesF2||0)*(b.mlPoteF2||400));}
+  function clMlRest(b){return b.mlF2Rest!=null?b.mlF2Rest:((b.potesF2Rest!=null?b.potesF2Rest:(b.potesF2||0))*(b.mlPoteF2||400));}
+  function clFabCalc(ml){var p=readP();var mlPoteF2=p.mlPoteF2||400;var potesF2=mlPoteF2>0?ceilUp(ml/mlPoteF2):0;var clF1=ml*p.txF2/100;var potesF1=p.mlPoteF1>0?ceilUp(clF1/p.mlPoteF1):0;var clCom=clF1*p.txF1/100;var seringas=p.volSeringa>0?ceilUp(clCom/p.volSeringa):0;var custo=seringas*p.custoSeringa;
+    return {ml:ml,mlPoteF2:mlPoteF2,potesF2:potesF2,clF1:Math.round(clF1*10)/10,potesF1:potesF1,clCom:Math.round(clCom*10)/10,seringas:seringas,custo:custo};}
+  function clFabSummary(){var ml=Math.max(0,num($("m-qty").value));var k=clFabCalc(ml);var T=computeP().T;
+    $("m-summary").innerHTML=kv("Quantidade a fabricar","<b>"+fmt(ml)+"</b> ml")+kv("Potes de CL F2",fmt(k.potesF2)+" de "+fmt(k.mlPoteF2)+" ml")+kv("CL F1 Master",fmt1(k.clF1)+" ml · "+fmt(k.potesF1)+" potes")+kv("CL comercial",fmt1(k.clCom)+" ml")+kv("Seringas","<b>"+fmt(k.seringas)+"</b>")+kv("Custo","<b>"+brl(k.custo)+"</b>")+kv("F2 pronta",fmtDate(T.f2pr));}
+
   function renderLotes(){
     // CL F2 stock
-    var totCL=batches.reduce(function(s,b){return s+(isReady(b)?(b.potesF2Rest||0):0);},0);var prepCL=batches.filter(function(b){return !isReady(b);}).length;
-    set("stock-total",fmt(totCL)+'<small>potes</small>');$("stock-count").textContent=batches.filter(isReady).length+(prepCL?" (+"+prepCL+")":"");
+    var totCL=batches.reduce(function(s,b){return s+(isReady(b)?clMlRest(b):0);},0);var prepCL=batches.filter(function(b){return !isReady(b);}).length;
+    set("stock-total",fmt(totCL)+'<small>ml</small>');$("stock-count").textContent=batches.filter(isReady).length+(prepCL?" (+"+prepCL+")":"");
     var list=$("lotes-list");
     if(!batches.length)list.innerHTML='<div class="empty"><div class="ico">⬡</div><p>Nenhum lote de cultura. Calcule em <b>Inoculações</b> e toque em <b>Fabricar lote</b>.</p></div>';
     else{var sorted=batches.slice().sort(function(a,b){return(a.createdAt<b.createdAt)?1:-1;});
-      list.innerHTML=sorted.map(function(b){var rest=b.potesF2Rest||0,tot=b.potesF2||0,pv=tot>0?Math.round(rest/tot*100):0,cls=rest<=0?"empty":(pv<=34?"low":"");
-        var hist=(b.baixas&&b.baixas.length)?b.baixas.map(function(x,xi){return '<div class="hist-row"><span class="hist">'+fmtDate(x.date)+' — baixa de '+x.qty+' pote(s)</span><button class="undo-baixa" data-act="undo" data-bidx="'+xi+'">desfazer</button></div>';}).join(""):'<div class="hist" style="color:var(--ink-faint)">sem baixas</div>';
+      list.innerHTML=sorted.map(function(b){var rest=clMlRest(b),tot=clMlTot(b),pv=tot>0?Math.round(rest/tot*100):0,cls=rest<=0?"empty":(pv<=34?"low":"");
+        var hist=(b.baixas&&b.baixas.length)?b.baixas.map(function(x,xi){return '<div class="hist-row"><span class="hist">'+fmtDate(x.date)+' — baixa de '+fmt(x.qty)+' ml</span><button class="undo-baixa" data-act="undo" data-bidx="'+xi+'">desfazer</button></div>';}).join(""):'<div class="hist" style="color:var(--ink-faint)">sem baixas</div>';
         return '<div class="lote" data-id="'+esc(b.id)+'" data-kind="cl">'
           +'<div class="lote-top"><div><div class="lote-id">'+esc(b.id)+'</div><div class="lote-meta">fab. '+fmtDate(b.createdAt)+(b.obs?' · '+esc(b.obs):'')+'</div></div><div class="lote-ready">F2 '+fmtShort(b.f2pr)+'</div></div>'
-          +'<div class="inv"><div class="inv-num"><span class="cur">'+fmt(rest)+'</span><span class="tot">/ '+fmt(tot)+'</span><span class="lab">potes de CL F2</span></div><div class="bar-track"><div class="bar-fill '+cls+'" style="width:'+pv+'%"></div></div></div>'
-          +(isReady(b)?('<div class="baixa"><button class="step-btn" data-act="dec1" '+(rest<=0?"disabled":"")+'>−</button><input type="text" inputmode="numeric" class="baixa-qty" value="1"><button class="baixa-btn" data-act="baixa" '+(rest<=0?"disabled":"")+'>Dar baixa</button></div>'):readyBtn(b.f2pr))
+          +'<div class="inv"><div class="inv-num"><span class="cur">'+fmt(rest)+'</span><span class="tot">/ '+fmt(tot)+'</span><span class="lab">ml de CL F2</span></div><div class="bar-track"><div class="bar-fill '+cls+'" style="width:'+pv+'%"></div></div></div>'
+          +(isReady(b)?('<div class="baixa"><button class="step-btn" data-act="dec1" '+(rest<=0?"disabled":"")+'>−</button><input type="text" inputmode="numeric" class="baixa-qty" value="50"><button class="baixa-btn" data-act="baixa" '+(rest<=0?"disabled":"")+'>Dar baixa</button></div>'):readyBtn(b.f2pr))
           +(rest<=0?archiveBtn():"")+'<button class="cal-btn" data-act="cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Adicionar cronograma ao calendário</button>'
           +'<details class="lote-toggle"><summary><span class="chev">▶</span> Detalhes</summary>'
-            +'<div class="det-block"><h4>Produção</h4>'+kv("Substrato alvo",fmt(b.substratoSem)+" kg/sem")+kv("Spawn a produzir",fmt(b.spawnProd)+" kg/mês")+kv("Sacos",fmt(b.sacos)+" /sem")+kv("CL F2",fmt(b.potesF2)+" potes · "+fmt(b.clF2Mes)+" ml")+kv("CL F1 Master",fmt(b.potesF1)+" potes · "+fmt(b.clF1Nec)+" ml")+kv("CL Comercial",fmt(b.seringas)+" seringas")+kv("Custo",brl(b.custo))+'</div>'
+            +'<div class="det-block"><h4>Produção</h4>'+kv("Substrato alvo",fmt(b.substratoSem)+" kg/sem")+kv("Spawn a produzir",fmt(b.spawnProd)+" kg/mês")+kv("Sacos",fmt(b.sacos)+" /sem")+kv("CL F2 fabricada",fmt(clMlTot(b))+" ml · "+fmt(b.potesF2)+" potes")+kv("CL F1 Master",fmt(b.potesF1)+" potes · "+fmt(b.clF1Nec)+" ml")+kv("CL Comercial",fmt(b.seringas)+" seringas")+kv("Custo",brl(b.custo))+'</div>'
             +'<div class="det-block"><h4>Cronograma</h4>'+kv("Compra comercial",fmtDate(b.compra))+kv("Início F1",fmtDate(b.f1ini))+kv("F1 pronta",fmtDate(b.f1pr))+kv("Início F2",fmtDate(b.f2ini))+kv("F2 pronta",fmtDate(b.f2pr))+'</div>'
             +'<div class="det-block"><h4>Baixas</h4>'+hist+'</div><button class="del-btn" data-act="del">Excluir lote</button></details></div>';}).join("");}
     // Composto stock
@@ -905,12 +948,12 @@
   function findB(arr,id){for(var i=0;i<arr.length;i++)if(arr[i].id===id)return arr[i];return null;}
   function isReady(b){return b&&b.ready!==false;}
   function readyBtn(date){return '<div class="prep-note">Em preparo · colonização'+(date?' até '+fmtDate(date):'')+'</div><button class="ready-btn" data-act="ready"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Marcar como pronto</button>';}
-  function doBaixaCL(id,qty){var b=findB(batches,id);if(!b)return;qty=Math.max(0,Math.floor(qty||0));qty=Math.min(qty,b.potesF2Rest);if(qty<=0)return;b.potesF2Rest-=qty;b.baixas=b.baixas||[];b.baixas.push({date:todayISO(),qty:qty});saveBatches();renderLotes();toast("Baixa de "+qty+" pote(s) · "+b.id);}
+  function doBaixaCL(id,qty){var b=findB(batches,id);if(!b)return;qty=Math.max(0,Math.round(qty||0));var rest=clMlRest(b);qty=Math.min(qty,rest);if(qty<=0)return;b.mlF2Rest=rest-qty;b.baixas=b.baixas||[];b.baixas.push({date:todayISO(),qty:qty});saveBatches();renderLotes();toast("Baixa de "+fmt(qty)+" ml · "+b.id);}
   function doBaixaComp(id,kg){var b=findB(compBatches,id);if(!b)return;kg=Math.max(0,kg||0);kg=Math.min(kg,b.pesoUmidoRest);if(kg<=0)return;b.pesoUmidoRest=Math.round((b.pesoUmidoRest-kg)*10)/10;b.baixas=b.baixas||[];b.baixas.push({date:todayISO(),qty:kg});saveCompBatches();renderLotes();toast("Baixa de "+fmt1(kg)+" kg · "+b.id);}
   function delB(kind,id){var name=kind==="cl"?"lote":kind==="spawn"?"lote de spawn":"mistura";if(!confirm("Excluir "+name+" "+id+"? Não pode ser desfeito."))return;if(kind==="cl"){batches=batches.filter(function(b){return b.id!==id;});saveBatches();}else if(kind==="spawn"){spawnBatches=spawnBatches.filter(function(b){return b.id!==id;});saveSpawnBatches();}else{compBatches=compBatches.filter(function(b){return b.id!==id;});saveCompBatches();}renderLotes();toast("Excluído");}
   function doBaixaSpawn(id,kg){var b=findB(spawnBatches,id);if(!b)return;var rest=(b.restante!=null?b.restante:b.totalKg);kg=Math.max(0,kg||0);kg=Math.min(kg,rest);if(kg<=0)return;b.restante=Math.round((rest-kg)*10)/10;b.baixas=b.baixas||[];b.baixas.push({date:todayISO(),qty:kg});saveSpawnBatches();renderLotes();toast("Baixa de "+fmt1(kg)+" kg · "+b.id);}
   function undoBaixaSpawn(id,idx){var b=findB(spawnBatches,id);if(!b||!b.baixas||!b.baixas[idx])return;var rec=b.baixas[idx];b.restante=Math.min(b.totalKg,Math.round((((b.restante!=null?b.restante:b.totalKg))+(rec.qty||0))*10)/10);b.baixas.splice(idx,1);saveSpawnBatches();renderLotes();toast("Baixa desfeita · "+b.id);}
-  function undoBaixaCL(id,idx){var b=findB(batches,id);if(!b||!b.baixas||!b.baixas[idx])return;var rec=b.baixas[idx];b.potesF2Rest=Math.min(b.potesF2,(b.potesF2Rest||0)+(rec.qty||0));b.baixas.splice(idx,1);saveBatches();renderLotes();toast("Baixa desfeita · "+b.id);}
+  function undoBaixaCL(id,idx){var b=findB(batches,id);if(!b||!b.baixas||!b.baixas[idx])return;var rec=b.baixas[idx];b.mlF2Rest=Math.min(clMlTot(b),clMlRest(b)+(rec.qty||0));b.baixas.splice(idx,1);saveBatches();renderLotes();toast("Baixa desfeita · "+b.id);}
   function undoBaixaComp(id,idx){var b=findB(compBatches,id);if(!b||!b.baixas||!b.baixas[idx])return;var rec=b.baixas[idx];b.pesoUmidoRest=Math.min(b.pesoUmido,Math.round(((b.pesoUmidoRest||0)+(rec.qty||0))*10)/10);b.baixas.splice(idx,1);saveCompBatches();renderLotes();toast("Baixa desfeita · "+b.id);}
   function icsEsc(s){return String(s).replace(/([,;\\])/g,"\\$1").replace(/\n/g,"\\n");}
   function icsD(iso){var a=iso.split("-");return a[0]+a[1]+a[2];}
@@ -945,14 +988,16 @@
   /* =================== MODAL (genérico) =================== */
   var modalMode="cl";
   function suggestLote(dateISO,prefix,ids){var a=dateISO.split("-");var base=prefix+a[0].slice(2)+a[1]+a[2];var n=base,i=1;while(ids.indexOf(n)>-1){i++;n=base+"-"+i;}return n;}
-  function openFabricarCL(){modalMode="cl";var c=computeP(),R=c.R,T=c.T,d=todayISO();
-    $("m-title").textContent="Fabricar lote";$("m-sub").textContent="Registra um snapshot deste cálculo no estoque de CL F2.";$("m-lote-label").textContent="Número do lote";
+  function openFabricarCL(){modalMode="cl";var c=computeP(),R=c.R,d=todayISO();
+    $("m-title").textContent="Fabricar lote";$("m-sub").textContent="Escolha a quantidade de CL F2 a fabricar (ml); os insumos são calculados automaticamente.";$("m-lote-label").textContent="Número do lote";
     $("m-data").value=d;$("m-lote").value=suggestLote(d,"INC",batches.map(function(b){return b.id;}));$("m-obs").value="";
-    $("m-summary").innerHTML=kv("Potes de CL F2","<b>"+fmt(R.potesF2)+"</b> potes")+kv("Spawn a produzir",fmt(R.spawnProd)+" kg/mês")+kv("CL F1 Master",fmt(R.potesF1)+" potes")+kv("Seringas",fmt(R.seringas))+kv("Custo",brl(R.custo))+kv("F2 pronta",fmtDate(T.f2pr));
+    if($("m-qty-wrap"))$("m-qty-wrap").style.display="";if($("m-qty"))$("m-qty").value=String(Math.round(R.clF2Mes));
+    clFabSummary();
     $("overlay").classList.add("open");}
   function openFabricarMix(){modalMode="mix";var s=readComp(),c=computeComp(s),d=todayISO();
     $("m-title").textContent="Fabricar mistura";$("m-sub").textContent="Registra esta receita de composto no estoque de substrato.";$("m-lote-label").textContent="Número do lote (composto)";
     $("m-data").value=d;$("m-lote").value=suggestLote(d,"COM",compBatches.map(function(b){return b.id;}));$("m-obs").value="";
+    if($("m-qty-wrap"))$("m-qty-wrap").style.display="none";
     var warn=(Math.abs(c.totalPct-100)>0.05)?'<div class="kv" style="color:var(--warn)"><span>Atenção</span><span class="v">composição em '+fmtP(c.totalPct)+'%</span></div>':'';
     $("m-summary").innerHTML=kv("Peso úmido","<b>"+fmt1(s.pesoUmido)+"</b> kg")+kv("Umidade final",fmtP(s.umidadeFinal)+"%")+kv("Matéria seca",fmt1(c.pesoMS)+" kg")+kv("Ingredientes",s.ingredientes.length)+kv("Água a adicionar",fmt1(c.agua)+" kg")+kv("Pronto em",fmtDate(addDays(d,s.dias))+" ("+fmt(s.dias)+" dias)")+warn;
     $("overlay").classList.add("open");}
@@ -962,9 +1007,9 @@
     if(modalMode==="cl"){
       if(!id)id=suggestLote(dt,"INC",batches.map(function(b){return b.id;}));
       if(findB(batches,id)){if(!confirm('Já existe o lote "'+id+'". Criar com sufixo?'))return;id=suggestLote(dt,"INC",batches.map(function(b){return b.id;}));}
-      var c=computeP(),R=c.R,p=c.p,T=c.T;
-      batches.push({id:id,createdAt:dt,obs:obs,substratoSem:p.substratoSem,spawnProd:R.spawnProd,sacos:R.sacos,clF2Mes:R.clF2Mes,potesF2:R.potesF2,clF1Nec:R.clF1Nec,potesF1:R.potesF1,clComNec:R.clComNec,seringas:R.seringas,custo:R.custo,compra:T.compra,f1ini:T.f1ini,f1pr:T.f1pr,f2ini:T.f2ini,f2pr:T.f2pr,potesF2Rest:R.potesF2,ready:false,baixas:[]});
-      saveBatches();closeFabricar();renderLotes();switchTab("page-lotes");toast("Lote "+id+" registrado ✓");
+      var c=computeP(),R=c.R,p=c.p,T=c.T;var ml=Math.max(0,num($("m-qty").value));var k=clFabCalc(ml);
+      batches.push({id:id,createdAt:dt,obs:obs,substratoSem:p.substratoSem,spawnProd:R.spawnProd,sacos:R.sacos,clF2Mes:R.clF2Mes,mlF2:ml,mlF2Rest:ml,mlPoteF2:k.mlPoteF2,potesF2:k.potesF2,clF1Nec:k.clF1,potesF1:k.potesF1,clComNec:k.clCom,seringas:k.seringas,custo:k.custo,compra:T.compra,f1ini:T.f1ini,f1pr:T.f1pr,f2ini:T.f2ini,f2pr:T.f2pr,ready:false,baixas:[]});
+      saveBatches();closeFabricar();renderLotes();switchTab("page-lotes");toast("Lote "+id+" · "+fmt(ml)+" ml registrado ✓");
     }else{
       if(!id)id=suggestLote(dt,"COM",compBatches.map(function(b){return b.id;}));
       if(findB(compBatches,id)){if(!confirm('Já existe a mistura "'+id+'". Criar com sufixo?'))return;id=suggestLote(dt,"COM",compBatches.map(function(b){return b.id;}));}
@@ -975,29 +1020,32 @@
 
   /* =================== SPAWN (cálculo) =================== */
   var spIds=["sp-alvo","sp-aumento","sp-pGesso","sp-pCalcario","sp-dias"];
-  var spDef={"sp-alvo":"232","sp-aumento":"120","sp-pGesso":"1","sp-pCalcario":"0,5","sp-dias":"14"};
+  var spDef={"sp-alvo":"54","sp-aumento":"120","sp-pGesso":"1","sp-pCalcario":"0,5","sp-dias":"14"};
   function loadSpawn(){spIds.forEach(function(id){var s=store.get("inoc2_"+id);el[id]=$(id);el[id].value=(s!=null&&s!=="")?s:spDef[id];});}
   function saveSpawn(){spIds.forEach(function(id){store.set("inoc2_"+id,$(id).value);});}
   function spawnDias(){return Math.max(1,Math.floor(num($("sp-dias").value)||14));}
   function renderSpawn(){
-    var alvo=num($("sp-alvo").value),aum=num($("sp-aumento").value),pg=num($("sp-pGesso").value),pc=num($("sp-pCalcario").value);
+    var alvoW=num($("sp-alvo").value),aum=num($("sp-aumento").value),pg=num($("sp-pGesso").value),pc=num($("sp-pCalcario").value);
     var sem=num(($("semanasMes")&&$("semanasMes").value))||4.3333;if(sem<=0)sem=4.3333;
-    var sorgoSeco=(1+aum/100)>0?alvo/(1+aum/100):0;
-    var Rs=ceilUp(sorgoSeco),Rg=Math.round(alvo*pg/100*10)/10,Rc=Math.round(alvo*pc/100*10)/10,Ru=ceilUp(alvo);
-    var total=Math.round((alvo+Rg+Rc)*10)/10;
-    set("sp-sorgo",fmt(Rs)+'<small>kg</small>');set("sp-gesso",fmt1(Rg)+'<small>kg</small>');
-    set("sp-calcario",fmt1(Rc)+'<small>kg</small>');set("sp-total",fmt1(total)+'<small>kg</small>');
-    set("sp-o-sorgo",fmt(Rs)+'<small> kg seco</small>');set("sp-o-umido",fmt(Ru)+' kg úmido (+'+fmtP(aum)+'%)');
-    set("sp-note",'Sorgo seco <b>'+fmt(Rs)+' kg</b> hidrata para <b>'+fmt(Ru)+' kg</b> · gesso '+fmtP(pg)+'% e calcário '+fmtP(pc)+'% do peso úmido.');
-    // semanal
-    var alvoW=alvo/sem,RsW=ceilUp((1+aum/100)>0?alvoW/(1+aum/100):0),RuW=ceilUp(alvoW),RgW=Math.round(alvoW*pg/100*10)/10,RcW=Math.round(alvoW*pc/100*10)/10,totW=Math.round((alvoW+RgW+RcW)*10)/10;
-    set("sp-week",'≈ <b>'+fmt1(alvoW)+'</b> kg úmido/semana');
-    set("sp-sorgo-w",fmt(RsW)+' kg/sem');set("sp-gesso-w",fmt1(RgW)+' kg/sem');set("sp-calcario-w",fmt1(RcW)+' kg/sem');set("sp-total-w",fmt1(totW)+' kg/sem');
+    // SEMANAL (lote a fabricar — valor principal)
+    var RsW=ceilUp((1+aum/100)>0?alvoW/(1+aum/100):0),RuW=ceilUp(alvoW),RgW=Math.round(alvoW*pg/100*10)/10,RcW=Math.round(alvoW*pc/100*10)/10,totW=Math.round((alvoW+RgW+RcW)*10)/10;
+    set("sp-sorgo",fmt(RsW)+'<small>kg</small>');set("sp-gesso",fmt1(RgW)+'<small>kg</small>');
+    set("sp-calcario",fmt1(RcW)+'<small>kg</small>');set("sp-total",fmt1(totW)+'<small>kg</small>');
+    // MENSAL (estimativa)
+    var alvoM=alvoW*sem,RsM=ceilUp((1+aum/100)>0?alvoM/(1+aum/100):0),RuM=ceilUp(alvoM),RgM=Math.round(alvoM*pg/100*10)/10,RcM=Math.round(alvoM*pc/100*10)/10,totM=Math.round((alvoM+RgM+RcM)*10)/10;
+    set("sp-sorgo-w",fmt(RsM)+' kg/mês');set("sp-gesso-w",fmt1(RgM)+' kg/mês');set("sp-calcario-w",fmt1(RcM)+' kg/mês');set("sp-total-w",fmt1(totM)+' kg/mês');
+    set("sp-week",'≈ <b>'+fmt1(alvoM)+'</b> kg úmido/mês ('+fmtP(sem)+' lotes)');
+    // lote semanal (detalhe sorgo)
     set("sp-w-sorgo",fmt(RsW)+'<small> kg seco</small>');set("sp-w-umido",fmt(RuW)+' kg úmido/semana');
-    set("sp-w-note",'Por semana: sorgo seco <b>'+fmt(RsW)+' kg</b> → <b>'+fmt(RuW)+' kg</b> úmido · total da mistura <b>'+fmt1(totW)+' kg</b> ('+fmtP(sem)+' semanas/mês).');
+    set("sp-w-note",'Lote semanal: sorgo seco <b>'+fmt(RsW)+' kg</b> → <b>'+fmt(RuW)+' kg</b> úmido · gesso <b>'+fmt1(RgW)+' kg</b> · calcário <b>'+fmt1(RcW)+' kg</b> · total <b>'+fmt1(totW)+' kg</b>.');
+    // mensal (detalhe)
+    set("sp-o-sorgo",fmt(RsM)+'<small> kg seco</small>');set("sp-o-umido",fmt(RuM)+' kg úmido (+'+fmtP(aum)+'%)');
+    set("sp-note",'No mês (~'+fmtP(sem)+' lotes): sorgo seco <b>'+fmt(RsM)+' kg</b> → <b>'+fmt(RuM)+' kg</b> úmido · gesso '+fmtP(pg)+'% e calcário '+fmtP(pc)+'% do peso úmido.');
     var spel=$("sp-link");if(spel)spel.textContent='de Inoculações: '+fmt(computeP().R.spawnProd)+' kg/mês';
   }
-  function syncSpawn(){$("sp-alvo").value=fmt(computeP().R.spawnProd);renderSpawn();saveSpawn();toast("Alvo atualizado");}
+  function spawnWeeklyTarget(){var sem=num(($("semanasMes")&&$("semanasMes").value))||4.3333;if(sem<=0)sem=4.3333;return Math.round(computeP().R.spawnProd/sem);}
+  function migrateSpawnWeekly(){if(store.get("inoc2_spwWk")==="1")return;if($("sp-alvo"))$("sp-alvo").value=fmt(spawnWeeklyTarget());saveSpawn();store.set("inoc2_spwWk","1");}
+  function syncSpawn(){$("sp-alvo").value=fmt(spawnWeeklyTarget());renderSpawn();saveSpawn();toast("Alvo semanal atualizado");}
 
   /* =================== LOTES DE PRODUÇÃO (fluxo) =================== */
   var prodLotes=[];
@@ -1021,6 +1069,22 @@
     if(nx==="container"){switchTab("page-prod");toast(l.id+" enviado para Produção");}
     else if(nx==="concluido"){renderLotes();toast(l.id+" concluído ✓");}
     else toast(l.id+" → "+PHASE_NAME[nx]);}
+  function findProdFor(subId){for(var i=0;i<prodLotes.length;i++){var x=prodLotes[i];if(x.sourceId===subId&&x.phase==="container")return x;}return null;}
+  var sendId=null;
+  function sendSummary(){var l=findP2(sendId);if(!l)return;var sent=l.sentToProd||0,rem=Math.max(0,(l.bolsas||0)-sent);var q=Math.max(0,Math.min(Math.floor(num($("send-qty").value)),rem));var dst=findProdFor(sendId);
+    $("send-summary").innerHTML=kv("Enviar agora","<b>"+fmt(q)+"</b> bolsa(s)")+kv("Ficam na incubação",fmt(rem-q)+" bolsa(s)")+kv("Destino",dst?("lote "+esc(dst.id)+" · "+fmt(dst.bolsas||0)+" + "+fmt(q)):"novo lote de produção");}
+  function openSend(subId){var l=findP2(subId);if(!l)return;sendId=subId;var sent=l.sentToProd||0,rem=Math.max(0,(l.bolsas||0)-sent);
+    $("send-sub").innerHTML="Lote <b>"+esc(l.id)+"</b> · "+fmt(rem)+" bolsa(s) restante(s)"+(sent>0?(" · "+fmt(sent)+" já enviada(s)"):"");
+    $("send-qty").value=fmt(rem);sendSummary();$("send-overlay").classList.add("open");}
+  function closeSend(){$("send-overlay").classList.remove("open");}
+  function confirmSend(){var l=findP2(sendId);if(!l){closeSend();return;}var sent=l.sentToProd||0,rem=Math.max(0,(l.bolsas||0)-sent);var qty=Math.max(1,Math.min(Math.floor(num($("send-qty").value)),rem));if(qty<=0){toast("Sem bolsas para enviar");return;}
+    var dst=findProdFor(sendId);
+    if(!dst){dst=newLote("container",todayISO());dst.sourceId=sendId;dst.pesoBolsa=l.pesoBolsa;dst.umidade=l.umidade;dst.container=l.container;dst.durCont=l.durCont||40;dst.bolsas=0;dst.compUsado=0;dst.obs=l.obs;}
+    dst.bolsas=(dst.bolsas||0)+qty;if((l.bolsas||0)>0)dst.compUsado=Math.round(((dst.compUsado||0)+(l.compUsado||0)*qty/(l.bolsas||1))*10)/10;
+    l.sentToProd=sent+qty;var full=l.sentToProd>=(l.bolsas||0);
+    if(full)prodLotes=prodLotes.filter(function(x){return x.id!==sendId;});
+    saveProd();closeSend();renderIncub();renderProd();renderHome();renderLotes();switchTab("page-prod");
+    toast(qty+" bolsa(s) → "+dst.id+(full?" · incubação concluída":(" · "+Math.max(0,(l.bolsas||0)-l.sentToProd)+" restante(s)")));}
   function dateDiff(aISO,bISO){var a=new Date(aISO+"T00:00:00Z").getTime();var b=new Date(bISO+"T00:00:00Z").getTime();return Math.round((b-a)/86400000);}
   function daysElapsed(iso){return Math.max(0,dateDiff(iso,todayISO()));}
   function eb(l){var umido=(l.bolsas||0)*(l.pesoBolsa||0);var ms=umido*(1-(l.umidade||0)/100);var col=(l.colheitas||[]).reduce(function(a,c){return a+(c.peso||0);},0);return{umido:umido,ms:ms,col:col,eb:ms>0?col/ms*100:0};}
@@ -1049,7 +1113,10 @@
         if(l.spawnReady){advBtn='<button class="advance-btn" data-act="mix"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v6l-4 9a3 3 0 0 0 3 4h12a3 3 0 0 0 3-4l-4-9V2M5 9h14"/></svg> Misturar com substrato (incubar)</button>';}
         else{advBtn='<div class="prep-note">Em colonização até '+fmtDate(ready)+'</div><button class="ready-btn" data-act="spawnready"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Marcar spawn como pronto</button>';}
       } else {
-        advBtn='<button class="advance-btn" data-act="advance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Substrato pronto · enviar para Produção</button>';
+        var sent=l.sentToProd||0,rem=Math.max(0,(l.bolsas||0)-sent);
+        var pn=(de>=dur)?'<div class="prep-note" style="background:var(--green-soft);color:var(--green)">Pronto · '+fmt(rem)+' bolsa(s) para enviar'+(sent>0?(' · '+fmt(sent)+' já enviada(s)'):'')+'</div>'
+                        :'<div class="prep-note">Incubando até '+fmtDate(ready)+' · '+fmt(rem)+' bolsa(s)'+(sent>0?(' · '+fmt(sent)+' já enviada(s)'):'')+'</div>';
+        advBtn=pn+'<button class="advance-btn" data-act="send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Enviar bolsas para produção</button>';
       }
       var durId=isSpawn?"set-durSpawn":"set-durSub";var s0=(l.history&&l.history[0]?l.history[0].date:l.createdAt);
       var bolsasLabel=isSpawn?"Bolsas de spawn em incubação":"Bolsas da mistura em incubação";
@@ -1114,6 +1181,7 @@
 
   function prodClick(e){var card=e.target.closest('.lote[data-kind="prod"]');if(!card)return;var id=card.getAttribute("data-id");var act=e.target.getAttribute("data-act")||(e.target.closest("[data-act]")&&e.target.closest("[data-act]").getAttribute("data-act"));if(!act)return;
     if(act==="advance"){advance(id);return;}
+    if(act==="send"){openSend(id);return;}
     if(act==="mix"){openMix(id);return;}
     if(act==="spawnready"){var l=findP2(id);if(l){l.spawnReady=true;saveProd();renderIncub();renderHome();toast(l.id+" · spawn pronto ✓");}return;}
     if(act==="del"){if(!confirm("Excluir lote "+id+"?"))return;prodLotes=prodLotes.filter(function(x){return x.id!==id;});saveProd();renderIncub();renderProd();renderHome();toast("Lote excluído");return;}
@@ -1186,8 +1254,8 @@
     return zipStore(f);}
   function exportExcel(){
     var sub="Pleurotus · gerado em "+fmtDate(todayISO());
-    var h1=[{label:"Lote",width:16},{label:"Fabricação",width:13},{label:"Potes F2 inicial",width:14,num:1},{label:"Potes restantes",width:14,num:1},{label:"Spawn kg/mês",width:13,num:1},{label:"Sacos",width:9,num:1},{label:"CL F2 (ml)",width:11,num:1},{label:"F2 pronta",width:13},{label:"Obs",width:28}];
-    var r1=batches.map(function(b){return [b.id,fmtDate(b.createdAt),b.potesF2||0,(b.potesF2Rest!=null?b.potesF2Rest:b.potesF2)||0,b.spawnProd||0,b.sacos||0,b.clF2Mes||0,fmtDate(b.f2pr),b.obs||""];});
+    var h1=[{label:"Lote",width:16},{label:"Fabricação",width:13},{label:"CL F2 fabricada (ml)",width:16,num:1},{label:"Restante (ml)",width:13,num:1},{label:"Potes F2",width:10,num:1},{label:"Spawn kg/mês",width:13,num:1},{label:"Sacos",width:9,num:1},{label:"F2 pronta",width:13},{label:"Obs",width:28}];
+    var r1=batches.map(function(b){return [b.id,fmtDate(b.createdAt),clMlTot(b),clMlRest(b),b.potesF2||0,b.spawnProd||0,b.sacos||0,fmtDate(b.f2pr),b.obs||""];});
     var h2=[{label:"Lote",width:16},{label:"Fabricação",width:13},{label:"Peso úmido (kg)",width:14,num:1},{label:"Restante (kg)",width:13,num:1},{label:"Umidade %",width:11,num:1},{label:"Matéria seca (kg)",width:15,num:1},{label:"Água (kg)",width:11,num:1},{label:"Pronto em",width:13},{label:"Ingredientes",width:34},{label:"Obs",width:24}];
     var r2=compBatches.map(function(b){var ing=(b.ingredientes||[]).map(function(g){return g.nome+" "+fmtP(g.pctMS)+"%";}).join("; ");return [b.id,fmtDate(b.createdAt),b.pesoUmido||0,(b.pesoUmidoRest!=null?b.pesoUmidoRest:b.pesoUmido)||0,b.umidadeFinal||0,Math.round((b.pesoMS||0)*10)/10,Math.round((b.agua||0)*10)/10,fmtDate(b.prontoEm||""),ing,b.obs||""];});
     var h4=[{label:"Lote",width:16},{label:"Fabricação",width:13},{label:"Bolsas",width:9,num:1},{label:"Peso/bolsa (kg)",width:14,num:1},{label:"Total (kg)",width:11,num:1},{label:"Restante (kg)",width:12,num:1},{label:"Obs",width:24}];
@@ -1323,7 +1391,7 @@
   function logAdd(entry){stockLog.push(entry);saveStockLog();}
   function archiveStock(kind,id){
     var d=todayISO();
-    if(kind==="cl"){var b=findB(batches,id);if(!b)return;logAdd({kind:"CL F2",id:b.id,createdAt:b.createdAt,archivedAt:d,produced:b.potesF2||0,used:(b.potesF2||0)-(b.potesF2Rest||0),unit:"potes",obs:b.obs||""});batches=batches.filter(function(x){return x.id!==id;});saveBatches();}
+    if(kind==="cl"){var b=findB(batches,id);if(!b)return;logAdd({kind:"CL F2",id:b.id,createdAt:b.createdAt,archivedAt:d,produced:clMlTot(b),used:clMlTot(b)-clMlRest(b),unit:"ml",obs:b.obs||""});batches=batches.filter(function(x){return x.id!==id;});saveBatches();}
     else if(kind==="comp"){var c=findB(compBatches,id);if(!c)return;logAdd({kind:"Composto",id:c.id,createdAt:c.createdAt,archivedAt:d,produced:c.pesoUmido||0,used:Math.round(((c.pesoUmido||0)-(c.pesoUmidoRest||0))*10)/10,unit:"kg",obs:c.obs||""});compBatches=compBatches.filter(function(x){return x.id!==id;});saveCompBatches();}
     else if(kind==="spawn"){var s=findB(spawnBatches,id);if(!s)return;logAdd({kind:"Spawn",id:s.id,createdAt:s.createdAt,archivedAt:d,produced:s.totalKg||0,used:Math.round(((s.totalKg||0)-(s.restante||0))*10)/10,unit:"kg",obs:s.obs||""});spawnBatches=spawnBatches.filter(function(x){return x.id!==id;});saveSpawnBatches();}
     renderLotes();renderLog();toast("Arquivado no histórico");
@@ -1346,15 +1414,15 @@
   function loadSpawnBatches(){try{var s=store.get("inoc2_spawn_batches");spawnBatches=s?JSON.parse(s):[];}catch(e){spawnBatches=[];}if(!Array.isArray(spawnBatches))spawnBatches=[];}
   function saveSpawnBatches(){store.set("inoc2_spawn_batches",JSON.stringify(spawnBatches));}
   function suggestSpawnId(d){var a=d.split("-");var base="SPW"+a[0].slice(2)+a[1]+a[2];var ids=spawnBatches.map(function(b){return b.id;});var n=base,i=1;while(ids.indexOf(n)>-1){i++;n=base+"-"+i;}return n;}
-  function clOptions(){var av=batches.filter(function(b){return (b.potesF2Rest||0)>0&&isReady(b);});if(!av.length)return '<option value="">— nenhum CL F2 em estoque —</option>';return av.map(function(b){return '<option value="'+esc(b.id)+'">'+esc(b.id)+' ('+fmt(b.potesF2Rest||0)+' potes)</option>';}).join("");}
-  function updateSpmSummary(){var bo=Math.max(0,Math.floor(num($("spm-bolsas").value))),pe=Math.max(0,num($("spm-peso").value)),tot=Math.round(bo*pe*10)/10;var cl=$("spm-cl").value,po=Math.max(0,Math.floor(num($("spm-clpotes").value)));$("spm-summary").innerHTML=kv("Total de spawn","<b>"+fmt1(tot)+"</b> kg")+kv("Bolsas × peso",fmt(bo)+" × "+fmt1(pe)+" kg")+(cl?kv("Consome de "+esc(cl),fmt(po)+" pote(s) de CL F2"):'<div class="kv" style="color:var(--warn)"><span>CL F2</span><span class="v">sem estoque · registre em Inoculações</span></div>');}
-  function openFabricarSpawn(){var d=todayISO();$("spm-lote").value=suggestSpawnId(d);$("spm-data").value=d;$("spm-cl").innerHTML=clOptions();$("spm-clpotes").value="1";$("spm-bolsas").value="0";$("spm-peso").value="2";$("spm-incub").checked=true;$("spm-obs").value="";updateSpmSummary();$("sp-overlay").classList.add("open");}
+  function clOptions(){var av=batches.filter(function(b){return clMlRest(b)>0&&isReady(b);});if(!av.length)return '<option value="">— nenhum CL F2 em estoque —</option>';return av.map(function(b){return '<option value="'+esc(b.id)+'">'+esc(b.id)+' ('+fmt(clMlRest(b))+' ml)</option>';}).join("");}
+  function updateSpmSummary(){var bo=Math.max(0,Math.floor(num($("spm-bolsas").value))),pe=Math.max(0,num($("spm-peso").value)),tot=Math.round(bo*pe*10)/10;var cl=$("spm-cl").value,ml=Math.max(0,Math.round(num($("spm-clml").value)));$("spm-summary").innerHTML=kv("Total de spawn","<b>"+fmt1(tot)+"</b> kg")+kv("Bolsas × peso",fmt(bo)+" × "+fmt1(pe)+" kg")+(cl?kv("Consome de "+esc(cl),fmt(ml)+" ml de CL F2"):'<div class="kv" style="color:var(--warn)"><span>CL F2</span><span class="v">sem estoque · registre em Inoculações</span></div>');}
+  function openFabricarSpawn(){var d=todayISO();$("spm-lote").value=suggestSpawnId(d);$("spm-data").value=d;$("spm-cl").innerHTML=clOptions();$("spm-clml").value="1";$("spm-bolsas").value="0";$("spm-peso").value="2";$("spm-incub").checked=true;$("spm-obs").value="";updateSpmSummary();$("sp-overlay").classList.add("open");}
   function closeFabricarSpawn(){$("sp-overlay").classList.remove("open");}
   function confirmFabricarSpawn(){var d=$("spm-data").value||todayISO();var id=($("spm-lote").value||"").trim()||suggestSpawnId(d);
     var bo=Math.max(0,Math.floor(num($("spm-bolsas").value))),pe=Math.max(0,num($("spm-peso").value)),tot=Math.round(bo*pe*10)/10,obs=($("spm-obs").value||"").trim();
-    var clId=$("spm-cl").value,po=Math.max(0,Math.floor(num($("spm-clpotes").value)));
-    // baixa de CL F2
-    if(clId&&po>0){var cb=findB(batches,clId);if(cb){var use=Math.min(po,cb.potesF2Rest||0);if(use>0){cb.potesF2Rest-=use;cb.baixas=cb.baixas||[];cb.baixas.push({date:d,qty:use});saveBatches();}}}
+    var clId=$("spm-cl").value,ml=Math.max(0,Math.round(num($("spm-clml").value)));
+    // baixa de CL F2 (ml)
+    if(clId&&ml>0){var cb=findB(batches,clId);if(cb){var rest=clMlRest(cb);var use=Math.min(ml,rest);if(use>0){cb.mlF2Rest=rest-use;cb.baixas=cb.baixas||[];cb.baixas.push({date:d,qty:use});saveBatches();}}}
     var toIncub=$("spm-incub").checked;var dias=spawnDias();
     if(toIncub){var l=newLote("spawn");l.phaseStart=d;l.durSpawn=dias;l.history=[{phase:"spawn",date:d}];l.bolsas=bo;l.pesoBolsa=pe;l.obs=("Spawn "+id+(clId?" · CL "+clId:"")).slice(0,60);saveProd();renderIncub();renderHome();}
     else{spawnBatches.push({id:id,createdAt:d,obs:obs,bolsas:bo,pesoBolsa:pe,totalKg:tot,restante:tot,dias:dias,ready:false,baixas:[]});saveSpawnBatches();}
@@ -1412,6 +1480,20 @@
     var l=newLote("substrato",sd);l.bolsas=bo;l.pesoBolsa=pe;l.container=cont||l.container;l.compUsado=kg;l.spawnUsado=sp;
     saveProd();closeNewSub();renderIncub();renderProd();renderLotes();renderHome();switchTab("page-incub");toast("Substrato "+l.id+" em incubação");}
 
+  /* ---- formulários: novo spawn / nova produção ---- */
+  function spwSummary(){var bo=Math.max(0,Math.floor(num($("spw-bolsas").value))),pe=Math.max(0,num($("spw-peso").value)),di=Math.max(1,Math.floor(num($("spw-dias").value))||14),d=$("spw-data").value||todayISO();
+    $("spw-summary").innerHTML=kv("Bolsas / potes","<b>"+fmt(bo)+"</b>")+kv("Peso / bolsa",fmt1(pe)+" kg")+kv("Total",fmt1(bo*pe)+" kg")+kv("Pronto em",fmtDate(addDays(d,di)));}
+  function openSpawnForm(){$("spw-data").value=(($("nl-data")&&$("nl-data").value)||todayISO());$("spw-dias").value="14";$("spw-bolsas").value="0";$("spw-peso").value="0";$("spw-obs").value="";spwSummary();$("spw-overlay").classList.add("open");}
+  function closeSpawnForm(){$("spw-overlay").classList.remove("open");}
+  function confirmSpawnForm(){var d=$("spw-data").value||todayISO();var l=newLote("spawn",d);l.bolsas=Math.max(0,Math.floor(num($("spw-bolsas").value)));l.pesoBolsa=Math.max(0,num($("spw-peso").value));l.durSpawn=Math.max(1,Math.floor(num($("spw-dias").value))||14);l.obs=($("spw-obs").value||"").trim();saveProd();closeSpawnForm();renderIncub();renderHome();switchTab("page-incub");toast("Lote "+l.id+" iniciado");}
+
+  function prdSummary(){var bo=Math.max(0,Math.floor(num($("prd-bolsas").value))),pe=Math.max(0,num($("prd-peso").value)),um=num($("prd-umid").value),di=Math.max(1,Math.floor(num($("prd-dias").value))||40),d=$("prd-data").value||todayISO();
+    var ms=bo*pe*(1-um/100);
+    $("prd-summary").innerHTML=kv("Bolsas","<b>"+fmt(bo)+"</b>")+kv("Substrato",fmt1(bo*pe)+" kg")+kv("Matéria seca",fmt1(ms)+" kg")+kv("Frutificação até",fmtDate(addDays(d,di)));}
+  function openProdForm(){$("prd-data").value=todayISO();$("prd-dias").value="40";$("prd-cont").innerHTML=contOptions(null);$("prd-bolsas").value="0";$("prd-peso").value="0";$("prd-umid").value="68";$("prd-obs").value="";prdSummary();$("prd-overlay").classList.add("open");}
+  function closeProdForm(){$("prd-overlay").classList.remove("open");}
+  function confirmProdForm(){var d=$("prd-data").value||todayISO();var l=newLote("container",d);l.bolsas=Math.max(0,Math.floor(num($("prd-bolsas").value)));l.pesoBolsa=Math.max(0,num($("prd-peso").value));l.umidade=num($("prd-umid").value)||68;l.durCont=Math.max(1,Math.floor(num($("prd-dias").value))||40);l.container=$("prd-cont").value||l.container;l.obs=($("prd-obs").value||"").trim();saveProd();closeProdForm();renderProd();renderHome();switchTab("page-prod");toast("Lote "+l.id+" em produção");}
+
   /* =================== DESCARTE =================== */
   var descTargetId=null;
   function openDescarte(id){descTargetId=id;$("dcm-bolsas").value="1";$("dcm-data").value=todayISO();$("dcm-motivo").value="Contaminação";$("dc-overlay").classList.add("open");}
@@ -1428,7 +1510,7 @@
     var ativas=0,vol=0;prodLotes.forEach(function(l){if(l.phase==="container"){var a=loteAtivas(l);ativas+=a;vol+=a*(l.pesoBolsa||0);}});
     var denom=contam30+ativas,taxa=denom>0?contam30/denom*100:0;
     set("kpi-san",denom>0?fmt1(100-taxa)+'<small>%</small>':'–');
-    set("kpi-ativas",fmt(ativas));set("kpi-ativas-s",fmt1(vol)+' kg de substrato');
+    set("kpi-ativas",fmt(ativas)+'<small>bolsas</small>');set("kpi-ativas-s",fmt1(vol)+' kg de substrato');
     var colh30=0;prodLotes.forEach(function(l){(l.colheitas||[]).forEach(function(c){if(c.date>=since)colh30+=(c.peso||0);});});
     set("kpi-colh",fmt1(colh30)+'<small>kg</small>');
     set("kpi-contam",fmt1(taxa)+'<small>%</small>');$("kpi-contam-r").textContent=fmt(contam30)+" bolsa(s) · 30d";
@@ -1516,6 +1598,7 @@
 
   $("m-cancel").addEventListener("click",closeFabricar);
   $("m-confirm").addEventListener("click",confirmFabricar);
+  if($("m-qty")){$("m-qty").addEventListener("input",function(){if(modalMode==="cl")clFabSummary();});$("m-qty").addEventListener("focus",function(){this.select();});}
   $("overlay").addEventListener("click",function(e){if(e.target.id==="overlay")closeFabricar();});
 
   // spawn
@@ -1524,9 +1607,16 @@
   // lotes de produção
   $("novoLoteBtn").addEventListener("click",openNewLote);
   $("nl-cancel").addEventListener("click",closeNewLote);
-  $("nl-spawn").addEventListener("click",function(){closeNewLote();var d=($("nl-data")&&$("nl-data").value)||todayISO();var l=newLote("spawn",d);renderIncub();renderHome();toast("Lote "+l.id+" iniciado");});
+  $("nl-spawn").addEventListener("click",function(){closeNewLote();openSpawnForm();});
   $("nl-sub").addEventListener("click",function(){closeNewLote();openNewSub();});
+  $("spw-cancel").addEventListener("click",closeSpawnForm);$("spw-confirm").addEventListener("click",confirmSpawnForm);
+  ["spw-data","spw-dias","spw-bolsas","spw-peso"].forEach(function(id){var e=$(id);if(e)e.addEventListener("input",spwSummary);});
+  $("prd-cancel").addEventListener("click",closeProdForm);$("prd-confirm").addEventListener("click",confirmProdForm);
+  ["prd-data","prd-dias","prd-bolsas","prd-peso","prd-umid"].forEach(function(id){var e=$(id);if(e)e.addEventListener("input",prdSummary);});
+  if($("prd-cont"))$("prd-cont").addEventListener("change",prdSummary);
   $("sub-cancel").addEventListener("click",closeNewSub);
+  $("send-cancel").addEventListener("click",closeSend);$("send-confirm").addEventListener("click",confirmSend);
+  if($("send-qty"))$("send-qty").addEventListener("input",sendSummary);
   $("sub-confirm").addEventListener("click",confirmNewSub);
   $("sub-kg").addEventListener("input",subFromComposto);$("sub-kg").addEventListener("focus",function(){this.select();});
   $("sub-spawnkg").addEventListener("input",subFromSpawn);$("sub-spawnkg").addEventListener("focus",function(){this.select();});
@@ -1536,7 +1626,7 @@
   $("sub-comp").addEventListener("change",function(){if(this.value!=="manual"){var cb=findB(compBatches,this.value);if(cb){$("sub-kg").value=fmtP(cb.pesoUmidoRest);subFromComposto();return;}}updateSubSummary();});
   $("sub-spw").addEventListener("change",updateSubSummary);
   $("sub-cont").addEventListener("change",updateSubSummary);
-  $("novoProdBtn").addEventListener("click",function(){var l=newLote("container");renderProd();toast("Lote "+l.id+" em produção");});
+  $("novoProdBtn").addEventListener("click",openProdForm);
   $("incub-list").addEventListener("click",prodClick);
   $("incub-list").addEventListener("change",prodChange);
   $("prod-list").addEventListener("click",prodClick);
@@ -1548,7 +1638,7 @@
   $("exportPdfBtn").addEventListener("click",exportChartsPDF);
   // fabricar spawn
   $("fabricarSpawnBtn").addEventListener("click",openFabricarSpawn);
-  ["spm-bolsas","spm-peso","spm-clpotes"].forEach(function(id){$(id).addEventListener("input",updateSpmSummary);$(id).addEventListener("focus",function(){this.select();});});
+  ["spm-bolsas","spm-peso","spm-clml"].forEach(function(id){$(id).addEventListener("input",updateSpmSummary);$(id).addEventListener("focus",function(){this.select();});});
   $("spm-cl").addEventListener("change",updateSpmSummary);
   $("spm-cancel").addEventListener("click",closeFabricarSpawn);
   $("spm-confirm").addEventListener("click",confirmFabricarSpawn);
@@ -1617,7 +1707,7 @@
   function openSync(){syncLoadCfg();$("sy-url").value=SYNC.url;$("sy-anon").value=SYNC.anon;$("sy-ws").value=SYNC.ws;syncStatus(SYNC.enabled?"ok":"off");$("sync-overlay").classList.add("open");}
   function closeSync(){$("sync-overlay").classList.remove("open");}
 
-  loadContainers();loadStockLog();loadP();loadComp();loadSpawn();loadBatches();loadProd();loadSpawnBatches();renderP();renderSpawn();renderLotes();renderIncub();renderProd();renderHome();renderLog();
+  loadContainers();loadStockLog();loadP();loadComp();loadSpawn();loadBatches();loadProd();loadSpawnBatches();migrateSpawnWeekly();renderP();renderSpawn();renderLotes();renderIncub();renderProd();renderHome();renderLog();
 
   // sincronização: wiring + init
   (function(){

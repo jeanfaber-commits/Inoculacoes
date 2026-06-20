@@ -716,8 +716,7 @@
 
 <div class="overlay" id="spw-overlay"><div class="sheet"><div class="sheet-grab"></div>
   <h2>Novo lote de spawn</h2><p class="sub2">Grão de sorgo colonizado pela CL F2. Preencha e confirme para registrar na incubação.</p>
-  <div class="new-meta"><div class="m-field" style="flex:1;margin:0"><label>Data de início</label><input id="spw-data" type="date"></div>
-    <div class="m-field" style="flex:1;margin:0"><label>Colonização (dias)</label><input id="spw-dias" type="text" inputmode="numeric" value="14"></div></div>
+  <div class="m-field"><label>Data de início</label><input id="spw-data" type="date"></div>
   <div class="new-meta"><div class="m-field" style="flex:1;margin:0"><label>Bolsas / potes</label><input id="spw-bolsas" type="text" inputmode="numeric" value="0"></div>
     <div class="m-field" style="flex:1;margin:0"><label>Peso / bolsa (kg)</label><input id="spw-peso" type="text" inputmode="decimal" value="0"></div></div>
   <div class="m-field"><label>Observação (opcional)</label><input id="spw-obs" type="text" placeholder="ex.: linhagem, origem da CL F2"></div>
@@ -727,8 +726,7 @@
 
 <div class="overlay" id="prd-overlay"><div class="sheet"><div class="sheet-grab"></div>
   <h2>Novo lote em produção</h2><p class="sub2">Bolsas já em frutificação no contêiner. Preencha e confirme para registrar na produção.</p>
-  <div class="new-meta"><div class="m-field" style="flex:1;margin:0"><label>Data de início</label><input id="prd-data" type="date"></div>
-    <div class="m-field" style="flex:1;margin:0"><label>Frutificação (dias)</label><input id="prd-dias" type="text" inputmode="numeric" value="40"></div></div>
+  <div class="m-field"><label>Data de início</label><input id="prd-data" type="date"></div>
   <div class="m-field"><label>Contêiner</label><select id="prd-cont"></select></div>
   <div class="new-meta"><div class="m-field" style="flex:1;margin:0"><label>Bolsas</label><input id="prd-bolsas" type="text" inputmode="numeric" value="0"></div>
     <div class="m-field" style="flex:1;margin:0"><label>Peso / bolsa (kg)</label><input id="prd-peso" type="text" inputmode="decimal" value="0"></div></div>
@@ -1481,18 +1479,18 @@
     saveProd();closeNewSub();renderIncub();renderProd();renderLotes();renderHome();switchTab("page-incub");toast("Substrato "+l.id+" em incubação");}
 
   /* ---- formulários: novo spawn / nova produção ---- */
-  function spwSummary(){var bo=Math.max(0,Math.floor(num($("spw-bolsas").value))),pe=Math.max(0,num($("spw-peso").value)),di=Math.max(1,Math.floor(num($("spw-dias").value))||14),d=$("spw-data").value||todayISO();
-    $("spw-summary").innerHTML=kv("Bolsas / potes","<b>"+fmt(bo)+"</b>")+kv("Peso / bolsa",fmt1(pe)+" kg")+kv("Total",fmt1(bo*pe)+" kg")+kv("Pronto em",fmtDate(addDays(d,di)));}
-  function openSpawnForm(){$("spw-data").value=(($("nl-data")&&$("nl-data").value)||todayISO());$("spw-dias").value="14";$("spw-bolsas").value="0";$("spw-peso").value="0";$("spw-obs").value="";spwSummary();$("spw-overlay").classList.add("open");}
+  function spwSummary(){var bo=Math.max(0,Math.floor(num($("spw-bolsas").value))),pe=Math.max(0,num($("spw-peso").value)),di=14,d=$("spw-data").value||todayISO();
+    $("spw-summary").innerHTML=kv("Bolsas / potes","<b>"+fmt(bo)+"</b>")+kv("Peso / bolsa",fmt1(pe)+" kg")+kv("Total",fmt1(bo*pe)+" kg")+kv("Pronto em",fmtDate(addDays(d,di))+" (padrão "+di+" dias)");}
+  function openSpawnForm(){$("spw-data").value=(($("nl-data")&&$("nl-data").value)||todayISO());$("spw-bolsas").value="0";$("spw-peso").value="0";$("spw-obs").value="";spwSummary();$("spw-overlay").classList.add("open");}
   function closeSpawnForm(){$("spw-overlay").classList.remove("open");}
-  function confirmSpawnForm(){var d=$("spw-data").value||todayISO();var l=newLote("spawn",d);l.bolsas=Math.max(0,Math.floor(num($("spw-bolsas").value)));l.pesoBolsa=Math.max(0,num($("spw-peso").value));l.durSpawn=Math.max(1,Math.floor(num($("spw-dias").value))||14);l.obs=($("spw-obs").value||"").trim();saveProd();closeSpawnForm();renderIncub();renderHome();switchTab("page-incub");toast("Lote "+l.id+" iniciado");}
+  function confirmSpawnForm(){var d=$("spw-data").value||todayISO();var l=newLote("spawn",d);l.bolsas=Math.max(0,Math.floor(num($("spw-bolsas").value)));l.pesoBolsa=Math.max(0,num($("spw-peso").value));l.obs=($("spw-obs").value||"").trim();saveProd();closeSpawnForm();renderIncub();renderHome();switchTab("page-incub");toast("Lote "+l.id+" iniciado");}
 
-  function prdSummary(){var bo=Math.max(0,Math.floor(num($("prd-bolsas").value))),pe=Math.max(0,num($("prd-peso").value)),um=num($("prd-umid").value),di=Math.max(1,Math.floor(num($("prd-dias").value))||40),d=$("prd-data").value||todayISO();
+  function prdSummary(){var bo=Math.max(0,Math.floor(num($("prd-bolsas").value))),pe=Math.max(0,num($("prd-peso").value)),um=num($("prd-umid").value),di=40,d=$("prd-data").value||todayISO();
     var ms=bo*pe*(1-um/100);
-    $("prd-summary").innerHTML=kv("Bolsas","<b>"+fmt(bo)+"</b>")+kv("Substrato",fmt1(bo*pe)+" kg")+kv("Matéria seca",fmt1(ms)+" kg")+kv("Frutificação até",fmtDate(addDays(d,di)));}
-  function openProdForm(){$("prd-data").value=todayISO();$("prd-dias").value="40";$("prd-cont").innerHTML=contOptions(null);$("prd-bolsas").value="0";$("prd-peso").value="0";$("prd-umid").value="68";$("prd-obs").value="";prdSummary();$("prd-overlay").classList.add("open");}
+    $("prd-summary").innerHTML=kv("Bolsas","<b>"+fmt(bo)+"</b>")+kv("Substrato",fmt1(bo*pe)+" kg")+kv("Matéria seca",fmt1(ms)+" kg")+kv("Frutificação até",fmtDate(addDays(d,di))+" (padrão "+di+" dias)");}
+  function openProdForm(){$("prd-data").value=todayISO();$("prd-cont").innerHTML=contOptions(null);$("prd-bolsas").value="0";$("prd-peso").value="0";$("prd-umid").value="68";$("prd-obs").value="";prdSummary();$("prd-overlay").classList.add("open");}
   function closeProdForm(){$("prd-overlay").classList.remove("open");}
-  function confirmProdForm(){var d=$("prd-data").value||todayISO();var l=newLote("container",d);l.bolsas=Math.max(0,Math.floor(num($("prd-bolsas").value)));l.pesoBolsa=Math.max(0,num($("prd-peso").value));l.umidade=num($("prd-umid").value)||68;l.durCont=Math.max(1,Math.floor(num($("prd-dias").value))||40);l.container=$("prd-cont").value||l.container;l.obs=($("prd-obs").value||"").trim();saveProd();closeProdForm();renderProd();renderHome();switchTab("page-prod");toast("Lote "+l.id+" em produção");}
+  function confirmProdForm(){var d=$("prd-data").value||todayISO();var l=newLote("container",d);l.bolsas=Math.max(0,Math.floor(num($("prd-bolsas").value)));l.pesoBolsa=Math.max(0,num($("prd-peso").value));l.umidade=num($("prd-umid").value)||68;l.container=$("prd-cont").value||l.container;l.obs=($("prd-obs").value||"").trim();saveProd();closeProdForm();renderProd();renderHome();switchTab("page-prod");toast("Lote "+l.id+" em produção");}
 
   /* =================== DESCARTE =================== */
   var descTargetId=null;
@@ -1610,9 +1608,9 @@
   $("nl-spawn").addEventListener("click",function(){closeNewLote();openSpawnForm();});
   $("nl-sub").addEventListener("click",function(){closeNewLote();openNewSub();});
   $("spw-cancel").addEventListener("click",closeSpawnForm);$("spw-confirm").addEventListener("click",confirmSpawnForm);
-  ["spw-data","spw-dias","spw-bolsas","spw-peso"].forEach(function(id){var e=$(id);if(e)e.addEventListener("input",spwSummary);});
+  ["spw-data","spw-bolsas","spw-peso"].forEach(function(id){var e=$(id);if(e)e.addEventListener("input",spwSummary);});
   $("prd-cancel").addEventListener("click",closeProdForm);$("prd-confirm").addEventListener("click",confirmProdForm);
-  ["prd-data","prd-dias","prd-bolsas","prd-peso","prd-umid"].forEach(function(id){var e=$(id);if(e)e.addEventListener("input",prdSummary);});
+  ["prd-data","prd-bolsas","prd-peso","prd-umid"].forEach(function(id){var e=$(id);if(e)e.addEventListener("input",prdSummary);});
   if($("prd-cont"))$("prd-cont").addEventListener("change",prdSummary);
   $("sub-cancel").addEventListener("click",closeNewSub);
   $("send-cancel").addEventListener("click",closeSend);$("send-confirm").addEventListener("click",confirmSend);

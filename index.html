@@ -379,6 +379,44 @@
   .choice-tx{display:flex;flex-direction:column;}
   .choice-tx b{font-size:15px;color:var(--ink);}
   .choice-tx small{font-size:12.5px;color:var(--ink-faint);margin-top:2px;}
+  /* auditoria fotográfica */
+  .audit-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:7px;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:11px;margin-top:8px;font-family:var(--sans);font-weight:600;font-size:13.5px;color:var(--ink-soft);cursor:pointer;}
+  .audit-btn svg{width:17px;height:17px;}
+  .audit-btn:active{opacity:.7;}
+  .audit-btn.overdue{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-deep);}
+  .aud-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .aud-x{background:none;border:none;font-size:20px;color:var(--ink-faint);cursor:pointer;padding:2px 6px;line-height:1;}
+  .aud-due{background:var(--surface-2);border-radius:10px;padding:9px 12px;font-size:12.5px;color:var(--ink-soft);margin:10px 0;}
+  .aud-card{display:flex;gap:11px;background:var(--surface);border:1px solid var(--line-soft);border-radius:13px;padding:10px;margin-bottom:9px;}
+  .aud-card img{width:84px;height:84px;object-fit:cover;border-radius:9px;flex:none;background:var(--surface-2);}
+  .aud-info{flex:1;min-width:0;}
+  .aud-row{display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .aud-day{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink);}
+  .aud-badge{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:99px;text-transform:uppercase;letter-spacing:.02em;}
+  .aud-badge.ok{background:var(--green-soft);color:var(--green);} .aud-badge.warn{background:var(--accent-soft);color:var(--accent-deep);}
+  .aud-badge.susp{background:#F6E5C9;color:#9A5C1E;} .aud-badge.bad{background:#F3D8D2;color:#B03A2A;}
+  .aud-cov{font-size:13px;color:var(--ink);margin-top:4px;} .aud-exp{font-size:11.5px;color:var(--ink-faint);}
+  .aud-meta{font-size:11px;color:var(--ink-faint);margin-top:2px;font-family:var(--serif);}
+  .aud-sus{font-size:11.5px;color:#B03A2A;margin-top:4px;font-weight:600;}
+  .aud-note{font-size:12px;color:var(--ink-soft);margin-top:4px;font-style:italic;}
+  .aud-del{background:none;border:none;color:var(--ink-faint);font-size:11px;text-decoration:underline;cursor:pointer;padding:4px 0 0;}
+  .ok{color:var(--green);} .warn{color:var(--accent-deep);} .bad{color:#B03A2A;}
+  .shot-wrap{background:#1a241f;border-radius:12px;overflow:hidden;display:flex;justify-content:center;margin-bottom:10px;}
+  #shot-canvas{max-width:100%;max-height:46vh;display:block;}
+  .shot-readout{display:flex;gap:12px;align-items:center;background:var(--surface-2);border-radius:11px;padding:10px 13px;margin-bottom:8px;}
+  .shot-cov{display:flex;flex-direction:column;flex:none;} .shot-cov .lab{font-size:11px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.04em;} .shot-cov .val{font-size:26px;font-weight:800;color:var(--green);font-family:var(--mono);}
+  .shot-flags{flex:1;min-width:0;font-size:12px;} .shot-exp{color:var(--ink-soft);margin-bottom:3px;}
+  .shot-ctrl{margin:8px 0;} .shot-ctrl label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:5px;}
+  .shot-ctrl input[type=range]{width:100%;accent-color:var(--green);}
+  .shot-toggle{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px;font-family:var(--sans);font-weight:600;font-size:13px;color:var(--ink-faint);cursor:pointer;margin-bottom:6px;}
+  .shot-toggle.on{background:var(--green-soft);border-color:var(--green);color:var(--green);}
+  .aud-sample{background:var(--surface-2);border-radius:10px;padding:9px 12px;font-size:12.5px;color:var(--ink-soft);margin-bottom:8px;}
+  .aud-chart{background:var(--surface);border:1px solid var(--line-soft);border-radius:12px;padding:10px 8px 6px;margin-bottom:10px;}
+  .aud-leg{display:flex;gap:16px;justify-content:center;margin-top:4px;font-size:11px;color:var(--ink-faint);}
+  .aud-leg i{display:inline-block;vertical-align:middle;margin-right:5px;}
+  .aud-leg .li-ideal{width:16px;height:0;border-top:2.5px solid var(--green);}
+  .aud-leg .li-obs{width:10px;height:10px;border-radius:50%;background:var(--accent);border:1px solid #fff;box-shadow:0 0 0 1px var(--accent);}
+  #shot-canvas{max-width:100%;max-height:46vh;display:block;cursor:crosshair;touch-action:none;}
 
 </style>
 </head>
@@ -743,6 +781,30 @@
   <div class="m-summary" id="send-summary"></div>
   <p class="sub2" style="margin:4px 2px">As bolsas restantes continuam na incubação. Ao enviar de novo, elas entram <b>no mesmo lote de produção</b>.</p>
   <div class="m-actions"><button class="m-cancel" id="send-cancel">Cancelar</button><button class="m-confirm" id="send-confirm">Enviar</button></div>
+</div></div>
+
+<input type="file" id="audit-file" accept="image/*" style="display:none">
+<div class="overlay" id="audit-overlay"><div class="sheet"><div class="sheet-grab"></div>
+  <div class="aud-head"><div><h2 style="margin:0" id="audit-title">Lote</h2><p class="sub2" id="audit-sub" style="margin:2px 0 0"></p></div><button class="aud-x" id="audit-close">✕</button></div>
+  <div class="aud-due" id="audit-due"></div>
+  <div class="aud-sample" id="audit-sample"></div>
+  <div class="aud-chart" id="audit-chart"></div>
+  <button class="m-confirm" id="audit-new" style="width:100%;margin:4px 0 12px"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>Nova foto</button>
+  <div id="audit-list"></div>
+  <p class="sub2" style="margin:10px 2px 0;font-size:11.5px">A cobertura é uma estimativa por análise de cor (offline, sem IA) — use como apoio à sua avaliação, não como diagnóstico. As fotos ficam neste aparelho e, com a sincronização ativa, também são salvas no seu projeto na nuvem (Supabase).</p>
+</div></div>
+
+<div class="overlay" id="shot-overlay"><div class="sheet"><div class="sheet-grab"></div>
+  <h2>Avaliar foto</h2><p class="sub2">Enquadre a bolsa na área clara. Ajuste a sensibilidade até a área destacada cobrir o micélio.</p>
+  <div class="shot-wrap"><canvas id="shot-canvas"></canvas></div>
+  <p class="sub2" style="margin:-2px 2px 8px">Arraste a moldura sobre a bolsa; arraste o <b>canto</b> para redimensionar.</p>
+  <div class="shot-readout"><div class="shot-cov"><span class="lab">Micélio</span><span class="val" id="shot-cov">≈ 0%</span></div><div class="shot-flags"><div id="shot-exp" class="shot-exp"></div><div id="shot-sus"></div></div></div>
+  <div class="shot-ctrl"><label>Sensibilidade <span style="color:var(--ink-faint);font-weight:400">(o que conta como branco)</span></label><input type="range" id="shot-thr" min="35" max="85" value="62"></div>
+  <div class="sy-row" style="margin-bottom:6px"><button class="shot-toggle on" id="shot-hi" style="flex:1">Mostrar área detectada</button><button class="shot-toggle" id="shot-reset" style="flex:1">Reenquadrar</button></div>
+  <div class="new-meta"><div class="m-field" style="flex:0 0 90px;margin:0"><label>Bolsa nº</label><input id="shot-bag" type="text" inputmode="numeric" value="1"></div>
+    <div class="m-field" style="flex:1;margin:0"><label>Avaliação</label><select id="shot-status"><option value="no_ritmo">No ritmo</option><option value="atrasado">Atrasado</option><option value="suspeita">Suspeita de contaminação</option><option value="contaminado">Contaminado</option><option value="pronto">Pronto</option></select></div></div>
+  <div class="m-field"><label>Nota (opcional)</label><input id="shot-note" type="text" placeholder="ex.: micélio firme, sem odor"></div>
+  <div class="m-actions"><button class="m-cancel" id="shot-cancel">Cancelar</button><button class="m-confirm" id="shot-save">Salvar foto</button></div>
 </div></div>
 
 <script>
@@ -1124,7 +1186,7 @@
         +'<div class="bar-track"><div class="bar-fill" style="width:'+pv+'%"></div></div>'
         +'<div class="prod-fields" style="grid-template-columns:1fr"><div class="field"><label>'+bolsasLabel+'</label><div class="in"><input type="text" inputmode="numeric" data-act="set-bolsas" value="'+(l.bolsas||0)+'"></div></div></div>'
         +sanBox(l)
-        +advBtn
+        +advBtn+auditBtn(l)
         +'<details class="lote-toggle"><summary><span class="chev">▶</span> Cronograma, descarte e ajustes</summary>'
           +'<div class="det-block"><h4>Cronograma</h4>'+kv("Spawn inicia",fmtDate(s0))+kv("Substrato (mistura)",'≈ '+fmtDate(addDays(s0,l.durSpawn||14)))+kv("Frutificação",'≈ '+fmtDate(addDays(s0,(l.durSpawn||14)+(l.durSub||14))))+kv("Fim",'≈ '+fmtDate(addDays(s0,(l.durSpawn||14)+(l.durSub||14)+(l.durCont||40))))+(l.compUsado?'</div><div class="det-block"><h4>Mistura</h4>'+kv("Composto usado",fmt1(l.compUsado)+" kg")+kv("Spawn usado",fmt1(l.spawnUsado||0)+" kg"):"")+'</div>'
           +discardBtn()+descBlock(l)
@@ -1145,7 +1207,7 @@
         +'<div class="field"><label>Peso/bolsa</label><div class="in"><input type="text" inputmode="decimal" data-act="set-peso" value="'+fmtP(l.pesoBolsa||0)+'"><span class="suffix">kg</span></div></div>'
         +'<div class="field"><label>Umidade</label><div class="in"><input type="text" inputmode="decimal" data-act="set-umid" value="'+fmtP(l.umidade||0)+'"><span class="suffix">%</span></div></div></div>'
       +'<div class="eb-box"><div class="lab">Eficiência Biológica<small>colheita ÷ matéria seca</small></div><div class="v">'+fmt1(e.eb)+'<small>%</small></div></div>'
-      +sanBox(l)
+      +sanBox(l)+auditBtn(l)
       +'<div class="det-block" style="margin-top:8px">'+kv("Substrato úmido",fmt1(e.umido)+" kg")+kv("Matéria seca",fmt1(e.ms)+" kg")+(l.compUsado?kv("Composto usado",fmt1(l.compUsado)+" kg"):"")+kv("Colheita total",fmt1(e.col)+" kg")+kv("Rendimento (úmido)",fmt1(e.umido>0?e.col/e.umido*100:0)+"%")+kv("Bolsas ativas",fmt(loteAtivas(l))+" de "+fmt(l.bolsas||0))+'</div>'
       +'<div class="colheita-add"><input type="date" class="cdate" value="'+todayISO()+'"><input type="text" inputmode="decimal" class="cpeso cph" placeholder="kg"><button data-act="add-colheita">+ Colheita</button></div>'
       +'<details class="lote-toggle"><summary><span class="chev">▶</span> Colheitas, contêiner e ajustes</summary>'
@@ -1180,6 +1242,7 @@
   function prodClick(e){var card=e.target.closest('.lote[data-kind="prod"]');if(!card)return;var id=card.getAttribute("data-id");var act=e.target.getAttribute("data-act")||(e.target.closest("[data-act]")&&e.target.closest("[data-act]").getAttribute("data-act"));if(!act)return;
     if(act==="advance"){advance(id);return;}
     if(act==="send"){openSend(id);return;}
+    if(act==="audit"){openAudit(id);return;}
     if(act==="mix"){openMix(id);return;}
     if(act==="spawnready"){var l=findP2(id);if(l){l.spawnReady=true;saveProd();renderIncub();renderHome();toast(l.id+" · spawn pronto ✓");}return;}
     if(act==="del"){if(!confirm("Excluir lote "+id+"?"))return;prodLotes=prodLotes.filter(function(x){return x.id!==id;});saveProd();renderIncub();renderProd();renderHome();toast("Lote excluído");return;}
@@ -1615,6 +1678,16 @@
   $("sub-cancel").addEventListener("click",closeNewSub);
   $("send-cancel").addEventListener("click",closeSend);$("send-confirm").addEventListener("click",confirmSend);
   if($("send-qty"))$("send-qty").addEventListener("input",sendSummary);
+  if($("audit-close"))$("audit-close").addEventListener("click",closeAudit);
+  if($("audit-new"))$("audit-new").addEventListener("click",function(){$("audit-file").click();});
+  if($("audit-file"))$("audit-file").addEventListener("change",onAuditFile);
+  if($("audit-list"))$("audit-list").addEventListener("click",auditListClick);
+  if($("shot-cancel"))$("shot-cancel").addEventListener("click",closeShot);
+  if($("shot-save"))$("shot-save").addEventListener("click",saveShot);
+  if($("shot-thr"))$("shot-thr").addEventListener("input",runAnalysis);
+  if($("shot-reset"))$("shot-reset").addEventListener("click",function(){cropBox={x:0.12,y:0.12,w:0.76,h:0.76};runAnalysis();});
+  if($("shot-canvas")){var sc=$("shot-canvas");sc.style.touchAction="none";sc.addEventListener("pointerdown",shotDown);sc.addEventListener("pointermove",shotMove);sc.addEventListener("pointerup",shotUp);sc.addEventListener("pointercancel",shotUp);}
+  if($("shot-hi"))$("shot-hi").addEventListener("click",function(){shotHi=!shotHi;this.classList.toggle("on",shotHi);runAnalysis();});
   $("sub-confirm").addEventListener("click",confirmNewSub);
   $("sub-kg").addEventListener("input",subFromComposto);$("sub-kg").addEventListener("focus",function(){this.select();});
   $("sub-spawnkg").addEventListener("input",subFromSpawn);$("sub-spawnkg").addEventListener("focus",function(){this.select();});
@@ -1704,6 +1777,135 @@
   function syncApplyCode(code){try{var o=JSON.parse(decodeURIComponent(escape(atob((code||"").trim()))));if(o.u)$("sy-url").value=o.u;if(o.a)$("sy-anon").value=o.a;if(o.w)$("sy-ws").value=o.w;toast("Código aplicado · toque em Conectar");}catch(e){toast("Código inválido");}}
   function openSync(){syncLoadCfg();$("sy-url").value=SYNC.url;$("sy-anon").value=SYNC.anon;$("sy-ws").value=SYNC.ws;syncStatus(SYNC.enabled?"ok":"off");$("sync-overlay").classList.add("open");}
   function closeSync(){$("sync-overlay").classList.remove("open");}
+
+  /* fotos da auditoria na nuvem (tabela audit_photos no mesmo projeto Supabase) */
+  function photosBase(){return SYNC.url.replace(/\/+$/,"")+"/rest/v1/audit_photos";}
+  function syncPhotoPush(loteId,entry){if(!SYNC.enabled)return;try{fetch(photosBase()+"?on_conflict=id",{method:"POST",headers:syncHeaders({Prefer:"resolution=merge-duplicates,return=minimal"}),body:JSON.stringify({id:entry.id,ws:SYNC.ws,lote:loteId,data:entry})}).catch(function(){});}catch(e){}}
+  function syncPhotoDelete(id){if(!SYNC.enabled)return;try{fetch(photosBase()+"?id=eq."+encodeURIComponent(id),{method:"DELETE",headers:syncHeaders({Prefer:"return=minimal"})}).catch(function(){});}catch(e){}}
+  function syncPhotoPull(loteId){if(!SYNC.enabled)return;try{fetch(photosBase()+"?ws=eq."+encodeURIComponent(SYNC.ws)+"&lote=eq."+encodeURIComponent(loteId)+"&select=id,data",{headers:syncHeaders()})
+    .then(function(r){return r.ok?r.json():[];})
+    .then(function(rows){if(!rows||!rows.length)return;var local=loadAudit(loteId),byId={};local.forEach(function(e){byId[e.id]=1;});var ch=false;
+      rows.forEach(function(row){var e=row.data;if(e&&e.id&&!byId[e.id]){local.push(e);byId[e.id]=1;ch=true;}});
+      if(ch){try{saveAuditArr(loteId,local);}catch(e){}if(auditLoteId===loteId)renderAuditList();renderIncub();renderProd();renderHome();}})
+    .catch(function(){});}catch(e){}}
+
+  /* =================== AUDITORIA FOTOGRÁFICA (offline) =================== */
+  var AUDIT_INTERVAL=3;
+  function auditKey(id){return "audit2_"+id;}
+  function loadAudit(id){try{return JSON.parse(store.get(auditKey(id))||"[]");}catch(e){return [];}}
+  function saveAuditArr(id,arr){store.set(auditKey(id),JSON.stringify(arr));}
+  function auditCount(id){return loadAudit(id).length;}
+  function auditDaysSince(id){var a=loadAudit(id);if(!a.length)return null;var mx=a[0].date;a.forEach(function(e){if(e.date>mx)mx=e.date;});return dateDiff(mx,todayISO());}
+  function auditOverdue(l){var ds=auditDaysSince(l.id);if(ds==null)return daysElapsed(l.phaseStart)>=AUDIT_INTERVAL;return ds>=AUDIT_INTERVAL;}
+  function auditBtn(l){var n=auditCount(l.id),ov=auditOverdue(l);
+    return '<button class="audit-btn'+(ov?' overdue':'')+'" data-act="audit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Auditoria · '+n+' foto(s)'+(ov?' · pendente':'')+'</button>';}
+  function expectedCov(de,dur){return Math.round(idealCov(de,dur));}
+  function idealCov(t,dur){if(dur<=0)return 0;if(t<=0)return 0;if(t>=dur)return 100;var k=9/dur,t0=0.45*dur,raw=function(x){return 1/(1+Math.exp(-k*(x-t0)));},r0=raw(0),r1=raw(dur);if(r1<=r0)return Math.max(0,Math.min(100,t/dur*100));return Math.max(0,Math.min(100,(raw(t)-r0)/(r1-r0)*100));}
+  function samplePct(l){return l.phase==="spawn"?0.20:0.05;}
+  function sampleTarget(l){return Math.max(1,Math.ceil((l.bolsas||0)*samplePct(l)));}
+  function bagsSampled(id,phase){var s={};loadAudit(id).forEach(function(e){if(e.phase===phase&&e.bag)s[e.bag]=1;});return Object.keys(s).length;}
+  function auditChart(l,entries){
+    var dur=phaseDur(l);if(dur<=0)dur=14;var W=304,H=156,pL=26,pR=8,pT=10,pB=22,pw=W-pL-pR,ph=H-pT-pB;
+    function X(t){return pL+(t/dur)*pw;}function Y(c){return pT+(1-c/100)*ph;}
+    var grid="";[0,50,100].forEach(function(c){var y=Y(c).toFixed(1);grid+='<line x1="'+pL+'" y1="'+y+'" x2="'+(W-pR)+'" y2="'+y+'" stroke="var(--line-soft)" stroke-width="1"/><text x="'+(pL-4)+'" y="'+(Y(c)+3).toFixed(1)+'" text-anchor="end" font-size="9" fill="var(--ink-faint)">'+c+'</text>';});
+    var ip="";for(var t=0;t<=dur;t++){ip+=(t===0?"M":"L")+X(t).toFixed(1)+" "+Y(idealCov(t,dur)).toFixed(1)+" ";}
+    var byDay={};entries.forEach(function(e){if(e.phase!==l.phase)return;(byDay[e.de]=byDay[e.de]||[]).push(e.cov);});
+    var days=Object.keys(byDay).map(Number).sort(function(a,b){return a-b;});
+    var ol="",dots="";days.forEach(function(d,i){var a=byDay[d].reduce(function(s,v){return s+v;},0)/byDay[d].length;ol+=(i===0?"M":"L")+X(d).toFixed(1)+" "+Y(a).toFixed(1)+" ";dots+='<circle cx="'+X(d).toFixed(1)+'" cy="'+Y(a).toFixed(1)+'" r="3.4" fill="var(--accent)" stroke="#fff" stroke-width="1"/>';});
+    var de=daysElapsed(l.phaseStart),tl=(de>=0&&de<=dur)?'<line x1="'+X(de).toFixed(1)+'" y1="'+pT+'" x2="'+X(de).toFixed(1)+'" y2="'+(H-pB)+'" stroke="var(--green)" stroke-width="1" stroke-dasharray="2 3"/>':"";
+    var xl='<text x="'+pL+'" y="'+(H-7)+'" font-size="9" fill="var(--ink-faint)">dia 0</text><text x="'+(W-pR)+'" y="'+(H-7)+'" text-anchor="end" font-size="9" fill="var(--ink-faint)">dia '+dur+'</text>';
+    var oPath=days.length?'<path d="'+ol+'" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3"/>':"";
+    return '<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block">'+grid+tl+'<path d="'+ip+'" fill="none" stroke="var(--green)" stroke-width="2.2"/>'+oPath+dots+xl+'</svg>'
+      +'<div class="aud-leg"><span><i class="li-ideal"></i> curva ideal</span><span><i class="li-obs"></i> observado</span></div>';
+  }
+  var AUD_ST={no_ritmo:["No ritmo","ok"],atrasado:["Atrasado","warn"],suspeita:["Suspeita","susp"],contaminado:["Contaminado","bad"],pronto:["Pronto","ok"]};
+  function audBadge(s){var x=AUD_ST[s]||["—","ok"];return '<span class="aud-badge '+x[1]+'">'+x[0]+'</span>';}
+
+  var auditLoteId=null,shotImg=null,shotResult={cov:0,susPct:0},shotHi=true,cropBox={x:0.12,y:0.12,w:0.76,h:0.76};
+  function openAudit(id){auditLoteId=id;renderAuditList();$("audit-overlay").classList.add("open");syncPhotoPull(id);}
+  function closeAudit(){$("audit-overlay").classList.remove("open");}
+  function renderAuditList(){var l=findP2(auditLoteId);if(!l){closeAudit();return;}
+    var dur=phaseDur(l),de=daysElapsed(l.phaseStart);
+    $("audit-title").textContent=l.id;
+    $("audit-sub").innerHTML=PHASE_NAME[l.phase]+' · dia <b>'+de+'</b> de '+dur+' · esperado ≈ <b>'+expectedCov(de,dur)+'%</b>';
+    var ds=auditDaysSince(auditLoteId);
+    $("audit-due").innerHTML=(ds==null)?'Nenhuma foto ainda. Registre a primeira para começar o acompanhamento.':(ds>=AUDIT_INTERVAL?('<b style="color:var(--accent-deep)">Auditoria pendente</b> · última foto há '+ds+' dia(s)'):('Última foto há '+ds+' dia(s) · próxima sugerida em '+(AUDIT_INTERVAL-ds)+' dia(s)'));
+    var tgt=sampleTarget(l),smp=bagsSampled(auditLoteId,l.phase);
+    $("audit-sample").innerHTML='Amostra desta fase: <b>'+smp+'</b> de '+tgt+' bolsa(s) ('+Math.round(samplePct(l)*100)+'% do lote)'+(smp<tgt?(' · <span style="color:var(--accent-deep)">faltam '+(tgt-smp)+'</span>'):' <span style="color:var(--green)">✓ representativo</span>');
+    $("audit-chart").innerHTML=auditChart(l,loadAudit(auditLoteId));
+    var arr=loadAudit(auditLoteId).slice().sort(function(a,b){return (a.date<b.date||(a.date===b.date&&a.id<b.id))?1:-1;});
+    if(!arr.length){$("audit-list").innerHTML='<div class="empty" style="padding:24px 12px"><div class="ico">📷</div><p>Sem fotos. Toque em <b>Nova foto</b> e enquadre a bolsa.</p></div>';return;}
+    $("audit-list").innerHTML=arr.map(function(e){var exp=expectedCov(e.de,e.dur),delta=e.cov-exp;
+      var dtxt=delta>=0?('+'+delta):(''+delta);var dcls=delta>=-10?'ok':(delta>=-25?'warn':'bad');
+      var sus=(e.sus||0)>=4?'<div class="aud-sus">⚠ Cores suspeitas ≈ '+e.sus+'% da área — verifique contaminação</div>':'';
+      return '<div class="aud-card"><img src="'+e.img+'" alt=""><div class="aud-info">'
+        +'<div class="aud-row"><span class="aud-day">dia '+e.de+' de '+e.dur+'</span>'+audBadge(e.status)+'</div>'
+        +'<div class="aud-cov">micélio ≈ <b>'+e.cov+'%</b> <span class="aud-exp">(esperado '+exp+'% · <span class="'+dcls+'">'+dtxt+'</span>)</span></div>'
+        +'<div class="aud-meta">'+fmtDate(e.date)+'</div>'+sus
+        +(e.note?'<div class="aud-note">'+esc(e.note)+'</div>':'')
+        +'<button class="aud-del" data-aid="'+e.id+'">excluir</button></div></div>';}).join("");
+  }
+  function auditListClick(e){var del=e.target.closest('.aud-del');if(del){var aid=del.getAttribute("data-aid");var arr=loadAudit(auditLoteId).filter(function(x){return x.id!==aid;});saveAuditArr(auditLoteId,arr);syncPhotoDelete(aid);renderAuditList();renderIncub();renderProd();renderHome();toast("Foto removida");}}
+
+  function onAuditFile(ev){var f=ev.target.files&&ev.target.files[0];if(!f){return;}var rd=new FileReader();
+    rd.onload=function(){var im=new Image();im.onload=function(){shotImg=im;openShot();};im.src=rd.result;};rd.readAsDataURL(f);ev.target.value="";}
+  function openShot(){shotHi=true;$("shot-hi").classList.add("on");$("shot-thr").value="62";cropBox={x:0.12,y:0.12,w:0.76,h:0.76};$("shot-status").value="no_ritmo";$("shot-note").value="";
+    var l=findP2(auditLoteId);$("shot-bag").value=String((l?bagsSampled(auditLoteId,l.phase):0)+1);
+    runAnalysis();$("shot-overlay").classList.add("open");}
+  function closeShot(){$("shot-overlay").classList.remove("open");shotImg=null;}
+  function runAnalysis(){if(!shotImg)return;
+    var cw=Math.min(320,shotImg.naturalWidth||320),ar=(shotImg.naturalHeight||1)/(shotImg.naturalWidth||1),ch=Math.max(1,Math.round(cw*ar));
+    var cv=$("shot-canvas");cv.width=cw;cv.height=ch;var ctx=cv.getContext("2d");ctx.drawImage(shotImg,0,0,cw,ch);
+    var img=ctx.getImageData(0,0,cw,ch),d=img.data;
+    var thr=Math.max(0,num($("shot-thr").value))/100;
+    var x0=Math.max(0,Math.floor(cw*cropBox.x)),x1=Math.min(cw,Math.ceil(cw*(cropBox.x+cropBox.w))),y0=Math.max(0,Math.floor(ch*cropBox.y)),y1=Math.min(ch,Math.ceil(ch*(cropBox.y+cropBox.h)));
+    var myc=0,sub=0,sus=0,tot=0,ov=ctx.createImageData(cw,ch),od=ov.data;
+    for(var y=0;y<ch;y++){for(var x=0;x<cw;x++){var i=(y*cw+x)*4;
+      if(!(x>=x0&&x<x1&&y>=y0&&y<y1)){od[i+3]=120;continue;}
+      var r=d[i]/255,g=d[i+1]/255,b=d[i+2]/255,mxv=Math.max(r,g,b),mnv=Math.min(r,g,b),L=(mxv+mnv)/2,chroma=mxv-mnv;
+      var hue=0;if(chroma>0){if(mxv===r)hue=((g-b)/chroma)%6;else if(mxv===g)hue=(b-r)/chroma+2;else hue=(r-g)/chroma+4;hue*=60;if(hue<0)hue+=360;}
+      tot++;var cat;
+      if(chroma>0.12&&L>0.12&&L<0.82&&hue>=65&&hue<=185)cat="sus";
+      else if(chroma>0.18&&L>0.25&&L<0.9&&hue>=290&&hue<=345)cat="sus";
+      else if(L>=thr&&chroma<0.18)cat="myc";else cat="sub";
+      if(cat==="myc"){myc++;if(shotHi){od[i]=60;od[i+1]=160;od[i+2]=255;od[i+3]=120;}}
+      else if(cat==="sus"){sus++;od[i]=255;od[i+1]=45;od[i+2]=45;od[i+3]=shotHi?160:90;}
+      else{sub++;}
+    }}
+    var oc=document.createElement("canvas");oc.width=cw;oc.height=ch;oc.getContext("2d").putImageData(ov,0,0);ctx.drawImage(oc,0,0);
+    var bx=cropBox.x*cw,by=cropBox.y*ch,bw=cropBox.w*cw,bh=cropBox.h*ch,hs=Math.max(7,cw*0.028);
+    ctx.strokeStyle="rgba(0,0,0,.45)";ctx.lineWidth=3;ctx.strokeRect(bx,by,bw,bh);
+    ctx.strokeStyle="rgba(255,255,255,.97)";ctx.lineWidth=1.6;ctx.strokeRect(bx,by,bw,bh);
+    ctx.fillStyle="#fff";ctx.fillRect(bx+bw-hs,by+bh-hs,hs,hs);ctx.strokeStyle="#2F6B57";ctx.lineWidth=2;ctx.strokeRect(bx+bw-hs,by+bh-hs,hs,hs);
+    var denom=myc+sub,cov=denom>0?Math.round(myc/denom*100):0,susPct=tot>0?Math.round(sus/tot*100):0;shotResult={cov:cov,susPct:susPct};
+    $("shot-cov").innerHTML='≈ '+cov+'%';
+    $("shot-sus").innerHTML=susPct>=4?('<span class="bad">⚠ Cores suspeitas ≈ '+susPct+'% da área</span>'):'<span class="ok">Sem cores suspeitas evidentes</span>';
+    var l=findP2(auditLoteId);if(l){var dur=phaseDur(l),de=daysElapsed(l.phaseStart),exp=expectedCov(de,dur),delta=cov-exp;$("shot-exp").innerHTML='Esperado p/ o dia '+de+': ≈ <b>'+exp+'%</b> · diferença <span class="'+(delta>=-10?'ok':(delta>=-25?'warn':'bad'))+'">'+(delta>=0?'+':'')+delta+'</span>';}
+  }
+  var rafPending=false;
+  function requestAnalysis(){if(rafPending)return;rafPending=true;requestAnimationFrame(function(){rafPending=false;runAnalysis();});}
+  var dragMode=null,dragOff={dx:0,dy:0};
+  function shotPt(ev){var cv=$("shot-canvas"),r=cv.getBoundingClientRect();return {x:Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width)),y:Math.max(0,Math.min(1,(ev.clientY-r.top)/r.height))};}
+  function shotDown(ev){if(!shotImg)return;ev.preventDefault();var p=shotPt(ev),hx=cropBox.x+cropBox.w,hy=cropBox.y+cropBox.h;
+    if(Math.abs(p.x-hx)<0.07&&Math.abs(p.y-hy)<0.07)dragMode="resize";
+    else if(p.x>cropBox.x&&p.x<hx&&p.y>cropBox.y&&p.y<hy){dragMode="move";dragOff={dx:p.x-cropBox.x,dy:p.y-cropBox.y};}
+    else{dragMode="new";cropBox.x=p.x;cropBox.y=p.y;cropBox.w=0.02;cropBox.h=0.02;}
+    try{$("shot-canvas").setPointerCapture(ev.pointerId);}catch(e){}requestAnalysis();}
+  function shotMove(ev){if(!dragMode||!shotImg)return;ev.preventDefault();var p=shotPt(ev);
+    if(dragMode==="move"){cropBox.x=Math.max(0,Math.min(1-cropBox.w,p.x-dragOff.dx));cropBox.y=Math.max(0,Math.min(1-cropBox.h,p.y-dragOff.dy));}
+    else{cropBox.w=Math.max(0.06,Math.min(1-cropBox.x,p.x-cropBox.x));cropBox.h=Math.max(0.06,Math.min(1-cropBox.y,p.y-cropBox.y));}
+    requestAnalysis();}
+  function shotUp(ev){dragMode=null;}
+  function saveShot(){var l=findP2(auditLoteId);if(!l||!shotImg){closeShot();return;}
+    var mw=560,w=Math.min(mw,shotImg.naturalWidth||mw),ar=(shotImg.naturalHeight||1)/(shotImg.naturalWidth||1),h=Math.max(1,Math.round(w*ar));
+    var cc=document.createElement("canvas");cc.width=w;cc.height=h;cc.getContext("2d").drawImage(shotImg,0,0,w,h);
+    var url;try{url=cc.toDataURL("image/jpeg",0.55);}catch(e){url="";}
+    var arr=loadAudit(auditLoteId);
+    var entry={id:"a"+Date.now(),date:todayISO(),phase:l.phase,de:daysElapsed(l.phaseStart),dur:phaseDur(l),img:url,cov:shotResult.cov,sus:shotResult.susPct,thr:num($("shot-thr").value),bag:Math.max(1,Math.floor(num($("shot-bag").value))||1),status:$("shot-status").value,note:($("shot-note").value||"").trim()};
+    arr.push(entry);
+    try{saveAuditArr(auditLoteId,arr);}catch(e){toast("Sem espaço para salvar a foto");return;}
+    syncPhotoPush(auditLoteId,entry);
+    closeShot();renderAuditList();renderIncub();renderProd();renderHome();toast("Foto registrada ✓");}
 
   loadContainers();loadStockLog();loadP();loadComp();loadSpawn();loadBatches();loadProd();loadSpawnBatches();migrateSpawnWeekly();renderP();renderSpawn();renderLotes();renderIncub();renderProd();renderHome();renderLog();
 

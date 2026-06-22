@@ -438,6 +438,7 @@
       <div class="kpi"><div class="kpi-k">Sanidade <span class="kpi-tag">30d</span></div><div class="kpi-v" id="kpi-san">–</div><div class="kpi-s" id="kpi-san-s">livre de contaminação</div></div>
       <div class="kpi"><div class="kpi-k">Em produção</div><div class="kpi-v" id="kpi-ativas">–</div><div class="kpi-s" id="kpi-ativas-s">bolsas ativas</div></div>
       <div class="kpi"><div class="kpi-k">Colhido <span class="kpi-tag">30d</span></div><div class="kpi-v" id="kpi-colh">–</div><div class="kpi-s" id="kpi-colh-s">últimos 30 dias</div></div>
+      <div class="kpi accent"><div class="kpi-k">Índice colonização</div><div class="kpi-v" id="kpi-colon">–</div><div class="kpi-s" id="kpi-colon-s">observado vs. ideal · maior = melhor</div></div>
     </div>
     <div class="sec-sub">Contaminação</div>
     <div class="stock-head"><div><div class="k">Taxa de contaminação · 30 dias</div><div class="big" id="kpi-contam">0<small>%</small></div></div>
@@ -454,6 +455,7 @@
       <button class="per active" data-per="12">12 meses</button>
       <button class="per" data-per="24">24 meses</button>
     </div>
+    <div class="chart-card"><div class="chart-h">Índice de colonização por semana (%)</div><div id="chart-colon" class="chart-body"></div></div>
     <div class="chart-card"><div class="chart-h">Colheita por semana (kg)</div><div id="chart-colh" class="chart-body"></div></div>
     <div class="chart-card"><div class="chart-h">Eficiência biológica (%)</div><div id="chart-eb" class="chart-body"></div></div>
     <div class="chart-card"><div class="chart-h">Sanidade (%)</div><div id="chart-san" class="chart-body"></div></div>
@@ -1142,7 +1144,7 @@
     if(!dst){dst=newLote("container",todayISO());dst.sourceId=sendId;dst.pesoBolsa=l.pesoBolsa;dst.umidade=l.umidade;dst.container=l.container;dst.durCont=l.durCont||40;dst.bolsas=0;dst.compUsado=0;dst.obs=l.obs;}
     dst.bolsas=(dst.bolsas||0)+qty;if((l.bolsas||0)>0)dst.compUsado=Math.round(((dst.compUsado||0)+(l.compUsado||0)*qty/(l.bolsas||1))*10)/10;
     l.sentToProd=sent+qty;var full=l.sentToProd>=(l.bolsas||0);
-    if(full)prodLotes=prodLotes.filter(function(x){return x.id!==sendId;});
+    if(full){archiveAuditPhotos(l);prodLotes=prodLotes.filter(function(x){return x.id!==sendId;});}
     saveProd();closeSend();renderIncub();renderProd();renderHome();renderLotes();switchTab("page-prod");
     toast(qty+" bolsa(s) → "+dst.id+(full?" · incubação concluída":(" · "+Math.max(0,(l.bolsas||0)-l.sentToProd)+" restante(s)")));}
   function dateDiff(aISO,bISO){var a=new Date(aISO+"T00:00:00Z").getTime();var b=new Date(bISO+"T00:00:00Z").getTime();return Math.round((b-a)/86400000);}
@@ -1207,7 +1209,7 @@
         +'<div class="field"><label>Peso/bolsa</label><div class="in"><input type="text" inputmode="decimal" data-act="set-peso" value="'+fmtP(l.pesoBolsa||0)+'"><span class="suffix">kg</span></div></div>'
         +'<div class="field"><label>Umidade</label><div class="in"><input type="text" inputmode="decimal" data-act="set-umid" value="'+fmtP(l.umidade||0)+'"><span class="suffix">%</span></div></div></div>'
       +'<div class="eb-box"><div class="lab">Eficiência Biológica<small>colheita ÷ matéria seca</small></div><div class="v">'+fmt1(e.eb)+'<small>%</small></div></div>'
-      +sanBox(l)+auditBtn(l)
+      +sanBox(l)
       +'<div class="det-block" style="margin-top:8px">'+kv("Substrato úmido",fmt1(e.umido)+" kg")+kv("Matéria seca",fmt1(e.ms)+" kg")+(l.compUsado?kv("Composto usado",fmt1(l.compUsado)+" kg"):"")+kv("Colheita total",fmt1(e.col)+" kg")+kv("Rendimento (úmido)",fmt1(e.umido>0?e.col/e.umido*100:0)+"%")+kv("Bolsas ativas",fmt(loteAtivas(l))+" de "+fmt(l.bolsas||0))+'</div>'
       +'<div class="colheita-add"><input type="date" class="cdate" value="'+todayISO()+'"><input type="text" inputmode="decimal" class="cpeso cph" placeholder="kg"><button data-act="add-colheita">+ Colheita</button></div>'
       +'<details class="lote-toggle"><summary><span class="chev">▶</span> Colheitas, contêiner e ajustes</summary>'
@@ -1245,7 +1247,7 @@
     if(act==="audit"){openAudit(id);return;}
     if(act==="mix"){openMix(id);return;}
     if(act==="spawnready"){var l=findP2(id);if(l){l.spawnReady=true;saveProd();renderIncub();renderHome();toast(l.id+" · spawn pronto ✓");}return;}
-    if(act==="del"){if(!confirm("Excluir lote "+id+"?"))return;prodLotes=prodLotes.filter(function(x){return x.id!==id;});saveProd();renderIncub();renderProd();renderHome();toast("Lote excluído");return;}
+    if(act==="del"){if(!confirm("Excluir lote "+id+"?"))return;var dl=findP2(id);if(dl)archiveAuditPhotos(dl);prodLotes=prodLotes.filter(function(x){return x.id!==id;});saveProd();renderIncub();renderProd();renderHome();toast("Lote excluído");return;}
     if(act==="add-colheita"){var l=findP2(id);if(!l)return;var dt=card.querySelector(".cdate").value||todayISO();var pe=num(card.querySelector(".cph").value);if(pe<=0){toast("Informe o peso da colheita");return;}l.colheitas=l.colheitas||[];l.colheitas.push({date:dt,peso:pe});saveProd();renderProd();renderHome();toast("Colheita registrada ✓");return;}
     if(act==="del-colheita"){var l=findP2(id);if(!l)return;var ci=parseInt(e.target.getAttribute("data-ci"),10);if(l.colheitas&&ci>-1&&ci<l.colheitas.length){l.colheitas.splice(ci,1);saveProd();renderProd();renderHome();toast("Colheita removida");}return;}
     if(act==="descartar"){openDescarte(id);return;}
@@ -1574,6 +1576,7 @@
     set("kpi-ativas",fmt(ativas)+'<small>bolsas</small>');set("kpi-ativas-s",fmt1(vol)+' kg de substrato');
     var colh30=0;prodLotes.forEach(function(l){(l.colheitas||[]).forEach(function(c){if(c.date>=since)colh30+=(c.peso||0);});});
     set("kpi-colh",fmt1(colh30)+'<small>kg</small>');
+    var ci=colonIndexNow();set("kpi-colon",ci!=null?fmt(ci)+'<small>%</small>':'–');
     set("kpi-contam",fmt1(taxa)+'<small>%</small>');$("kpi-contam-r").textContent=fmt(contam30)+" bolsa(s) · 30d";
     var and=prodLotes.filter(function(l){return l.phase!=="concluido";});
     var hl=$("home-lotes");
@@ -1593,7 +1596,7 @@
     var has=false;for(var k=0;k<vals.length;k++)if(vals[k]!=null){has=true;break;}
     if(!has)return '<div class="chart-empty">Sem dados no período selecionado.</div>';
     var W=340,H=150,padL=30,padR=8,padT=10,padB=22,n=weeks.length;
-    var maxV=0;if(opts.pct)maxV=100;else{vals.forEach(function(v){if(v!=null&&v>maxV)maxV=v;});}if(maxV<=0)maxV=1;
+    var maxV=0;if(opts.pct)maxV=100;else{vals.forEach(function(v){if(v!=null&&v>maxV)maxV=v;});}if(opts.max)maxV=opts.max;if(maxV<=0)maxV=1;
     function X(i){return padL+(n<=1?(W-padL-padR)/2:(i/(n-1))*(W-padL-padR));}
     function Y(v){return padT+(1-v/maxV)*(H-padT-padB);}
     var grid='';[0,0.5,1].forEach(function(f){var y=padT+(1-f)*(H-padT-padB);grid+='<line x1="'+padL+'" y1="'+y.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+y.toFixed(1)+'" class="grid"/><text x="0" y="'+(y+3).toFixed(1)+'" class="ax-y">'+fmt(Math.round(maxV*f))+'</text>';});
@@ -1611,6 +1614,12 @@
   function renderCharts(){
     var weeks=weeksRange(chartMonths);
     function bucket(fnMatch,avg){return weeks.map(function(w){var lo=w.ms,hi=w.ms+7*86400000;var sum=0,n=0;fnMatch(function(dateISO,val){var t=Date.parse(dateISO+"T00:00:00Z");if(t>=lo&&t<hi){sum+=val;n++;}});if(avg)return n?Math.round(sum/n*10)/10:null;return Math.round(sum*10)/10;});}
+    // Índice de colonização (observado vs ideal) por semana — ativos + arquivados
+    var idx=bucket(function(add){
+      prodLotes.forEach(function(l){if(l.phase==="spawn"||l.phase==="substrato")loadAudit(l.id).forEach(function(e){var p=obsPerf({de:e.de,dur:e.dur,cov:e.cov});if(p!=null)add(e.date||"",p);});});
+      (auditCurves||[]).forEach(function(c){(c.points||[]).forEach(function(pt){var p=obsPerf({de:pt.de,dur:c.dur,cov:pt.cov});if(p!=null)add(pt.date||"",p);});});
+    },true);
+    $("chart-colon").innerHTML=svgLine(weeks,idx,{cls:"g",max:120});
     // Colheita por semana (kg)
     var colh=bucket(function(add){prodLotes.forEach(function(l){(l.colheitas||[]).forEach(function(c){add(c.date||"",c.peso||0);});});},false);
     $("chart-colh").innerHTML=svgLine(weeks,colh,{cls:"a"});
@@ -1782,6 +1791,7 @@
   function photosBase(){return SYNC.url.replace(/\/+$/,"")+"/rest/v1/audit_photos";}
   function syncPhotoPush(loteId,entry){if(!SYNC.enabled)return;try{fetch(photosBase()+"?on_conflict=id",{method:"POST",headers:syncHeaders({Prefer:"resolution=merge-duplicates,return=minimal"}),body:JSON.stringify({id:entry.id,ws:SYNC.ws,lote:loteId,data:entry})}).catch(function(){});}catch(e){}}
   function syncPhotoDelete(id){if(!SYNC.enabled)return;try{fetch(photosBase()+"?id=eq."+encodeURIComponent(id),{method:"DELETE",headers:syncHeaders({Prefer:"return=minimal"})}).catch(function(){});}catch(e){}}
+  function syncPhotosDeleteLote(loteId){if(!SYNC.enabled)return;try{fetch(photosBase()+"?ws=eq."+encodeURIComponent(SYNC.ws)+"&lote=eq."+encodeURIComponent(loteId),{method:"DELETE",headers:syncHeaders({Prefer:"return=minimal"})}).catch(function(){});}catch(e){}}
   function syncPhotoPull(loteId){if(!SYNC.enabled)return;try{fetch(photosBase()+"?ws=eq."+encodeURIComponent(SYNC.ws)+"&lote=eq."+encodeURIComponent(loteId)+"&select=id,data",{headers:syncHeaders()})
     .then(function(r){return r.ok?r.json():[];})
     .then(function(rows){if(!rows||!rows.length)return;var local=loadAudit(loteId),byId={};local.forEach(function(e){byId[e.id]=1;});var ch=false;
@@ -1820,6 +1830,14 @@
   }
   var AUD_ST={no_ritmo:["No ritmo","ok"],atrasado:["Atrasado","warn"],suspeita:["Suspeita","susp"],contaminado:["Contaminado","bad"],pronto:["Pronto","ok"]};
   function audBadge(s){var x=AUD_ST[s]||["—","ok"];return '<span class="aud-badge '+x[1]+'">'+x[0]+'</span>';}
+
+  var auditCurves=[];
+  function loadAuditCurves(){try{auditCurves=JSON.parse(store.get("inoc2_auditCurves")||"[]");}catch(e){auditCurves=[];}}
+  function saveAuditCurves(){store.set("inoc2_auditCurves",JSON.stringify(auditCurves));}
+  function obsPerf(o){var id=idealCov(o.de,o.dur);if(id<=0)return null;return Math.max(0,Math.min(150,Math.round(o.cov/id*100)));}
+  function obsActive(){var out=[];prodLotes.forEach(function(l){if(l.phase==="spawn"||l.phase==="substrato")loadAudit(l.id).forEach(function(e){out.push({date:e.date,de:e.de,dur:e.dur,cov:e.cov});});});return out;}
+  function colonIndexNow(){var o=obsActive(),s=0,n=0;o.forEach(function(e){var p=obsPerf(e);if(p!=null){s+=p;n++;}});return n?Math.round(s/n):null;}
+  function archiveAuditPhotos(l){if(!l)return;var arr=loadAudit(l.id);if(arr.length){auditCurves.push({id:l.id,phase:l.phase,dur:phaseDur(l),points:arr.map(function(e){return {date:e.date,de:e.de,cov:e.cov};}),archivedAt:todayISO()});saveAuditCurves();}saveAuditArr(l.id,[]);try{localStorage.removeItem(auditKey(l.id));}catch(e){}syncPhotosDeleteLote(l.id);}
 
   var auditLoteId=null,shotImg=null,shotResult={cov:0,susPct:0},shotHi=true,cropBox={x:0.12,y:0.12,w:0.76,h:0.76};
   function openAudit(id){auditLoteId=id;renderAuditList();$("audit-overlay").classList.add("open");syncPhotoPull(id);}
@@ -1907,7 +1925,7 @@
     syncPhotoPush(auditLoteId,entry);
     closeShot();renderAuditList();renderIncub();renderProd();renderHome();toast("Foto registrada ✓");}
 
-  loadContainers();loadStockLog();loadP();loadComp();loadSpawn();loadBatches();loadProd();loadSpawnBatches();migrateSpawnWeekly();renderP();renderSpawn();renderLotes();renderIncub();renderProd();renderHome();renderLog();
+  loadContainers();loadStockLog();loadP();loadComp();loadSpawn();loadBatches();loadProd();loadSpawnBatches();loadAuditCurves();migrateSpawnWeekly();renderP();renderSpawn();renderLotes();renderIncub();renderProd();renderHome();renderLog();
 
   // sincronização: wiring + init
   (function(){
